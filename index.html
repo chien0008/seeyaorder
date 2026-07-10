@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="zh-TW">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>See Ya Bar</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <style>
+    :root {
+        --sunset-dark: #1a0f0a;
+        --sunset-amber: #3d2419;
+        --neon-glow: #f59e0b;
+        --neon-success: #4ade80;
+    }
+    body { 
+        font-family: 'DM Sans', sans-serif; 
+        margin:0; padding:0; 
+        background: linear-gradient(135deg, var(--sunset-dark), var(--sunset-amber));
+        color: #f3f4f6;
+    }
+    .tab-page { display:none; }
+    .tab-page.active { display:block; }
+    .home-container { min-height: calc(100vh - 12rem); display: flex; flex-direction: column; justify-content: center; }
+    
+    /* 螢光動畫定義 */
+    @keyframes neonPulse {
+        0% { box-shadow: 0 0 0px var(--neon-success); transform: scale(1); }
+        50% { box-shadow: 0 0 25px var(--neon-success); transform: scale(1.15); border-color: var(--neon-success); }
+        100% { box-shadow: 0 0 0px var(--neon-success); transform: scale(1); }
+    }
+    .neon-active { animation: neonPulse 0.5s ease-in-out; background-color: rgba(74, 222, 128, 0.2) !important; color: #4ade80 !important; }
+
+    @keyframes inputError {
+        0%, 100% { border-color: #f59e0b; }
+        50% { border-color: #ef4444; box-shadow: 0 0 15px #ef4444; }
+    }
+    .error-flash { animation: inputError 0.4s ease infinite; }
+
+    /* 購物車面板 */
+    .cart-panel { transform:translateY(100%); transition:transform .3s ease; background-color: #1a0f0a; border-top: 2px solid var(--neon-glow); }
+    .cart-panel.open { transform:translateY(0); }
+    
+    .nav-btn { color: #9ca3af; transition: all 0.2s ease; }
+    .nav-btn.active { color:var(--neon-glow); }
+    
+    .sub-btn { color: #cccccc; border-color: #5a3a2a; }
+    .sub-btn.active { background:var(--neon-glow); color:#1a0f0a; border-color:var(--neon-glow); }
+
+    /* 圖片現形術 */
+    .menu-img-box {
+        width: 80px !important; height: 80px !important;
+        min-width: 80px !important; min-height: 80px !important;
+        background-size: cover; background-position: center; border-radius: 12px;
+        border: 1px solid rgba(245, 158, 11, 0.2);
+    }
+  </style>
+ </head>
+ <body class="w-full min-h-screen pb-32">
+  
+  <header class="relative bg-black/40">
+   <div class="w-full h-40 bg-gradient-to-r from-amber-900 to-stone-950 flex items-center justify-center text-white text-xl font-bold tracking-widest opacity-30">SEE YA BAR</div>
+   <div class="absolute inset-0 bg-gradient-to-b from-transparent to-sunset-dark"></div>
+   <div class="absolute bottom-4 left-4">
+    <h1 class="text-3xl font-bold text-white drop-shadow-sm">See Ya</h1>
+    <p class="text-sm text-amber-200/80">小琉球・深夜微醺</p>
+   </div>
+  </header>
+
+  <main class="px-4">
+   <section id="page-home" class="tab-page active">
+    <div class="home-container">
+     <div class="bg-black/30 rounded-2xl p-5 mb-5 border border-amber-900/40 text-center">
+      <div class="space-y-3 text-amber-100/90 leading-relaxed text-sm">
+       <p class="italic font-medium text-amber-400">Hidden in the heart of Xiaoliuqiu, See Ya is more than a bar.</p>
+       <p class="italic font-medium text-amber-400">It's where island nights begin, conversations last longer, and every goodbye becomes "See Ya."</p>
+       <p class="italic font-medium text-amber-400 mb-4">Great cocktails, warm lights, good people.</p>
+       <div class="w-12 h-[1px] bg-amber-500 mx-auto my-3"></div>
+       <p class="font-light">白天追著陽光、海風與浪花；夜晚，See Ya為你準備好酒精，讓旅程慢下來</p>
+       <p class="font-light">旅行最難忘的不只是風景，而是笑聲與微醺的夜晚</p>
+       <p class="font-light text-amber-300 font-medium mt-2">在琉球，我們不說 Goodbye</p>
+       <p class="text-base text-amber-400 font-bold tracking-wider">我們說 See Ya。</p>
+      </div>
+     </div>
+     
+     <div class="bg-red-950/60 border border-red-700/50 rounded-xl p-4 mb-5 text-center shadow-sm">
+      <p class="text-xs text-red-200 font-medium">
+       ⚠️ 未滿 18 歲請勿飲酒 ｜ 理性飲酒，理性微醺<br>
+       <span class="block mt-1 font-bold text-red-100">🚫 開車不喝酒，喝酒不開車 🚫</span>
+      </p>
+     </div>
+     
+     <div id="table-box" class="bg-black/40 border-2 border-amber-500/70 rounded-xl p-4 shadow-lg transition-all duration-300">
+      <label class="block text-sm font-medium text-amber-400 mb-2 font-bold" for="table-input">📍 點餐第一步：請輸入您的桌號 / 位置</label> 
+      <input id="table-input" type="text" class="w-full bg-black/60 border border-amber-800 rounded-lg px-3 py-3 text-white font-bold placeholder-amber-900 focus:outline-none focus:ring-2 focus:ring-amber-500 transition" placeholder="例如：A1、吧台、沙灘區...">
+     </div>
+    </div>
+   </section>
+
+   <section id="page-alcohol" class="tab-page">
+    <div id="alcohol-filters" class="flex gap-2 overflow-x-auto pb-3 mb-3 pt-2"></div>
+    <div id="alcohol-items" class="grid gap-4"></div>
+   </section>
+
+   <section id="page-nonalcohol" class="tab-page">
+    <div id="nonalcohol-filters" class="flex gap-2 overflow-x-auto pb-3 mb-3 pt-2"></div>
+    <div id="nonalcohol-items" class="grid gap-4"></div>
+   </section>
+
+   <section id="page-food" class="tab-page">
+    <div id="food-items" class="grid gap-4 pt-2"></div>
+   </section>
+  </main>
+
+  <div id="global-alert" class="fixed top-5 inset-x-4 bg-red-600 text-white font-bold p-4 rounded-xl text-center shadow-2xl z-50 transform -translate-y-32 transition-transform duration-300"></div>
+
+  <button id="cart-badge" class="fixed bottom-24 right-4 bg-amber-600 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center font-bold z-40 hidden transition-all duration-300">
+   <i data-lucide="shopping-cart" style="width:24px;height:24px"></i>
+   <span id="cart-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">0</span>
+  </button>
+
+  <div id="cart-panel" class="cart-panel fixed inset-x-0 bottom-[68px] z-40 max-h-[60vh] overflow-y-auto p-4 shadow-2xl rounded-t-3xl">
+   <div class="flex justify-between items-center mb-4">
+    <h2 class="font-bold text-lg text-amber-400">📋 今晚的微醺明細</h2>
+    <button id="close-cart" class="text-amber-500"><i data-lucide="x" style="width:20px;height:20px"></i></button>
+   </div>
+   <div id="cart-list" class="space-y-2 mb-4"></div>
+   <div class="border-t border-amber-900/40 pt-3 mb-4">
+    <div class="flex justify-between font-bold text-amber-300"><span>合計金額</span><span id="cart-total">NT$0</span></div>
+   </div>
+   <textarea id="order-notes" rows="2" class="w-full bg-black/40 border border-amber-900 rounded-lg px-3 py-2 text-sm text-white placeholder-amber-800 mb-4 focus:outline-none" placeholder="備註（去冰、少糖、或任何想對我們說的話...）"></textarea>
+   <button id="submit-order" class="w-full bg-amber-600 text-white font-bold py-3 rounded-xl hover:bg-amber-500 shadow-lg">確認送出 🍹</button>
+   <p id="cart-error" class="text-red-400 text-sm mt-2 text-center hidden"></p>
+   <p id="cart-success" class="text-green-400 text-sm mt-2 text-center hidden"></p>
+  </div>
+
+  <nav class="fixed bottom-0 inset-x-0 bg-black/90 backdrop-blur-md border-t border-amber-900/40 flex z-50 py-2">
+   <button class="nav-btn active flex-1 flex flex-col items-center py-1 text-[12px] font-bold" id="nav-home" data-page="home"><i data-lucide="home" class="mb-1"></i><span>首頁</span></button>
+   <button class="nav-btn flex-1 flex flex-col items-center py-1 text-[12px] font-bold" data-page="alcohol"><i data-lucide="glass-water" class="mb-1"></i><span>有酒精</span></button>
+   <button class="nav-btn flex-1 flex flex-col items-center py-1 text-[12px] font-bold" data-page="nonalcohol"><i data-lucide="cup-soda" class="mb-1"></i><span>無酒精</span></button>
+   <button class="nav-btn flex-1 flex flex-col items-center py-1 text-[12px] font-bold" data-page="food"><i data-lucide="popcorn" class="mb-1"></i><span>嚴選小點</span></button>
+  </nav>
+
+  <script>
+const MENU={
+alcohol:{
+"啤酒 Beer":[
+{name:"金色沙灘",en:"Golden Beach Lager",desc:"清爽麥香，海風必備",price:150,imageUrl:"https://images.unsplash.com/photo-1618885472179-5e474019f2a9?q=80&w=200"},
+{name:"椰林暗湧",en:"Coconut Undertow",desc:"椰子風味淡啤酒",price:160,imageUrl:"https://images.unsplash.com/photo-1599824419266-419b4b0e8b1d?q=80&w=200"},
+{name:"日落琥珀",en:"Sunset Amber Ale",desc:"焦糖麥芽微甜尾韻",price:170,imageUrl:"https://images.unsplash.com/photo-1571613316887-6f8d5cbf7ef7?q=80&w=200"},
+{name:"潮汐IPA",en:"Tidal IPA",desc:"柑橘啤酒花香氣奔放",price:180,imageUrl:"https://images.unsplash.com/photo-1608270586620-248524c67de9?q=80&w=200"}
+],
+"雞尾酒 Cocktails":[
+{name:"藍色珊瑚礁",en:"Blue Lagoon",desc:"藍柑橘伏特加萊姆汁",price:280,imageUrl:"https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?q=80&w=200"},
+{name:"夕陽莫希托",en:"Sunset Mojito",desc:"蘭姆酒薄荷百香果",price:260,imageUrl:"https://images.unsplash.com/photo-1546171753-97d7676e4602?q=80&w=200"},
+{name:"火山瑪格麗特",en:"Volcano Margarita",desc:"龍舌蘭辣椒鹽口杯",price:300,imageUrl:"https://images.unsplash.com/photo-1556855248-7123d65fdbd9?q=80&w=200"}
+],
+"調酒 Mixed Drinks":[
+{name:"鳳梨可樂達",en:"Piña Colada",desc:"鳳梨椰奶蘭姆經典",price:240,imageUrl:"https://images.unsplash.com/photo-1514218240783-940066a4b6c7?q=80&w=200"},
+{name:"長島冰茶",en:"Long Island Iced Tea",desc:"五種基酒可樂微甜",price:280,imageUrl:"https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?q=80&w=200"},
+{name:"性感海灘",en:"Sex on the Beach",desc:"伏特加蜜桃柳橙汁",price:250,imageUrl:"https://images.unsplash.com/photo-1605706915003-8869c97b2183?q=80&w=200"}
+],
+"Shot":[
+{name:"火焰B52",en:"Flaming B-52",desc:"咖啡酒貝禮詩點火",price:180,imageUrl:"https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=200"}
+]
+},
+nonalcohol:{
+"果汁 Juice":[
+{name:"鮮榨鳳梨",en:"Fresh Pineapple",desc:"現榨金鑽鳳梨原汁",price:120,imageUrl:"https://images.unsplash.com/photo-1613478223719-2ab802602423?q=80&w=200"},
+{name:"西瓜冰沙",en:"Watermelon Smoothie",desc:"整顆西瓜打成沙冰",price:130,imageUrl:"https://images.unsplash.com/photo-1553530666-ba11a7da3888?q=80&w=200"}
+],
+"軟性飲料 Soft Drinks":[
+{name:"可樂",en:"Coca-Cola",desc:"經典冰可樂",price:80,imageUrl:"https://images.unsplash.com/photo-1567103472667-6898f3a83cd2?q=80&w=200"}
+]
+},
+food:[
+{name:"碳烤蝦串",en:"Grilled Shrimp Skewers",desc:"鮮蝦炭火直烤佐檸檬蒜醬",price:320,imageUrl:"https://images.unsplash.com/photo-1559742811-822873691df8?q=80&w=200"},
+{name:"魚肉塔可",en:"Fish Tacos",desc:"酥炸鮮魚墨西哥餅配酸奶醬",price:280,imageUrl:"https://images.unsplash.com/photo-1565299585323-38d6b0865b47?q=80&w=200"},
+{name:"起司玉米片",en:"Nachos & Guacamole",desc:"脆玉米片佐新鮮酪梨莎莎醬",price:240,imageUrl:"https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?q=80&w=200"}
+]
+};
+
+// 這是你的專屬收單晶片電話號碼
+const BACKEND_URL = "https://script.google.com/macros/s/AKfycbw-xLInbmRPs4heLE1nx7o4vsd2SWOZHmJc_MvvD7CWqD5bomsDgnZUhDAFPF727RZT-w/exec";
+
+let cart=[];
+let currentAlcoholCat=Object.keys(MENU.alcohol)[0];
+let currentNonalcoholCat=Object.keys(MENU.nonalcohol)[0];
+
+// 分頁切換
+document.querySelectorAll('.nav-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.tab-page').forEach(p=>p.classList.remove('active'));
+    document.getElementById('page-'+btn.dataset.page).classList.add('active');
+    window.scrollTo(0,0);
+  });
+});
+
+// 強制照片現形渲染
+function renderItems(container,items){
+  container.innerHTML=items.map(item=>`
+<div class="bg-black/30 border border-amber-900/20 rounded-2xl p-3 flex gap-3 shadow-md">
+  <div class="menu-img-box flex-shrink-0" style="background-image: url('${item.imageUrl}');"></div>
+  <div class="flex-1 min-w-0 flex flex-col justify-between">
+    <div>
+      <div class="font-bold text-amber-100">${item.name}</div>
+      <div class="text-[11px] text-gray-500 font-medium">${item.en}</div>
+      <div class="text-[11px] text-gray-400 mt-1 leading-tight">${item.desc}</div>
+    </div>
+    <div class="flex items-center justify-between mt-2">
+      <span class="text-amber-500 font-bold text-sm">NT$${item.price}</span>
+      <button onclick="validatedAdd(this, '${item.name.replace(/'/g,"\\\\'")}',${item.price})" class="bg-amber-600/20 text-amber-400 border border-amber-600/40 rounded-lg px-3 py-1.5 text-xs font-bold transition-all hover:bg-amber-600 hover:text-white">+加入</button>
+    </div>
+  </div>
+</div>`).join('');
+}
+
+function renderFilters(container,cats,current,setter){
+  container.innerHTML=Object.keys(cats).map(c=>`<button class="sub-btn whitespace-nowrap px-4 py-1.5 rounded-full text-xs font-medium border transition ${c===current?'active':''}" data-cat="${c}">${c}</button>`).join('');
+  container.querySelectorAll('.sub-btn').forEach(b=>{
+    b.addEventListener('click',()=>{ setter(b.dataset.cat); });
+  });
+}
+
+function initAlcohol(){
+  renderFilters(document.getElementById('alcohol-filters'),MENU.alcohol,currentAlcoholCat,c=>{currentAlcoholCat=c;initAlcohol();});
+  renderItems(document.getElementById('alcohol-items'),MENU.alcohol[currentAlcoholCat]);
+}
+function initNonalcohol(){
+  renderFilters(document.getElementById('nonalcohol-filters'),MENU.nonalcohol,currentNonalcoholCat,c=>{currentNonalcoholCat=c;initNonalcohol();});
+  renderItems(document.getElementById('nonalcohol-items'),MENU.nonalcohol[currentNonalcoholCat]);
+}
+function initFood(){ renderItems(document.getElementById('food-items'),MENU.food); }
+initAlcohol(); initNonalcohol(); initFood();
+
+// 🎯 核心攔截：驗證桌號 + 螢光脈衝動畫
+function validatedAdd(btn, name, price) {
+  const tableInput = document.getElementById('table-input').value.trim();
+  
+  if (!tableInput) {
+    const alertBox = document.getElementById('global-alert');
+    alertBox.textContent = "🚨 提醒您：請先至首頁輸入桌號碼，才能開始點餐喔！🍹";
+    alertBox.style.transform = "translateY(0)";
+    
+    document.getElementById('nav-home').click();
+    
+    const box = document.getElementById('table-box');
+    box.classList.add('error-flash');
+    box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    setTimeout(() => { 
+        alertBox.style.transform = "translateY(-128px)"; 
+        box.classList.remove('error-flash');
+    }, 4000);
+    return;
+  }
+
+  // 成功加入：引爆螢光綠霓虹律動動畫
+  btn.classList.add('neon-active');
+  const cartIcon = document.getElementById('cart-badge');
+  cartIcon.classList.add('neon-active');
+
+  setTimeout(() => {
+    btn.classList.remove('neon-active');
+    cartIcon.classList.remove('neon-active');
+  }, 500);
+
+  addToCart(name, price);
+}
+
+function addToCart(name,price){
+  const existing=cart.find(i=>i.name===name);
+  if(existing){existing.qty++;}else{cart.push({name,price,qty:1});}
+  updateBadge();
+}
+
+function updateBadge(){
+  const total=cart.reduce((s,i)=>s+i.qty,0);
+  const badge = document.getElementById('cart-badge');
+  badge.classList.toggle('hidden',total===0);
+  document.getElementById('cart-count').textContent=total;
+}
+
+document.getElementById('cart-badge').addEventListener('click',openCart);
+document.getElementById('close-cart').addEventListener('click',closeCart);
+
+function openCart(){
+  const list=document.getElementById('cart-list');
+  list.innerHTML=cart.map((item,i)=>`
+<div class="flex justify-between items-center text-sm border-b border-amber-900/40 pb-2">
+  <span class="font-medium text-amber-100">${item.name} <span class="text-amber-500">x${item.qty}</span></span>
+  <div class="flex items-center gap-3">
+    <span class="text-amber-400 font-bold">NT$${item.price*item.qty}</span>
+    <button onclick="removeFromCart(${i})" class="text-red-400 text-xs">✕</button>
+  </div>
+</div>`).join('');
+  document.getElementById('cart-total').textContent='NT$'+cart.reduce((s,i)=>s+i.price*i.qty,0);
+  document.getElementById('cart-error').classList.add('hidden');
+  document.getElementById('cart-success').classList.add('hidden');
+  document.getElementById('cart-panel').classList.add('open');
+}
+function closeCart(){document.getElementById('cart-panel').classList.remove('open');}
+function removeFromCart(i){cart.splice(i,1);updateBadge();openCart();}
+
+// 真・送出點餐明細至 Google Sheets
+document.getElementById('submit-order').addEventListener('click',async()=>{
+  const tableInput=document.getElementById('table-input').value.trim();
+  const btn=document.getElementById('submit-order');
+  const errEl=document.getElementById('cart-error');
+  const successEl=document.getElementById('cart-success');
+  
+  if(!tableInput) {
+    errEl.textContent='❌ 請先填寫桌號位置！';
+    errEl.classList.remove('hidden');
+    return;
+  }
+
+  btn.disabled=true; btn.textContent='正在傳送點餐明細...';
+  errEl.classList.add('hidden');
+  successEl.classList.add('hidden');
+  
+  // 重組格式，配合後台
+  const orderData = {
+    tableNum: tableInput,
+    totalAmount: cart.reduce((s,i)=>s+i.price*i.qty,0),
+    notes: document.getElementById('order-notes').value.trim() || "無",
+    items: cart.map(item => ({
+      name: item.name,
+      quantity: item.qty,
+      note: ""
+    }))
+  };
+
+  try {
+    // 跨網域打給 Google 大腦
+    const response = await fetch(BACKEND_URL, {
+      method: 'POST',
+      mode: 'no-cors', // 繞過瀏覽器的 CORS 阻擋限制
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(orderData)
+    });
+
+    // 由於 no-cors 模式下無法讀取 response 內容，但只要沒進 catch 就是發送成功！
+    successEl.textContent = '🍹 點餐成功！訂單已飛進櫃檯，調酒師準備中！';
+    successEl.classList.remove('hidden');
+    cart = []; 
+    updateBadge();
+    document.getElementById('order-notes').value = '';
+    setTimeout(() => { closeCart(); btn.disabled = false; btn.textContent = '確認送出 🍹'; }, 3500);
+
+  } catch (error) {
+    errEl.textContent = '❌ 送出失敗，請重試或聯絡吧台服務人員';
+    errEl.classList.remove('hidden');
+    btn.disabled = false; btn.textContent = '確認送出 🍹';
+  }
+});
+
+lucide.createIcons();
+  </script>
+ </body>
+</html>
