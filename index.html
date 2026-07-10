@@ -253,7 +253,7 @@ function validatedAdd(btn, name, price, type) {
 
 function addToCart(name,price,type){
   const existing=cart.find(i=>i.name===name);
-  if(existing){existing.qty++;}else{cart.push({name,price,qty:1,note:"",type:type});}
+  if(existing){existing.qty++;}else{cart.push({name:name,price:price,qty:1,note:"",type:type});}
   updateBadge();
 }
 
@@ -306,12 +306,18 @@ function openCart(){
   document.getElementById('cart-total').textContent='NT$'+cart.reduce((s,i)=>s+i.price*i.qty,0);
   document.getElementById('cart-error').classList.add('hidden');
   document.getElementById('cart-success').classList.add('hidden');
+  document.getElementById('cart-panel').open = true;
   document.getElementById('cart-panel').classList.add('open');
 }
 
+// 🎯 網頁端強力釘死：直接硬改購物車裡的 note 狀態，不給快取逃跑的空間！
 function toggleIce(index) {
   if(cart[index]) {
-    cart[index].note = (cart[index].note === "去冰") ? "去冰" : "";
+    if(cart[index].note === "去冰") {
+      cart[index].note = "";
+    } else {
+      cart[index].note = "去冰";
+    }
     openCart();
   }
 }
@@ -334,15 +340,14 @@ document.getElementById('submit-order').addEventListener('click',async()=>{
   btn.disabled=true; btn.textContent='正在傳送點餐明細...';
   errEl.classList.add('hidden'); successEl.classList.add('hidden');
   
-  // 🎯【終極修正點】在最上游的 name 欄位直接做強制文字揉合，徹底粉碎任何格式漏洞！
   const orderData = {
     tableNum: tableInput,
     totalAmount: cart.reduce((s,i)=>s+i.price*i.qty,0),
     items: cart.map(item => {
       return {
-        name: item.note === "去冰" ? item.name + " (去冰)" : item.name,
+        name: item.name,
         quantity: item.qty,
-        note: ""
+        note: item.note === "去冰" ? "去冰" : "正常"
       };
     })
   };
