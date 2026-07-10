@@ -177,7 +177,6 @@ food:[
 ]
 };
 
-// 這是你剛剛換好的最新部署網址（保留不動）
 const BACKEND_URL = "https://script.google.com/macros/s/AKfycbyf2aQgkaeLuzpONrc3RzegFMRqXtfgucDMhXs_sXxBH4J2YnqUXr4GgnIB7LV2JO_N8A/exec";
 
 let cart=[];
@@ -194,8 +193,24 @@ document.querySelectorAll('.nav-btn').forEach(btn=>{
   });
 });
 
+// 🎯【加入黃金小警示】在飲料類下方加上獨立的「風味固定不調整」溫柔提醒
 function renderItems(container,items,type){
-  container.innerHTML=items.map(item=>`
+  container.innerHTML=items.map(item=>{
+    let actionButtons = '';
+    if(type === 'food') {
+      actionButtons = `<button onclick="validatedAdd(this, '${item.name.replace(/'/g,"\\\\'")}',${item.price},'food','')" class="bg-amber-600/20 text-amber-400 border border-amber-600/40 rounded-lg px-4 py-1.5 text-xs font-bold transition-all hover:bg-amber-600 hover:text-white">+加入</button>`;
+    } else {
+      actionButtons = `
+      <div class="flex flex-col items-end gap-1">
+        <div class="flex gap-1.5">
+          <button onclick="validatedAdd(this, '${item.name.replace(/'/g,"\\\\'")}',${item.price},'drink','')" class="bg-stone-800 text-amber-400 border border-amber-800 rounded-lg px-2 py-1.5 text-[11px] font-bold transition-all hover:bg-stone-700">＋正常</button>
+          <button onclick="validatedAdd(this, '${item.name.replace(/'/g,"\\\\'")}',${item.price},'drink','去冰')" class="bg-amber-600/30 text-amber-200 border border-amber-600/50 rounded-lg px-2 py-1.5 text-[11px] font-bold transition-all hover:bg-amber-600 hover:text-white">❄️去冰</button>
+        </div>
+        <span class="text-[10px] text-amber-600/60 font-light mt-0.5 tracking-wider">風味固定不調整</span>
+      </div>`;
+    }
+
+    return `
 <div class="bg-black/30 border border-amber-900/20 rounded-2xl p-3 flex gap-3 shadow-md">
   <div class="menu-img-box flex-shrink-0" style="background-image: url('${item.imageUrl}');"></div>
   <div class="flex-1 min-w-0 flex flex-col justify-between">
@@ -206,10 +221,11 @@ function renderItems(container,items,type){
     </div>
     <div class="flex items-center justify-between mt-2">
       <span class="text-amber-500 font-bold text-sm">NT$${item.price}</span>
-      <button onclick="validatedAdd(this, '${item.name.replace(/'/g,"\\\\'")}',${item.price},'${type}')" class="bg-amber-600/20 text-amber-400 border border-amber-600/40 rounded-lg px-3 py-1.5 text-xs font-bold transition-all hover:bg-amber-600 hover:text-white">+加入</button>
+      ${actionButtons}
     </div>
   </div>
-</div>`).join('');
+</div>`;
+  }).join('');
 }
 
 function renderFilters(container,cats,current,setter){
@@ -230,7 +246,7 @@ function initNonalcohol(){
 function initFood(){ renderItems(document.getElementById('food-items'),MENU.food,'food'); }
 initAlcohol(); initNonalcohol(); initFood();
 
-function validatedAdd(btn, name, price, type) {
+function validatedAdd(btn, name, price, type, note) {
   const tableInput = document.getElementById('table-input').value.trim();
   
   if (!tableInput) {
@@ -249,13 +265,16 @@ function validatedAdd(btn, name, price, type) {
   const cartIcon = document.getElementById('cart-badge');
   cartIcon.classList.add('neon-active');
   setTimeout(() => { btn.classList.remove('neon-active'); cartIcon.classList.remove('neon-active'); }, 500);
-  addToCart(name, price, type);
+  addToCart(name, price, type, note);
 }
 
-// 🎯【分流核心升級】加點時一律預設為「正常狀態 (空字串)」，讓重複加點先在同一個格子累加數量
-function addToCart(name,price,type){
-  const existing=cart.find(i=>i.name===name && i.note==="");
-  if(existing){existing.qty++;}else{cart.push({name:name,price:price,qty:1,note:"",type:type});}
+function addToCart(name,price,type,note){
+  const existing=cart.find(i=>i.name===name && i.note===note);
+  if(existing){
+    existing.qty++;
+  }else{
+    cart.push({name:name,price:price,qty:1,note:note,type:type});
+  }
   updateBadge();
 }
 
@@ -272,35 +291,26 @@ document.getElementById('close-cart').addEventListener('click',closeCart);
 function openCart(){
   const list=document.getElementById('cart-list');
   list.innerHTML=cart.map((item,i)=>{
-    if(item.type === 'food') {
-      return `
-      <div class="bg-black/20 border border-amber-900/10 rounded-xl p-3">
-        <div class="flex justify-between items-center text-sm">
-          <span class="font-medium text-amber-100">${item.name} <span class="text-amber-500">x${item.qty}</span></span>
-          <div class="flex items-center gap-3">
-            <span class="text-amber-400 font-bold">NT$${item.price*item.qty}</span>
-            <button onclick="removeFromCart(${i})" class="text-red-400 text-xs">✕</button>
-          </div>
-        </div>
-        <p class="text-[11px] text-amber-600/60 mt-1.5 italic">✨ 嚴選餐點依主廚黃金比例出餐，不開放客製</p>
-      </div>`;
+    let displayName = item.name;
+    if(item.note === "去冰") {
+      displayName += ` <span class="text-sky-400 font-bold bg-sky-950/50 px-2 py-0.5 rounded text-[11px] ml-1">去冰</span>`;
+    } else if(item.type === 'drink') {
+      displayName += ` <span class="text-gray-400 text-[11px] ml-1">(正常冰)</span>`;
     }
-    
-    const isNoIce = item.note === "去冰";
+
     return `
-    <div class="bg-black/20 border border-amber-900/10 rounded-xl p-3 space-y-2">
-      <div class="flex justify-between items-center text-sm">
-        <span class="font-medium text-amber-100">${item.name} <span class="text-amber-500">x${item.qty}</span></span>
-        <div class="flex items-center gap-3">
-          <span class="text-amber-400 font-bold">NT$${item.price*item.qty}</span>
-          <button onclick="removeFromCart(${i})" class="text-red-400 text-xs">✕</button>
-        </div>
+    <div class="bg-black/20 border border-amber-900/10 rounded-xl p-3 flex justify-between items-center text-sm">
+      <div>
+        <div class="font-medium text-amber-100">${displayName}</div>
+        <div class="text-[11px] text-gray-500 mt-0.5">單價 NT$${item.price}</div>
       </div>
-      <div class="flex gap-2 items-center">
-        <button onclick="toggleIce(${i})" class="px-3 py-1 rounded-lg text-xs font-bold border transition-all duration-200 ${isNoIce ? 'bg-amber-600 text-white border-amber-600 shadow-md' : 'bg-transparent text-amber-500 border-amber-900/50 hover:border-amber-600'}">
-          ${isNoIce ? '✓ 已選擇去冰' : '❄ 點擊要求去冰'}
-        </button>
-        <span class="text-[10px] text-gray-500">（風味固定不調整）</span>
+      <div class="flex items-center gap-4">
+        <div class="flex items-center bg-stone-900 rounded-lg border border-amber-900/30 overflow-hidden">
+          <button onclick="changeQty(${i}, -1)" class="px-2.5 py-1 text-amber-600 hover:bg-stone-800 font-bold">-</button>
+          <span class="px-3 text-amber-200 font-bold text-xs">${item.qty}</span>
+          <button onclick="changeQty(${i}, 1)" class="px-2.5 py-1 text-amber-600 hover:bg-stone-800 font-bold">+</button>
+        </div>
+        <span class="text-amber-400 font-bold min-w-[60px] text-right">NT$${item.price*item.qty}</span>
       </div>
     </div>`;
   }).join('');
@@ -311,49 +321,19 @@ function openCart(){
   document.getElementById('cart-panel').classList.add('open');
 }
 
-// 🎯【分流核心升級】當客人按下去冰時，我們進行「細胞分裂」！
-function toggleIce(index) {
-  if(!cart[index]) return;
-  
-  let target = cart[index];
-  
-  // 情況一：如果原本這格是1杯以上（例如點了2杯正常，想把其中1杯拿去去冰）
-  if (target.note === "" && target.qty > 1) {
-    target.qty--; // 正常冰的數量減 1
-    
-    // 檢查購物車裡有沒有已經存在的「去冰」同品項
-    let missingIce = cart.find(i => i.name === target.name && i.note === "去冰");
-    if (missingIce) {
-      missingIce.qty++; // 有的話，去冰那格加 1
-    } else {
-      cart.push({ ...target, qty: 1, note: "去冰" }); // 沒有的話，獨立分裂一格叫去冰
+// 購物車明細裡也貼心秀出警示小字
+function changeQty(index, delta) {
+  if(cart[index]) {
+    cart[index].qty += delta;
+    if(cart[index].qty <= 0) {
+      cart.splice(index, 1);
     }
-  } 
-  // 情況二：如果點了去冰，想要反悔變回正常冰，且去冰那格有複數杯
-  else if (target.note === "去冰" && target.qty > 1) {
-    target.qty--;
-    let missingNormal = cart.find(i => i.name === target.name && i.note === "");
-    if (missingNormal) { missingNormal.qty++; } else { cart.push({ ...target, qty: 1, note: "" }); }
+    updateBadge();
+    openCart();
   }
-  // 情況三：最單純的狀態（只有1杯），直接在去冰與正常之間切換
-  else {
-    target.note = (target.note === "去冰") ? "" : "去冰";
-    
-    // 防呆合併：如果切換後發現跟隔壁撞衫了，自動融合成一格
-    for (let m = cart.length - 1; m >= 0; m--) {
-      for (let n = m - 1; n >= 0; n--) {
-        if (cart[m] && cart[n] && cart[m].name === cart[n].name && cart[m].note === cart[n].note) {
-          cart[n].qty += cart[m].qty;
-          cart.splice(m, 1);
-        }
-      }
-    }
-  }
-  openCart();
 }
 
 function closeCart(){document.getElementById('cart-panel').classList.remove('open');}
-function removeFromCart(i){cart.splice(i,1);updateBadge();openCart();}
 
 document.getElementById('submit-order').addEventListener('click',async()=>{
   const tableInput=document.getElementById('table-input').value.trim();
