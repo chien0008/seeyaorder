@@ -177,6 +177,7 @@ food:[
 ]
 };
 
+// 這是你剛剛換好的最新部署網址（保留不動）
 const BACKEND_URL = "https://script.google.com/macros/s/AKfycbyf2aQgkaeLuzpONrc3RzegFMRqXtfgucDMhXs_sXxBH4J2YnqUXr4GgnIB7LV2JO_N8A/exec";
 
 let cart=[];
@@ -251,8 +252,9 @@ function validatedAdd(btn, name, price, type) {
   addToCart(name, price, type);
 }
 
+// 🎯【分流核心升級】加點時一律預設為「正常狀態 (空字串)」，讓重複加點先在同一個格子累加數量
 function addToCart(name,price,type){
-  const existing=cart.find(i=>i.name===name);
+  const existing=cart.find(i=>i.name===name && i.note==="");
   if(existing){existing.qty++;}else{cart.push({name:name,price:price,qty:1,note:"",type:type});}
   updateBadge();
 }
@@ -306,20 +308,48 @@ function openCart(){
   document.getElementById('cart-total').textContent='NT$'+cart.reduce((s,i)=>s+i.price*i.qty,0);
   document.getElementById('cart-error').classList.add('hidden');
   document.getElementById('cart-success').classList.add('hidden');
-  document.getElementById('cart-panel').open = true;
   document.getElementById('cart-panel').classList.add('open');
 }
 
-// 🎯 網頁端強力釘死：直接硬改購物車裡的 note 狀態，不給快取逃跑的空間！
+// 🎯【分流核心升級】當客人按下去冰時，我們進行「細胞分裂」！
 function toggleIce(index) {
-  if(cart[index]) {
-    if(cart[index].note === "去冰") {
-      cart[index].note = "";
+  if(!cart[index]) return;
+  
+  let target = cart[index];
+  
+  // 情況一：如果原本這格是1杯以上（例如點了2杯正常，想把其中1杯拿去去冰）
+  if (target.note === "" && target.qty > 1) {
+    target.qty--; // 正常冰的數量減 1
+    
+    // 檢查購物車裡有沒有已經存在的「去冰」同品項
+    let missingIce = cart.find(i => i.name === target.name && i.note === "去冰");
+    if (missingIce) {
+      missingIce.qty++; // 有的話，去冰那格加 1
     } else {
-      cart[index].note = "去冰";
+      cart.push({ ...target, qty: 1, note: "去冰" }); // 沒有的話，獨立分裂一格叫去冰
     }
-    openCart();
+  } 
+  // 情況二：如果點了去冰，想要反悔變回正常冰，且去冰那格有複數杯
+  else if (target.note === "去冰" && target.qty > 1) {
+    target.qty--;
+    let missingNormal = cart.find(i => i.name === target.name && i.note === "");
+    if (missingNormal) { missingNormal.qty++; } else { cart.push({ ...target, qty: 1, note: "" }); }
   }
+  // 情況三：最單純的狀態（只有1杯），直接在去冰與正常之間切換
+  else {
+    target.note = (target.note === "去冰") ? "" : "去冰";
+    
+    // 防呆合併：如果切換後發現跟隔壁撞衫了，自動融合成一格
+    for (let m = cart.length - 1; m >= 0; m--) {
+      for (let n = m - 1; n >= 0; n--) {
+        if (cart[m] && cart[n] && cart[m].name === cart[n].name && cart[m].note === cart[n].note) {
+          cart[n].qty += cart[m].qty;
+          cart.splice(m, 1);
+        }
+      }
+    }
+  }
+  openCart();
 }
 
 function closeCart(){document.getElementById('cart-panel').classList.remove('open');}
