@@ -75,7 +75,7 @@
        <p class="italic font-medium text-amber-400 mb-4">Great cocktails, warm lights, good people.</p>
        <div class="w-12 h-[1px] bg-amber-500 mx-auto my-3"></div>
        <p class="font-light">白天追著陽光、海風與浪花；夜晚，See Ya為你準備好酒精，讓旅程慢下來</p>
-       <p class="font-light">旅行最難忘的不只是風景，而是笑聲與微醺的夜晚</p>
+       <p class="font-light">旅行最難忘的不じる風景，而是笑聲與微醺的夜晚</p>
        <p class="font-light text-amber-300 font-medium mt-2">在琉球，我們不說 Goodbye</p>
        <p class="text-base text-amber-400 font-bold tracking-wider">我們說 See Ya。</p>
       </div>
@@ -267,11 +267,9 @@ function updateBadge(){
 document.getElementById('cart-badge').addEventListener('click',openCart);
 document.getElementById('close-cart').addEventListener('click',closeCart);
 
-// ✨ 核心升級：精準判斷是酒類還是食物！
 function openCart(){
   const list=document.getElementById('cart-list');
   list.innerHTML=cart.map((item,i)=>{
-    // 如果是食物，完全不渲染任何備註按鈕，一律不給調整
     if(item.type === 'food') {
       return `
       <div class="bg-black/20 border border-amber-900/10 rounded-xl p-3">
@@ -286,7 +284,6 @@ function openCart(){
       </div>`;
     }
     
-    // 如果是飲料/酒類，渲染酷炫的「去冰快捷勾選按鈕」
     const isNoIce = item.note === "去冰";
     return `
     <div class="bg-black/20 border border-amber-900/10 rounded-xl p-3 space-y-2">
@@ -301,7 +298,7 @@ function openCart(){
         <button onclick="toggleIce(${i})" class="px-3 py-1 rounded-lg text-xs font-bold border transition-all duration-200 ${isNoIce ? 'bg-amber-600 text-white border-amber-600 shadow-md' : 'bg-transparent text-amber-500 border-amber-900/50 hover:border-amber-600'}">
           ${isNoIce ? '✓ 已選擇去冰' : '❄ 點擊要求去冰'}
         </button>
-        <span class="text-[10px] text-gray-500">（甜度風味固定不調整）</span>
+        <span class="text-[10px] text-gray-500">（風味固定不調整）</span>
       </div>
     </div>`;
   }).join('');
@@ -312,11 +309,10 @@ function openCart(){
   document.getElementById('cart-panel').classList.add('open');
 }
 
-// ✨ 核心升級：一鍵開關去冰狀態
 function toggleIce(index) {
   if(cart[index]) {
-    cart[index].note = (cart[index].note === "去冰") ? "" : "去冰";
-    openCart(); // 重新渲染畫面刷新按鈕顏色
+    cart[index].note = (cart[index].note === "去冰") ? "去冰" : "";
+    openCart();
   }
 }
 
@@ -338,14 +334,17 @@ document.getElementById('submit-order').addEventListener('click',async()=>{
   btn.disabled=true; btn.textContent='正在傳送點餐明細...';
   errEl.classList.add('hidden'); successEl.classList.add('hidden');
   
+  // 🎯【終極修正點】在最上游的 name 欄位直接做強制文字揉合，徹底粉碎任何格式漏洞！
   const orderData = {
     tableNum: tableInput,
     totalAmount: cart.reduce((s,i)=>s+i.price*i.qty,0),
-    items: cart.map(item => ({
-      name: item.name,
-      quantity: item.qty,
-      note: item.note || "正常" // 若沒點去冰，預備帶入"正常"給後台
-    }))
+    items: cart.map(item => {
+      return {
+        name: item.note === "去冰" ? item.name + " (去冰)" : item.name,
+        quantity: item.qty,
+        note: ""
+      };
+    })
   };
 
   try {
