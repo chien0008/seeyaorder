@@ -24,7 +24,6 @@
     .tab-page.active { display:block; }
     .home-container { min-height: calc(100vh - 12rem); display: flex; flex-direction: column; justify-content: center; }
     
-    /* 螢光動畫定義 */
     @keyframes neonPulse {
         0% { box-shadow: 0 0px var(--neon-success); transform: scale(1); }
         50% { box-shadow: 0 0 25px var(--neon-success); transform: scale(1.15); border-color: var(--neon-success); }
@@ -38,7 +37,6 @@
     }
     .error-flash { animation: inputError 0.4s ease infinite; }
 
-    /* 購物車面板 */
     .cart-panel { transform:translateY(100%); transition:transform .3s ease; background-color: #1a0f0a; border-top: 2px solid var(--neon-glow); }
     .cart-panel.open { transform:translateY(0); }
     
@@ -48,7 +46,6 @@
     .sub-btn { color: #cccccc; border-color: #5a3a2a; }
     .sub-btn.active { background:var(--neon-glow); color:#1a0f0a; border-color:var(--neon-glow); }
 
-    /* 圖片現形術 */
     .menu-img-box {
         width: 80px !important; height: 80px !important;
         min-width: 80px !important; min-height: 80px !important;
@@ -125,11 +122,10 @@
     <h2 class="font-bold text-lg text-amber-400">📋 今晚的微醺明細</h2>
     <button id="close-cart" class="text-amber-500"><i data-lucide="x" style="width:20px;height:20px"></i></button>
    </div>
-   <div id="cart-list" class="space-y-2 mb-4"></div>
+   <div id="cart-list" class="space-y-4 mb-4"></div>
    <div class="border-t border-amber-900/40 pt-3 mb-4">
     <div class="flex justify-between font-bold text-amber-300"><span>合計金額</span><span id="cart-total">NT$0</span></div>
    </div>
-   <textarea id="order-notes" rows="2" class="w-full bg-black/40 border border-amber-900 rounded-lg px-3 py-2 text-sm text-white placeholder-amber-800 mb-4 focus:outline-none" placeholder="備註（去冰、少糖、或任何想對我們說的話...）"></textarea>
    <button id="submit-order" class="w-full bg-amber-600 text-white font-bold py-3 rounded-xl hover:bg-amber-500 shadow-lg">確認送出 🍹</button>
    <p id="cart-error" class="text-red-400 text-sm mt-2 text-center hidden"></p>
    <p id="cart-success" class="text-green-400 text-sm mt-2 text-center hidden"></p>
@@ -181,14 +177,12 @@ food:[
 ]
 };
 
-// 這是你的最新專屬收單晶片電話號碼
 const BACKEND_URL = "https://script.google.com/macros/s/AKfycbyf2aQgkaeLuzpONrc3RzegFMRqXtfgucDMhXs_sXxBH4J2YnqUXr4GgnIB7LV2JO_N8A/exec";
 
 let cart=[];
 let currentAlcoholCat=Object.keys(MENU.alcohol)[0];
 let currentNonalcoholCat=Object.keys(MENU.nonalcohol)[0];
 
-// 分頁切換
 document.querySelectorAll('.nav-btn').forEach(btn=>{
   btn.addEventListener('click',()=>{
     document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
@@ -199,7 +193,6 @@ document.querySelectorAll('.nav-btn').forEach(btn=>{
   });
 });
 
-// 強制照片現形渲染
 function renderItems(container,items){
   container.innerHTML=items.map(item=>`
 <div class="bg-black/30 border border-amber-900/20 rounded-2xl p-3 flex gap-3 shadow-md">
@@ -236,7 +229,6 @@ function initNonalcohol(){
 function initFood(){ renderItems(document.getElementById('food-items'),MENU.food); }
 initAlcohol(); initNonalcohol(); initFood();
 
-// 🎯 核心攔截：驗證桌號 + 螢光脈衝動畫
 function validatedAdd(btn, name, price) {
   const tableInput = document.getElementById('table-input').value.trim();
   
@@ -244,36 +236,25 @@ function validatedAdd(btn, name, price) {
     const alertBox = document.getElementById('global-alert');
     alertBox.textContent = "🚨 提醒您：請先至首頁輸入桌號碼，才能開始點餐喔！🍹";
     alertBox.style.transform = "translateY(0)";
-    
     document.getElementById('nav-home').click();
-    
     const box = document.getElementById('table-box');
     box.classList.add('error-flash');
     box.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-    setTimeout(() => { 
-        alertBox.style.transform = "translateY(-128px)"; 
-        box.classList.remove('error-flash');
-    }, 4000);
+    setTimeout(() => { alertBox.style.transform = "translateY(-128px)"; box.classList.remove('error-flash'); }, 4000);
     return;
   }
 
-  // 成功加入：引爆螢光綠霓虹律動動畫
   btn.classList.add('neon-active');
   const cartIcon = document.getElementById('cart-badge');
   cartIcon.classList.add('neon-active');
-
-  setTimeout(() => {
-    btn.classList.remove('neon-active');
-    cartIcon.classList.remove('neon-active');
-  }, 500);
-
+  setTimeout(() => { btn.classList.remove('neon-active'); cartIcon.classList.remove('neon-active'); }, 500);
   addToCart(name, price);
 }
 
+// ✨ 升級點：購物車陣列預留物件專屬 note
 function addToCart(name,price){
   const existing=cart.find(i=>i.name===name);
-  if(existing){existing.qty++;}else{cart.push({name,price,qty:1});}
+  if(existing){existing.qty++;}else{cart.push({name,price,qty:1,note:""});}
   updateBadge();
 }
 
@@ -287,25 +268,34 @@ function updateBadge(){
 document.getElementById('cart-badge').addEventListener('click',openCart);
 document.getElementById('close-cart').addEventListener('click',closeCart);
 
+// ✨ 升級點：讓購物車裡的每一個品項都長出自己獨立的備註框！
 function openCart(){
   const list=document.getElementById('cart-list');
   list.innerHTML=cart.map((item,i)=>`
-<div class="flex justify-between items-center text-sm border-b border-amber-900/40 pb-2">
-  <span class="font-medium text-amber-100">${item.name} <span class="text-amber-500">x${item.qty}</span></span>
-  <div class="flex items-center gap-3">
-    <span class="text-amber-400 font-bold">NT$${item.price*item.qty}</span>
-    <button onclick="removeFromCart(${i})" class="text-red-400 text-xs">✕</button>
+<div class="bg-black/20 border border-amber-900/10 rounded-xl p-3 space-y-2">
+  <div class="flex justify-between items-center text-sm">
+    <span class="font-medium text-amber-100">${item.name} <span class="text-amber-500">x${item.qty}</span></span>
+    <div class="flex items-center gap-3">
+      <span class="text-amber-400 font-bold">NT$${item.price*item.qty}</span>
+      <button onclick="removeFromCart(${i})" class="text-red-400 text-xs">✕</button>
+    </div>
   </div>
+  <input type="text" onchange="updateItemNote(${i}, this.value)" value="${item.note}" class="w-full bg-stone-900/80 border border-amber-900/40 rounded-lg px-2.5 py-1 text-xs text-white placeholder-amber-900/60 focus:outline-none" placeholder="客製備註（如：少冰、微辣，若無則免填）">
 </div>`).join('');
   document.getElementById('cart-total').textContent='NT$'+cart.reduce((s,i)=>s+i.price*i.qty,0);
   document.getElementById('cart-error').classList.add('hidden');
   document.getElementById('cart-success').classList.add('hidden');
   document.getElementById('cart-panel').classList.add('open');
 }
+
+// ✨ 升級點：當客人在框框打字時，即時鎖定該品項的備註
+function updateItemNote(index, value) {
+  if(cart[index]) { cart[index].note = value.trim(); }
+}
+
 function closeCart(){document.getElementById('cart-panel').classList.remove('open');}
 function removeFromCart(i){cart.splice(i,1);updateBadge();openCart();}
 
-// 真・送出點餐明細至 Google Sheets
 document.getElementById('submit-order').addEventListener('click',async()=>{
   const tableInput=document.getElementById('table-input').value.trim();
   const btn=document.getElementById('submit-order');
@@ -319,23 +309,20 @@ document.getElementById('submit-order').addEventListener('click',async()=>{
   }
 
   btn.disabled=true; btn.textContent='正在傳送點餐明細...';
-  errEl.classList.add('hidden');
-  successEl.classList.add('hidden');
+  errEl.classList.add('hidden'); successEl.classList.add('hidden');
   
-  // 重組格式，配合後台
+  // ✨ 升級點：打包時，把每隻酒、每道菜各自的 note 精準傳出去
   const orderData = {
     tableNum: tableInput,
     totalAmount: cart.reduce((s,i)=>s+i.price*i.qty,0),
-    notes: document.getElementById('order-notes').value.trim() || "無",
     items: cart.map(item => ({
       name: item.name,
       quantity: item.qty,
-      note: ""
+      note: item.note || "無"
     }))
   };
 
   try {
-    // 完美的動態投遞，走新大腦網址
     const response = await fetch(BACKEND_URL, {
       method: 'POST',
       mode: 'no-cors', 
@@ -345,9 +332,7 @@ document.getElementById('submit-order').addEventListener('click',async()=>{
 
     successEl.textContent = '🍹 點餐成功！訂單已飛進櫃檯，調酒師準備中！';
     successEl.classList.remove('hidden');
-    cart = []; 
-    updateBadge();
-    document.getElementById('order-notes').value = '';
+    cart = []; updateBadge();
     setTimeout(() => { closeCart(); btn.disabled = false; btn.textContent = '確認送出 🍹'; }, 3500);
 
   } catch (error) {
