@@ -335,8 +335,8 @@ document.getElementById('submit-order').addEventListener('click',async()=>{
   };
 
   try {
-    // 跨網域打給 Google 大腦
-    const response = await fetch(BACKEND_URL, {
+// 跨網域打給 Google 大腦
+    const response = await fetch("https://script.google.com/macros/s/AKfycbxUXDuK5ct_lAc2Il7C_9WhflQJK80_rdMJR33x3i2AwGmvy-6WG591msbTuE8ERI0JFQ/exec", {
       method: 'POST',
       mode: 'no-cors', // 繞過瀏覽器的 CORS 阻擋限制
       headers: { 'Content-Type': 'application/json' },
