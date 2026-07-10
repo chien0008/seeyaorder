@@ -138,7 +138,7 @@
    <button class="nav-btn flex-1 flex flex-col items-center py-1 text-[12px] font-bold" data-page="food"><i data-lucide="popcorn" class="mb-1"></i><span>嚴選小點</span></button>
   </nav>
 
-<script>
+  <script>
 const MENU={
 alcohol:{
 "啤酒 Beer":[
@@ -193,7 +193,7 @@ document.querySelectorAll('.nav-btn').forEach(btn=>{
   });
 });
 
-function renderItems(container,items){
+function renderItems(container,items,type){
   container.innerHTML=items.map(item=>`
 <div class="bg-black/30 border border-amber-900/20 rounded-2xl p-3 flex gap-3 shadow-md">
   <div class="menu-img-box flex-shrink-0" style="background-image: url('${item.imageUrl}');"></div>
@@ -205,7 +205,7 @@ function renderItems(container,items){
     </div>
     <div class="flex items-center justify-between mt-2">
       <span class="text-amber-500 font-bold text-sm">NT$${item.price}</span>
-      <button onclick="validatedAdd(this, '${item.name.replace(/'/g,"\\\\'")}',${item.price})" class="bg-amber-600/20 text-amber-400 border border-amber-600/40 rounded-lg px-3 py-1.5 text-xs font-bold transition-all hover:bg-amber-600 hover:text-white">+加入</button>
+      <button onclick="validatedAdd(this, '${item.name.replace(/'/g,"\\\\'")}',${item.price},'${type}')" class="bg-amber-600/20 text-amber-400 border border-amber-600/40 rounded-lg px-3 py-1.5 text-xs font-bold transition-all hover:bg-amber-600 hover:text-white">+加入</button>
     </div>
   </div>
 </div>`).join('');
@@ -220,16 +220,16 @@ function renderFilters(container,cats,current,setter){
 
 function initAlcohol(){
   renderFilters(document.getElementById('alcohol-filters'),MENU.alcohol,currentAlcoholCat,c=>{currentAlcoholCat=c;initAlcohol();});
-  renderItems(document.getElementById('alcohol-items'),MENU.alcohol[currentAlcoholCat]);
+  renderItems(document.getElementById('alcohol-items'),MENU.alcohol[currentAlcoholCat],'drink');
 }
 function initNonalcohol(){
   renderFilters(document.getElementById('nonalcohol-filters'),MENU.nonalcohol,currentNonalcoholCat,c=>{currentNonalcoholCat=c;initNonalcohol();});
-  renderItems(document.getElementById('nonalcohol-items'),MENU.nonalcohol[currentNonalcoholCat]);
+  renderItems(document.getElementById('nonalcohol-items'),MENU.nonalcohol[currentNonalcoholCat],'drink');
 }
-function initFood(){ renderItems(document.getElementById('food-items'),MENU.food); }
+function initFood(){ renderItems(document.getElementById('food-items'),MENU.food,'food'); }
 initAlcohol(); initNonalcohol(); initFood();
 
-function validatedAdd(btn, name, price) {
+function validatedAdd(btn, name, price, type) {
   const tableInput = document.getElementById('table-input').value.trim();
   
   if (!tableInput) {
@@ -248,12 +248,12 @@ function validatedAdd(btn, name, price) {
   const cartIcon = document.getElementById('cart-badge');
   cartIcon.classList.add('neon-active');
   setTimeout(() => { btn.classList.remove('neon-active'); cartIcon.classList.remove('neon-active'); }, 500);
-  addToCart(name, price);
+  addToCart(name, price, type);
 }
 
-function addToCart(name,price){
+function addToCart(name,price,type){
   const existing=cart.find(i=>i.name===name);
-  if(existing){existing.qty++;}else{cart.push({name,price,qty:1,note:""});}
+  if(existing){existing.qty++;}else{cart.push({name,price,qty:1,note:"",type:type});}
   updateBadge();
 }
 
@@ -267,27 +267,57 @@ function updateBadge(){
 document.getElementById('cart-badge').addEventListener('click',openCart);
 document.getElementById('close-cart').addEventListener('click',closeCart);
 
+// ✨ 核心升級：精準判斷是酒類還是食物！
 function openCart(){
   const list=document.getElementById('cart-list');
-  list.innerHTML=cart.map((item,i)=>`
-<div class="bg-black/20 border border-amber-900/10 rounded-xl p-3 space-y-2">
-  <div class="flex justify-between items-center text-sm">
-    <span class="font-medium text-amber-100">${item.name} <span class="text-amber-500">x${item.qty}</span></span>
-    <div class="flex items-center gap-3">
-      <span class="text-amber-400 font-bold">NT$${item.price*item.qty}</span>
-      <button onclick="removeFromCart(${i})" class="text-red-400 text-xs">✕</button>
-    </div>
-  </div>
-  <input type="text" oninput="updateItemNote(${i}, this.value)" value="${item.note}" class="w-full bg-stone-900/80 border border-amber-900/40 rounded-lg px-2.5 py-1 text-xs text-white placeholder-amber-900/60 focus:outline-none" placeholder="客製備註（如：少冰、微辣，若無則免填）">
-</div>`).join('');
+  list.innerHTML=cart.map((item,i)=>{
+    // 如果是食物，完全不渲染任何備註按鈕，一律不給調整
+    if(item.type === 'food') {
+      return `
+      <div class="bg-black/20 border border-amber-900/10 rounded-xl p-3">
+        <div class="flex justify-between items-center text-sm">
+          <span class="font-medium text-amber-100">${item.name} <span class="text-amber-500">x${item.qty}</span></span>
+          <div class="flex items-center gap-3">
+            <span class="text-amber-400 font-bold">NT$${item.price*item.qty}</span>
+            <button onclick="removeFromCart(${i})" class="text-red-400 text-xs">✕</button>
+          </div>
+        </div>
+        <p class="text-[11px] text-amber-600/60 mt-1.5 italic">✨ 嚴選餐點依主廚黃金比例出餐，不開放客製</p>
+      </div>`;
+    }
+    
+    // 如果是飲料/酒類，渲染酷炫的「去冰快捷勾選按鈕」
+    const isNoIce = item.note === "去冰";
+    return `
+    <div class="bg-black/20 border border-amber-900/10 rounded-xl p-3 space-y-2">
+      <div class="flex justify-between items-center text-sm">
+        <span class="font-medium text-amber-100">${item.name} <span class="text-amber-500">x${item.qty}</span></span>
+        <div class="flex items-center gap-3">
+          <span class="text-amber-400 font-bold">NT$${item.price*item.qty}</span>
+          <button onclick="removeFromCart(${i})" class="text-red-400 text-xs">✕</button>
+        </div>
+      </div>
+      <div class="flex gap-2 items-center">
+        <button onclick="toggleIce(${i})" class="px-3 py-1 rounded-lg text-xs font-bold border transition-all duration-200 ${isNoIce ? 'bg-amber-600 text-white border-amber-600 shadow-md' : 'bg-transparent text-amber-500 border-amber-900/50 hover:border-amber-600'}">
+          ${isNoIce ? '✓ 已選擇去冰' : '❄ 點擊要求去冰'}
+        </button>
+        <span class="text-[10px] text-gray-500">（甜度風味固定不調整）</span>
+      </div>
+    </div>`;
+  }).join('');
+  
   document.getElementById('cart-total').textContent='NT$'+cart.reduce((s,i)=>s+i.price*i.qty,0);
   document.getElementById('cart-error').classList.add('hidden');
   document.getElementById('cart-success').classList.add('hidden');
   document.getElementById('cart-panel').classList.add('open');
 }
 
-function updateItemNote(index, value) {
-  if(cart[index]) { cart[index].note = value.trim(); }
+// ✨ 核心升級：一鍵開關去冰狀態
+function toggleIce(index) {
+  if(cart[index]) {
+    cart[index].note = (cart[index].note === "去冰") ? "" : "去冰";
+    openCart(); // 重新渲染畫面刷新按鈕顏色
+  }
 }
 
 function closeCart(){document.getElementById('cart-panel').classList.remove('open');}
@@ -314,7 +344,7 @@ document.getElementById('submit-order').addEventListener('click',async()=>{
     items: cart.map(item => ({
       name: item.name,
       quantity: item.qty,
-      note: item.note || "無"
+      note: item.note || "正常" // 若沒點去冰，預備帶入"正常"給後台
     }))
   };
 
