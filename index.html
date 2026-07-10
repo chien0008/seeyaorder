@@ -26,9 +26,9 @@
     
     /* 螢光動畫定義 */
     @keyframes neonPulse {
-        0% { box-shadow: 0 0 0px var(--neon-success); transform: scale(1); }
+        0% { box-shadow: 0 0px var(--neon-success); transform: scale(1); }
         50% { box-shadow: 0 0 25px var(--neon-success); transform: scale(1.15); border-color: var(--neon-success); }
-        100% { box-shadow: 0 0 0px var(--neon-success); transform: scale(1); }
+        100% { box-shadow: 0 0px var(--neon-success); transform: scale(1); }
     }
     .neon-active { animation: neonPulse 0.5s ease-in-out; background-color: rgba(74, 222, 128, 0.2) !important; color: #4ade80 !important; }
 
@@ -181,8 +181,8 @@ food:[
 ]
 };
 
-// 這是你的專屬收單晶片電話號碼
-const BACKEND_URL = "https://script.google.com/macros/s/AKfycbw-xLInbmRPs4heLE1nx7o4vsd2SWOZHmJc_MvvD7CWqD5bomsDgnZUhDAFPF727RZT-w/exec";
+// 這是你的最新專屬收單晶片電話號碼
+const BACKEND_URL = "https://script.google.com/macros/s/AKfycbyf2aQgkaeLuzpONrc3RzegFMRqXtfgucDMhXs_sXxBH4J2YnqUXr4GgnIB7LV2JO_N8A/exec";
 
 let cart=[];
 let currentAlcoholCat=Object.keys(MENU.alcohol)[0];
@@ -335,15 +335,14 @@ document.getElementById('submit-order').addEventListener('click',async()=>{
   };
 
   try {
-// 跨網域打給 Google 大腦
-    const response = await fetch("https://script.google.com/macros/s/AKfycbxUXDuK5ct_lAc2Il7C_9WhflQJK80_rdMJR33x3i2AwGmvy-6WG591msbTuE8ERI0JFQ/exec", {
+    // 完美的動態投遞，走新大腦網址
+    const response = await fetch(BACKEND_URL, {
       method: 'POST',
-      mode: 'no-cors', // 繞過瀏覽器的 CORS 阻擋限制
+      mode: 'no-cors', 
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(orderData)
     });
 
-    // 由於 no-cors 模式下無法讀取 response 內容，但只要沒進 catch 就是發送成功！
     successEl.textContent = '🍹 點餐成功！訂單已飛進櫃檯，調酒師準備中！';
     successEl.classList.remove('hidden');
     cart = []; 
