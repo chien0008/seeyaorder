@@ -280,7 +280,7 @@ function openCart(){
       <button onclick="removeFromCart(${i})" class="text-red-400 text-xs">✕</button>
     </div>
   </div>
-  <input type="text" onchange="updateItemNote(${i}, this.value)" value="${item.note}" class="w-full bg-stone-900/80 border border-amber-900/40 rounded-lg px-2.5 py-1 text-xs text-white placeholder-amber-900/60 focus:outline-none" placeholder="客製備註（如：少冰、微辣，若無則免填）">
+  <input type="text" oninput="updateItemNote(${i}, this.value)" value="${item.note}" class="w-full bg-stone-900/80 border border-amber-900/40 rounded-lg px-2.5 py-1 text-xs text-white placeholder-amber-900/60 focus:outline-none" placeholder="客製備註（如：少冰、微辣，若無則免填）">
 </div>`).join('');
   document.getElementById('cart-total').textContent='NT$'+cart.reduce((s,i)=>s+i.price*i.qty,0);
   document.getElementById('cart-error').classList.add('hidden');
