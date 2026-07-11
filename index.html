@@ -262,7 +262,7 @@ function clientSelectTable(table) {
   // 2. 更新上方亮燈區提示字體
   const display = document.getElementById('selected-table-display');
   if (display) {
-    display.textContent = `🟢 已鎖定 ${table} 位置`;
+    display.textContent = ` 您的桌號為 ${table} ，請開始點餐 `;
     display.className = "text-md font-black text-green-400";
   }
 }
