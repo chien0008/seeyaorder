@@ -88,9 +88,20 @@
       </p>
      </div>
      
-     <div id="table-box" class="bg-black/40 border-2 border-amber-500/70 rounded-xl p-4 shadow-lg transition-all duration-300">
-      <label class="block text-sm font-medium text-amber-400 mb-2 font-bold" for="table-input">📍 點餐第一步：請輸入您的桌號 / 位置</label> 
-      <input id="table-input" type="text" class="w-full bg-black/60 border border-amber-800 rounded-lg px-3 py-3 text-white font-bold placeholder-amber-900 focus:outline-none focus:ring-2 focus:ring-amber-500 transition" placeholder="例如：A1、吧台、沙灘區...">
+    <!-- ==================== 全新升級：防呆選桌按鈕牆 ==================== -->
+     <div id="table-box" class="bg-black/40 border-2 border-amber-500/70 rounded-xl p-5 shadow-lg transition-all duration-300 space-y-4">
+       <label class="block text-sm font-medium text-amber-400 font-bold">📍 點餐第一步：請點選您的桌號 / 位置</label> 
+       
+       <!-- 當前已選桌號亮燈區（沒選時提示未選） -->
+       <div class="bg-black/60 p-3 rounded-lg border border-amber-900/50 text-center">
+         <span class="text-xs text-amber-900 block mb-1">您目前選定的位置</span>
+         <span id="selected-table-display" class="text-md font-black text-rose-500 animate-pulse">⚠️ 尚未選擇桌號</span>
+       </div>
+
+       <!-- 23款吧台特製防呆按鈕牆 -->
+       <div class="grid grid-cols-4 gap-2 text-xs" id="front-table-grid">
+         <!-- 這裡會透過 JavaScript 全自動生成 A1~散客 共23個按鈕 -->
+       </div>
      </div>
     </div>
    </section>
