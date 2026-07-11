@@ -88,19 +88,45 @@
       </p>
      </div>
      
-    <!-- ==================== 全新升級：防呆選桌按鈕牆 ==================== -->
+     <!-- ==================== 全新升級：防呆選桌按鈕牆（100% 實體刻在骨架上） ==================== -->
      <div id="table-box" class="bg-black/40 border-2 border-amber-500/70 rounded-xl p-5 shadow-lg transition-all duration-300 space-y-4">
        <label class="block text-sm font-medium text-amber-400 font-bold">📍 點餐第一步：請點選您的桌號 / 位置</label> 
        
-       <!-- 當前已選桌號亮燈區（沒選時提示未選） -->
+       <!-- 當前已選桌號亮燈區 -->
        <div class="bg-black/60 p-3 rounded-lg border border-amber-900/50 text-center">
          <span class="text-xs text-amber-900 block mb-1">您目前選定的位置</span>
          <span id="selected-table-display" class="text-md font-black text-rose-500 animate-pulse">⚠️ 尚未選擇桌號</span>
        </div>
 
-       <!-- 23款吧台特製防呆按鈕牆 -->
-       <div class="grid grid-cols-4 gap-2 text-xs" id="front-table-grid">
-         <!-- 這裡會透過 JavaScript 全自動生成 A1~散客 共23個按鈕 -->
+       <!-- 23款吧台實體按鈕牆 -->
+       <div class="grid grid-cols-4 gap-2 text-xs">
+         <button type="button" id="front-btn-A1" onclick="clientSelectTable('A1')" class="col-span-1 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">A1</button>
+         <button type="button" id="front-btn-A2" onclick="clientSelectTable('A2')" class="col-span-1 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">A2</button>
+         <button type="button" id="front-btn-A3" onclick="clientSelectTable('A3')" class="col-span-1 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">A3</button>
+         <button type="button" id="front-btn-A4" onclick="clientSelectTable('A4')" class="col-span-1 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">A4</button>
+         
+         <button type="button" id="front-btn-B1" onclick="clientSelectTable('B1')" class="col-span-1 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">B1</button>
+         <button type="button" id="front-btn-B2" onclick="clientSelectTable('B2')" class="col-span-1 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">B2</button>
+         <button type="button" id="front-btn-B3" onclick="clientSelectTable('B3')" class="col-span-1 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">B3</button>
+         <button type="button" id="front-btn-B4" onclick="clientSelectTable('B4')" class="col-span-1 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">B4</button>
+         
+         <button type="button" id="front-btn-C1" onclick="clientSelectTable('C1')" class="col-span-1 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">C1</button>
+         <button type="button" id="front-btn-C2" onclick="clientSelectTable('C2')" class="col-span-1 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">C2</button>
+         <button type="button" id="front-btn-C3" onclick="clientSelectTable('C3')" class="col-span-1 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">C3</button>
+         <button type="button" id="front-btn-C4" onclick="clientSelectTable('C4')" class="col-span-1 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">C4</button>
+         
+         <button type="button" id="front-btn-吧台1" onclick="clientSelectTable('吧台1')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">吧台1</button>
+         <button type="button" id="front-btn-吧台2" onclick="clientSelectTable('吧台2')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">吧台2</button>
+         <button type="button" id="front-btn-吧台3" onclick="clientSelectTable('吧台3')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">吧台3</button>
+         <button type="button" id="front-btn-吧台4" onclick="clientSelectTable('吧台4')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">吧台4</button>
+         <button type="button" id="front-btn-吧台5" onclick="clientSelectTable('吧台5')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">吧台5</button>
+         <button type="button" id="front-btn-吧台6" onclick="clientSelectTable('吧台6')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">吧台6</button>
+         <button type="button" id="front-btn-吧台7" onclick="clientSelectTable('吧台7')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">吧台7</button>
+         <button type="button" id="front-btn-吧台8" onclick="clientSelectTable('吧台8')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">吧台8</button>
+         <button type="button" id="front-btn-吧台9" onclick="clientSelectTable('吧台9')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">吧台9</button>
+         <button type="button" id="front-btn-吧台10" onclick="clientSelectTable('吧台10')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">吧台10</button>
+         
+         <button type="button" id="front-btn-散客" onclick="clientSelectTable('散客')" class="col-span-4 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">散客</button>
        </div>
      </div>
     </div>
@@ -169,7 +195,7 @@ alcohol:{
 {name:"性感海灘",en:"Sex on the Beach",desc:"伏特加蜜桃柳橙汁",price:250,imageUrl:"https://images.unsplash.com/photo-1605706915003-8869c97b2183?q=80&w=200"}
 ],
 "Shot":[
-{name:"火焰B52",en:"Flaming B-52",desc:"咖啡酒貝禮詩點火",price:180,imageUrl:"https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=200"}
+{name:"火焰B52",en:"Flaming B-52",desc:"咖啡酒貝礼詩点火",price:180,imageUrl:"https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=200"}
 ]
 },
 nonalcohol:{
@@ -190,6 +216,17 @@ food:[
 
 const BACKEND_URL = "https://script.google.com/macros/s/AKfycbyf2aQgkaeLuzpONrc3RzegFMRqXtfgucDMhXs_sXxBH4J2YnqUXr4GgnIB7LV2JO_N8A/exec";
 
+// 🎯 官方指定 23 個精準桌號名稱（顏色切換器對齊用）
+const officialTables = [
+  "A1", "A2", "A3", "A4", 
+  "B1", "B2", "B3", "B4", 
+  "C1", "C2", "C3", "C4", 
+  "吧台1", "吧台2", "吧台3", "吧台4", "吧台5", 
+  "吧台6", "吧台7", "吧台8", "吧台9", "吧台10", 
+  "散客"
+];
+
+let chosenTable = ""; // 👑 用來儲存客人點選的唯一正確桌號字串
 let cart=[];
 let currentAlcoholCat=Object.keys(MENU.alcohol)[0];
 let currentNonalcoholCat=Object.keys(MENU.nonalcohol)[0];
@@ -204,7 +241,32 @@ document.querySelectorAll('.nav-btn').forEach(btn=>{
   });
 });
 
-// 🎯【加入黃金小警示】在飲料類下方加上獨立的「風味固定不調整」溫柔提醒
+// 👑 客人手指點選桌號按鈕的動態視覺大腦
+function clientSelectTable(table) {
+  chosenTable = table;
+  
+  // 1. 刷新所有按鈕外觀：選中的變身金黃色霓虹燈＋黑字，沒選的維持暗底橘字
+  officialTables.forEach(t => {
+    const btn = document.getElementById(`front-btn-${t}`);
+    if (!btn) return;
+    if (t === table) {
+      btn.className = "py-3 font-black rounded-lg border border-amber-500 bg-amber-500 text-black shadow-md shadow-amber-500/20 active:scale-95 transition-all duration-200";
+      if (t.includes("吧台")) btn.className = "col-span-2 " + btn.className;
+      if (t === "散客") btn.className = "col-span-4 " + btn.className;
+    } else {
+      let colSpan = t.includes("吧台") ? "col-span-2" : (t === "散客" ? "col-span-4" : "col-span-1");
+      btn.className = `${colSpan} py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200`;
+    }
+  });
+
+  // 2. 更新上方亮燈區提示字體
+  const display = document.getElementById('selected-table-display');
+  if (display) {
+    display.textContent = `🟢 已鎖定 ${table} 位置`;
+    display.className = "text-md font-black text-green-400";
+  }
+}
+
 function renderItems(container,items,type){
   container.innerHTML=items.map(item=>{
     let actionButtons = '';
@@ -257,12 +319,11 @@ function initNonalcohol(){
 function initFood(){ renderItems(document.getElementById('food-items'),MENU.food,'food'); }
 initAlcohol(); initNonalcohol(); initFood();
 
+// 👑 選桌必填防護罩：沒選桌號點「＋加入」會強行彈出金黃小警示並閃爍首頁框線
 function validatedAdd(btn, name, price, type, note) {
-  const tableInput = document.getElementById('table-input').value.trim();
-  
-  if (!tableInput) {
+  if (!chosenTable) {
     const alertBox = document.getElementById('global-alert');
-    alertBox.textContent = "🚨 提醒您：請先至首頁輸入桌號碼，才能開始點餐喔！🍹";
+    alertBox.textContent = "🚨 提醒您：請先至首頁點選桌號位置，才能開始點餐喔！🍹";
     alertBox.style.transform = "translateY(0)";
     document.getElementById('nav-home').click();
     const box = document.getElementById('table-box');
@@ -332,7 +393,6 @@ function openCart(){
   document.getElementById('cart-panel').classList.add('open');
 }
 
-// 購物車明細裡也貼心秀出警示小字
 function changeQty(index, delta) {
   if(cart[index]) {
     cart[index].qty += delta;
@@ -344,16 +404,16 @@ function changeQty(index, delta) {
   }
 }
 
-function closeCart(){document.getElementById('cart-panel').classList.remove('open');}
+function closeCart(){document.getElementById('cart-panel').classList.remove('remove');document.getElementById('cart-panel').classList.remove('open');}
 
 document.getElementById('submit-order').addEventListener('click',async()=>{
-  const tableInput=document.getElementById('table-input').value.trim();
   const btn=document.getElementById('submit-order');
   const errEl=document.getElementById('cart-error');
   const successEl=document.getElementById('cart-success');
   
-  if(!tableInput) {
-    errEl.textContent='❌ 請先填寫桌號位置！';
+  // 👑 購物車最後關卡防禦鎖
+  if(!chosenTable) {
+    errEl.textContent='❌ 請先回到首頁點選您的桌號位置！';
     errEl.classList.remove('hidden');
     return;
   }
@@ -362,7 +422,7 @@ document.getElementById('submit-order').addEventListener('click',async()=>{
   errEl.classList.add('hidden'); successEl.classList.add('hidden');
   
   const orderData = {
-    tableNum: tableInput,
+    tableNum: chosenTable, // 👑 精準對接我們按鈕紀錄的唯一正確桌號！
     totalAmount: cart.reduce((s,i)=>s+i.price*i.qty,0),
     items: cart.map(item => {
       return {
