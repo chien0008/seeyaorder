@@ -175,24 +175,33 @@
   <script>
 const MENU={
 alcohol:{
+"seeya特調 Specials":[
+{name:"調酒1號",en:"Mixed Drinksr",desc:"紅酒 蔓越莓汁 水蜜桃利口酒 monin百香果糖漿 檸檬汁 Chambord桑椹酒",price:150,imageUrl:"https://images.unsplash.com/photo-1618885472179-5e474019f2a9?q=80&w=200"},
+{name:"調酒2號",en:"Mixed Drinks",desc:"琴酒 applesour 香甜酒 接骨木利口酒 蘋果汁 檸檬汁 蜂蜜糖漿",price:160,imageUrl:"https://images.unsplash.com/photo-1599824419266-419b4b0e8b1d?q=80&w=200"},
+{name:"調酒3號",en:"Mixed Drinks",desc:"蘭姆酒 芒果梅酒 柳橙汁 芭樂汁 檸檬汁 monin百香果糖漿 紅梅粉 檸檬汁",price:170,imageUrl:"https://images.unsplash.com/photo-1571613316887-6f8d5cbf7ef7?q=80&w=200"},
+{name:"調酒4號",en:"Mixed Drinks",desc:"茉莉花茶琴酒(我可以自己煮) 有茶葉就可以 檸檬汁 蜂蜜糖漿 蘇打水",price:180,imageUrl:"https://images.unsplash.com/photo-1608270586620-248524c67de9?q=80&w=200"}
+],
+"經典調酒 Mixed Drinks":[
+{name:"長島冰茶",en:"Long Island Iced Tea",desc:"可樂與柑橘酸甜，入口順口，尾韻酒感強勁",price:280,imageUrl:"https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?q=80&w=200"},
+{name:"Gin fizz",en:"Gin Fizz",desc:"清新檸檬酸香，氣泡輕盈，帶有琴酒草本香氣",price:260,imageUrl:"https://images.unsplash.com/photo-1546171753-97d7676e4602?q=80&w=200"},
+{name:"戴克莉",en:"Daiquiri",desc:"萊姆酸香鮮明，酸甜俐落，帶有蘭姆酒的甘蔗香氣",price:260,imageUrl:"https://images.unsplash.com/photo-1546171753-97d7676e4602?q=80&w=200"},
+{name:"野格蹦",en:"Jägerbomb",desc:"濃郁草本甜香，搭配氣泡與刺激感，風味直接強烈果",price:260,imageUrl:"https://images.unsplash.com/photo-1546171753-97d7676e4602?q=80&w=200"},
+{name:"side car",en:"side car",desc:"柑橘酸香與白蘭地交織，酒體飽滿，尾韻溫暖",price:260,imageUrl:"https://images.unsplash.com/photo-1546171753-97d7676e4602?q=80&w=200"},
+{name:"sex on the beach",en:"sex on the beach",desc:"水蜜桃與莓果，酸甜柔和，果香感十足",price:260,imageUrl:"https://images.unsplash.com/photo-1546171753-97d7676e4602?q=80&w=200"},
+{name:"柯夢波丹",en:"Cosmopolitan",desc:"蔓越莓酸甜搭配柑橘香氣，微酸不膩",price:260,imageUrl:"https://images.unsplash.com/photo-1546171753-97d7676e4602?q=80&w=200"},
+{name:"High ball",en:"High ball",desc:"威士忌香氣搭配爽脆氣泡，尾韻俐落",price:300,imageUrl:"https://images.unsplash.com/photo-1556855248-7123d65fdbd9?q=80&w=200"}
+],
 "啤酒 Beer":[
-{name:"金色沙灘",en:"Golden Beach Lager",desc:"清爽麥香，海風必備",price:150,imageUrl:"https://images.unsplash.com/photo-1618885472179-5e474019f2a9?q=80&w=200"},
-{name:"椰林暗湧",en:"Coconut Undertow",desc:"椰子風味淡啤酒",price:160,imageUrl:"https://images.unsplash.com/photo-1599824419266-419b4b0e8b1d?q=80&w=200"},
-{name:"日落琥珀",en:"Sunset Amber Ale",desc:"焦糖麥芽微甜尾韻",price:170,imageUrl:"https://images.unsplash.com/photo-1571613316887-6f8d5cbf7ef7?q=80&w=200"},
-{name:"潮汐IPA",en:"Tidal IPA",desc:"柑橘啤酒花香氣奔放",price:180,imageUrl:"https://images.unsplash.com/photo-1608270586620-248524c67de9?q=80&w=200"}
-],
-"雞尾酒 Cocktails":[
-{name:"藍色珊瑚礁",en:"Blue Lagoon",desc:"藍柑橘伏特加萊姆汁",price:280,imageUrl:"https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?q=80&w=200"},
-{name:"夕陽莫希托",en:"Sunset Mojito",desc:"蘭姆酒薄荷百香果",price:260,imageUrl:"https://images.unsplash.com/photo-1546171753-97d7676e4602?q=80&w=200"},
-{name:"火山瑪格麗特",en:"Volcano Margarita",desc:"龍舌蘭辣椒鹽口杯",price:300,imageUrl:"https://images.unsplash.com/photo-1556855248-7123d65fdbd9?q=80&w=200"}
-],
-"調酒 Mixed Drinks":[
-{name:"鳳梨可樂達",en:"Piña Colada",desc:"鳳梨椰奶蘭姆經典",price:240,imageUrl:"https://images.unsplash.com/photo-1514218240783-940066a4b6c7?q=80&w=200"},
-{name:"長島冰茶",en:"Long Island Iced Tea",desc:"五種基酒可樂微甜",price:280,imageUrl:"https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?q=80&w=200"},
-{name:"性感海灘",en:"Sex on the Beach",desc:"伏特加蜜桃柳橙汁",price:250,imageUrl:"https://images.unsplash.com/photo-1605706915003-8869c97b2183?q=80&w=200"}
+{name:"可樂娜",en:"Corona",desc:" ",price:200,imageUrl:"https://images.unsplash.com/photo-1514218240783-940066a4b6c7?q=80&w=200"},
+{name:"18天生啤",en:"18day beer",desc:" ",price:200,imageUrl:"https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?q=80&w=200"},
+{name:"百威",en:"Budweiser",desc:" ",price:200,imageUrl:"https://images.unsplash.com/photo-1605706915003-8869c97b2183?q=80&w=200"}
 ],
 "Shot":[
-{name:"火焰B52",en:"Flaming B-52",desc:"咖啡酒貝礼詩点火",price:180,imageUrl:"https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=200"}
+{name:"Vodka｜伏特加",en:"Flaming B-52",desc:" ",price:180,imageUrl:"https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=200"},
+ {name:"Gin｜琴酒",en:"Flaming B-52",desc:" ",price:180,imageUrl:"https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=200"},
+ {name:"Rum｜蘭姆酒",en:"Flaming B-52",desc:" ",price:180,imageUrl:"https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=200"},
+ {name:"Tequila｜龍舌蘭",en:"Flaming B-52",desc:" ",price:180,imageUrl:"https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=200"},
+ {name:"Whisky｜威士忌",en:"Flaming B-52",desc:" ",price:180,imageUrl:"https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=200"}
 ]
 },
 nonalcohol:{
@@ -205,9 +214,10 @@ nonalcohol:{
 ]
 },
 food:[
-{name:"碳烤蝦串",en:"Grilled Shrimp Skewers",desc:"鮮蝦炭火直烤佐檸檬蒜醬",price:320,imageUrl:"https://images.unsplash.com/photo-1559742811-822873691df8?q=80&w=200"},
-{name:"魚肉塔可",en:"Fish Tacos",desc:"酥炸鮮魚墨西哥餅配酸奶醬",price:280,imageUrl:"https://images.unsplash.com/photo-1565299585323-38d6b0865b47?q=80&w=200"},
-{name:"起司玉米片",en:"Nachos & Guacamole",desc:"脆玉米片佐新鮮酪梨莎莎醬",price:240,imageUrl:"https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?q=80&w=200"}
+{name:"牛肉湯",en:"Beef Soup",desc:"鮮甜牛骨湯底，搭配軟嫩牛肉，濃郁暖胃。",price:320,imageUrl:"https://images.unsplash.com/photo-1559742811-822873691df8?q=80&w=200"},
+{name:"牛雜湯",en:"Beef Offal Soup",desc:"牛骨湯底搭配多種牛雜，口感豐富，鮮香濃郁。",price:280,imageUrl:"https://images.unsplash.com/photo-1565299585323-38d6b0865b47?q=80&w=200"},
+{name:"紅油抄手",en:"Wontons in Chili Oil",desc:"滑嫩抄手拌上香辣紅油，麻香微辣，開胃涮嘴。",price:280,imageUrl:"https://images.unsplash.com/photo-1565299585323-38d6b0865b47?q=80&w=200"},
+{name:"經典水餃",en:"Pork Dumplings",desc:"飽滿內餡包裹Q彈麵皮，簡單耐吃的經典口味。",price:240,imageUrl:"https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?q=80&w=200"}
 ]
 };
 
@@ -316,7 +326,7 @@ initAlcohol(); initNonalcohol(); initFood();
 function validatedAdd(btn, name, price, type, note) {
   if (!chosenTable) {
     const alertBox = document.getElementById('global-alert');
-    alertBox.textContent = "🚨 提醒您：請先至首頁點選桌號位置，才能開始點餐喔！🍹";
+    alertBox.textContent = "請先至首頁點選桌號位置，就可以開始點餐囉！";
     alertBox.style.transform = "translateY(0)";
     document.getElementById('nav-home').click();
     const box = document.getElementById('table-box');
@@ -408,7 +418,7 @@ document.getElementById('submit-order').addEventListener('click',async()=>{
   const successEl=document.getElementById('cart-success');
   
   if(!chosenTable) {
-    errEl.textContent='❌ 請先回到首頁點選您的桌號位置！';
+    errEl.textContent='❌ 請返回首頁點選您的桌號位置再進行點餐';
     errEl.classList.remove('hidden');
     return;
   }
@@ -437,17 +447,17 @@ document.getElementById('submit-order').addEventListener('click',async()=>{
 
     const result = await response.json();
     if (result.success) {
-      successEl.textContent = '🍹 點餐成功！訂單已飛進櫃檯，調酒師準備中！';
+      successEl.textContent = '點餐成功！調酒師準備中！';
       successEl.classList.remove('hidden');
       cart = []; updateBadge();
-      setTimeout(() => { closeCart(); btn.disabled = false; btn.textContent = '確認送出 🍹'; }, 3500);
+      setTimeout(() => { closeCart(); btn.disabled = false; btn.textContent = '確認送出'; }, 3500);
     } else {
       throw new Error(result.error);
     }
   } catch (error) {
     errEl.textContent = '❌ 送出失敗：系統碰撞或網路異常，請向服務人員確認！';
     errEl.classList.remove('hidden');
-    btn.disabled = false; btn.textContent = '確認送出 🍹';
+    btn.disabled = false; btn.textContent = '確認送出';
   }
 });
 
