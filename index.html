@@ -406,7 +406,7 @@ function closeCart(){
   document.getElementById('cart-panel').classList.remove('open');
 }
 
-// 👑 鐵血對齊：完全剔除 no-cors！100% 採用純文字包裝 JSON 發送，並帶入單價 price
+// 👑 終極拆行神技：客人點 2 下，前端送出時自動拆成 2 個獨立物件，保證 Google Sheet 必定印出 2 行！
 document.getElementById('submit-order').addEventListener('click',async()=>{
   const btn=document.getElementById('submit-order');
   const errEl=document.getElementById('cart-error');
@@ -421,23 +421,29 @@ document.getElementById('submit-order').addEventListener('click',async()=>{
   btn.disabled=true; btn.textContent = '正在傳送點餐明細...';
   errEl.classList.add('hidden'); successEl.classList.add('hidden');
   
+  // 🎯 核心拆彈：將數量 > 1 的品項，在前端直接展平成獨立的 x1 物件！
+  const expandedItems = [];
+  cart.forEach(item => {
+    for (let q = 0; q < item.qty; q++) {
+      expandedItems.push({
+        name: item.name,
+        price: item.price,
+        quantity: 1, // 👈 強制每個物件都是獨立的 1 杯！
+        note: item.note === "去冰" ? "去冰" : "正常"
+      });
+    }
+  });
+
   const orderData = {
     tableNum: chosenTable, 
     totalAmount: cart.reduce((s,i)=>s+i.price*i.qty,0),
-    items: cart.map(item => {
-      return {
-        name: item.name,
-        price: item.price, // 👈 補上這一行！讓後台能精準計算每個品項的小計金額
-        quantity: item.qty,
-        note: item.note === "去冰" ? "去冰" : "正常"
-      };
-    })
+    items: expandedItems // 傳送徹底拆開的獨立品項列表
   };
 
   try {
     const response = await fetch(BACKEND_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'text/plain' }, // 👑 核心防禦：安全避開 CORS 限制
+      headers: { 'Content-Type': 'text/plain' },
       body: JSON.stringify(orderData)
     });
 
