@@ -406,7 +406,7 @@ function closeCart(){
   document.getElementById('cart-panel').classList.remove('open');
 }
 
-// 👑 鐵血對齊：完全剔除 no-cors！100% 採用純文字包裝 JSON 發送，確保大客滿不碰撞、不漏單
+// 👑 鐵血對齊：完全剔除 no-cors！100% 採用純文字包裝 JSON 發送，並帶入單價 price
 document.getElementById('submit-order').addEventListener('click',async()=>{
   const btn=document.getElementById('submit-order');
   const errEl=document.getElementById('cart-error');
@@ -427,6 +427,7 @@ document.getElementById('submit-order').addEventListener('click',async()=>{
     items: cart.map(item => {
       return {
         name: item.name,
+        price: item.price, // 👈 補上這一行！讓後台能精準計算每個品項的小計金額
         quantity: item.qty,
         note: item.note === "去冰" ? "去冰" : "正常"
       };
