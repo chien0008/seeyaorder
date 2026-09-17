@@ -75,7 +75,7 @@
        <p class="italic font-medium text-amber-400 mb-4">Great cocktails, warm lights, good people.</p>
        <div class="w-12 h-[1px] bg-amber-500 mx-auto my-3"></div>
        <p class="font-light">白天追著陽光、海風與浪花；夜晚，See Ya為你準備好酒精，讓旅程慢下來</p>
-       <p class="font-light">旅行最難忘的不是風景，而是笑聲與微醺的夜晚</p>
+       <p class="font-light">旅行最難忘的除了風景，還有笑聲與微醺的夜晚</p>
        <p class="font-light text-amber-300 font-medium mt-2">在琉球，我們不說 Goodbye</p>
        <p class="text-base text-amber-400 font-bold tracking-wider">我們說 See Ya。</p>
       </div>
@@ -83,17 +83,17 @@
      
      <div class="bg-red-950/60 border border-red-700/50 rounded-xl p-4 mb-5 text-center shadow-sm">
       <p class="text-xs text-red-200 font-medium">
-       ⚠️ 未滿 18 歲請勿飲酒 ｜ 理性飲酒，理性微醺<br>
-       <span class="block mt-1 font-bold text-red-100">🚫 開車不喝酒，喝酒不開車 🚫</span>
+       ⚠️ 未滿18歲請勿飲酒｜理性飲酒，理性微醺｜本店低消一杯飲品<br>
+       <span class="block mt-1 font-bold text-red-100">開車不喝酒，喝酒不開車</span>
       </p>
      </div>
      
      <div id="table-box" class="bg-black/40 border-2 border-amber-500/70 rounded-xl p-5 shadow-lg transition-all duration-300 space-y-4">
-       <label class="block text-sm font-medium text-amber-400 font-bold">📍 點餐第一步：請點選您的桌號 / 位置</label> 
+       <label class="block text-sm font-medium text-amber-400 font-bold">請先點選您的桌號</label> 
        
        <div class="bg-black/60 p-3 rounded-lg border border-amber-900/50 text-center">
          <span class="text-xs text-amber-900 block mb-1">您目前選定的位置</span>
-         <span id="selected-table-display" class="text-md font-black text-rose-500 animate-pulse">⚠️ 尚未選擇桌號</span>
+         <span id="selected-table-display" class="text-md font-black text-rose-500 animate-pulse">尚未選擇桌號</span>
        </div>
 
        <div class="grid grid-cols-4 gap-2 text-xs">
@@ -123,7 +123,6 @@
          <button type="button" id="front-btn-吧台9" onclick="clientSelectTable('吧台9')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 duration-200">吧台9</button>
          <button type="button" id="front-btn-吧台10" onclick="clientSelectTable('吧台10')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 duration-200">吧台10</button>
          
-         <button type="button" id="front-btn-散客" onclick="clientSelectTable('散客')" class="col-span-4 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 duration-200">散客</button>
        </div>
      </div>
     </div>
@@ -153,14 +152,14 @@
 
   <div id="cart-panel" class="cart-panel fixed inset-x-0 bottom-[68px] z-40 max-h-[60vh] overflow-y-auto p-4 shadow-2xl rounded-t-3xl">
    <div class="flex justify-between items-center mb-4">
-    <h2 class="font-bold text-lg text-amber-400">📋 今晚的微醺明細</h2>
+    <h2 class="font-bold text-lg text-amber-400">點餐明細</h2>
     <button id="close-cart" class="text-amber-500"><i data-lucide="x" style="width:20px;height:20px"></i></button>
    </div>
    <div id="cart-list" class="space-y-4 mb-4"></div>
    <div class="border-t border-amber-900/40 pt-3 mb-4">
     <div class="flex justify-between font-bold text-amber-300"><span>合計金額</span><span id="cart-total">NT$0</span></div>
    </div>
-   <button id="submit-order" class="w-full bg-amber-600 text-white font-bold py-3 rounded-xl hover:bg-amber-500 shadow-lg">確認送出 🍹</button>
+   <button id="submit-order" class="w-full bg-amber-600 text-white font-bold py-3 rounded-xl hover:bg-amber-500 shadow-lg">確認送出</button>
    <p id="cart-error" class="text-red-400 text-sm mt-2 text-center hidden"></p>
    <p id="cart-success" class="text-green-400 text-sm mt-2 text-center hidden"></p>
   </div>
@@ -185,16 +184,16 @@ alcohol:{
 {name:"長島冰茶",en:"Long Island Iced Tea",desc:"可樂與柑橘酸甜，入口順口，尾韻酒感強勁",price:280,imageUrl:"https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?q=80&w=200"},
 {name:"Gin fizz",en:"Gin Fizz",desc:"清新檸檬酸香，氣泡輕盈，帶有琴酒草本香氣",price:260,imageUrl:"https://images.unsplash.com/photo-1546171753-97d7676e4602?q=80&w=200"},
 {name:"戴克莉",en:"Daiquiri",desc:"萊姆酸香鮮明，酸甜俐落，帶有蘭姆酒的甘蔗香氣",price:260,imageUrl:"https://images.unsplash.com/photo-1546171753-97d7676e4602?q=80&w=200"},
-{name:"野格蹦",en:"Jägerbomb",desc:"濃郁草本甜香，搭配氣泡與刺激感，風味直接強烈果",price:260,imageUrl:"https://images.unsplash.com/photo-1546171753-97d7676e4602?q=80&w=200"},
+{name:"野格炸彈",en:"Jägerbomb",desc:"濃郁草本甜香，搭配氣泡與刺激感，風味直接強烈果",price:260,imageUrl:"https://images.unsplash.com/photo-1546171753-97d7676e4602?q=80&w=200"},
 {name:"side car",en:"side car",desc:"柑橘酸香與白蘭地交織，酒體飽滿，尾韻溫暖",price:260,imageUrl:"https://images.unsplash.com/photo-1546171753-97d7676e4602?q=80&w=200"},
 {name:"sex on the beach",en:"sex on the beach",desc:"水蜜桃與莓果，酸甜柔和，果香感十足",price:260,imageUrl:"https://images.unsplash.com/photo-1546171753-97d7676e4602?q=80&w=200"},
 {name:"柯夢波丹",en:"Cosmopolitan",desc:"蔓越莓酸甜搭配柑橘香氣，微酸不膩",price:260,imageUrl:"https://images.unsplash.com/photo-1546171753-97d7676e4602?q=80&w=200"},
 {name:"High ball",en:"High ball",desc:"威士忌香氣搭配爽脆氣泡，尾韻俐落",price:300,imageUrl:"https://images.unsplash.com/photo-1556855248-7123d65fdbd9?q=80&w=200"}
 ],
 "啤酒 Beer":[
-{name:"可樂娜",en:"Corona",desc:" ",price:200,imageUrl:"https://images.unsplash.com/photo-1514218240783-940066a4b6c7?q=80&w=200"},
+{name:"Corona 可樂娜",en:"Corona",desc:" ",price:200,imageUrl:"https://images.unsplash.com/photo-1514218240783-940066a4b6c7?q=80&w=200"},
 {name:"18天生啤",en:"18day beer",desc:" ",price:200,imageUrl:"https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?q=80&w=200"},
-{name:"百威",en:"Budweiser",desc:" ",price:200,imageUrl:"https://images.unsplash.com/photo-1605706915003-8869c97b2183?q=80&w=200"}
+{name:"Budweiser 百威",en:"Budweiser",desc:" ",price:200,imageUrl:"https://images.unsplash.com/photo-1605706915003-8869c97b2183?q=80&w=200"}
 ],
 "Shot":[
 {name:"Vodka｜伏特加",en:"Flaming B-52",desc:" ",price:180,imageUrl:"https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=200"},
@@ -205,19 +204,15 @@ alcohol:{
 ]
 },
 nonalcohol:{
-"果汁 Juice":[
-{name:"鮮榨鳳梨",en:"Fresh Pineapple",desc:"現榨金鑽鳳梨原汁",price:120,imageUrl:"https://images.unsplash.com/photo-1613478223719-2ab802602423?q=80&w=200"},
-{name:"西瓜冰沙",en:"Watermelon Smoothie",desc:"整顆西瓜打成沙冰",price:130,imageUrl:"https://images.unsplash.com/photo-1553530666-ba11a7da3888?q=80&w=200"}
-],
 "軟性飲料 Soft Drinks":[
-{name:"可樂",en:"Coca-Cola",desc:"經典冰可樂",price:80,imageUrl:"https://images.unsplash.com/photo-1567103472667-6898f3a83cd2?q=80&w=200"}
+{name:"可口可樂",en:"Coca-Cola",desc:"經典冰可樂",price:80,imageUrl:"https://images.unsplash.com/photo-1567103472667-6898f3a83cd2?q=80&w=200"}
 ]
 },
 food:[
-{name:"牛肉湯",en:"Beef Soup",desc:"鮮甜牛骨湯底，搭配軟嫩牛肉，濃郁暖胃。",price:320,imageUrl:"https://images.unsplash.com/photo-1559742811-822873691df8?q=80&w=200"},
-{name:"牛雜湯",en:"Beef Offal Soup",desc:"牛骨湯底搭配多種牛雜，口感豐富，鮮香濃郁。",price:280,imageUrl:"https://images.unsplash.com/photo-1565299585323-38d6b0865b47?q=80&w=200"},
-{name:"紅油抄手",en:"Wontons in Chili Oil",desc:"滑嫩抄手拌上香辣紅油，麻香微辣，開胃涮嘴。",price:280,imageUrl:"https://images.unsplash.com/photo-1565299585323-38d6b0865b47?q=80&w=200"},
-{name:"經典水餃",en:"Pork Dumplings",desc:"飽滿內餡包裹Q彈麵皮，簡單耐吃的經典口味。",price:240,imageUrl:"https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?q=80&w=200"}
+{name:"銷魂牛肉湯",en:"Beef Soup",desc:"鮮甜牛骨湯底，搭配軟嫩牛肉，濃郁暖胃。",price:320,imageUrl:"https://images.unsplash.com/photo-1559742811-822873691df8?q=80&w=200"},
+{name:"銷魂牛雜湯",en:"Beef Offal Soup",desc:"牛骨湯底搭配多種牛雜，口感豐富，鮮香濃郁。",price:280,imageUrl:"https://images.unsplash.com/photo-1565299585323-38d6b0865b47?q=80&w=200"},
+{name:"經典紅油抄手",en:"Wontons in Chili Oil",desc:"滑嫩抄手拌上香辣紅油，麻香微辣，開胃涮嘴。",price:280,imageUrl:"https://images.unsplash.com/photo-1565299585323-38d6b0865b47?q=80&w=200"},
+{name:"經典台式水餃",en:"Pork Dumplings",desc:"飽滿內餡包裹Q彈麵皮，簡單耐吃的經典口味。",price:240,imageUrl:"https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?q=80&w=200"}
 ]
 };
 
@@ -418,7 +413,7 @@ document.getElementById('submit-order').addEventListener('click',async()=>{
   const successEl=document.getElementById('cart-success');
   
   if(!chosenTable) {
-    errEl.textContent='❌ 請返回首頁點選您的桌號位置再進行點餐';
+    errEl.textContent='請返回首頁點選您的桌號位置再進行點餐';
     errEl.classList.remove('hidden');
     return;
   }
@@ -455,7 +450,7 @@ document.getElementById('submit-order').addEventListener('click',async()=>{
       throw new Error(result.error);
     }
   } catch (error) {
-    errEl.textContent = '❌ 送出失敗：系統碰撞或網路異常，請向服務人員確認！';
+    errEl.textContent = '送出失敗：系統碰撞或網路異常，請向櫃檯人員確認！';
     errEl.classList.remove('hidden');
     btn.disabled = false; btn.textContent = '確認送出';
   }
