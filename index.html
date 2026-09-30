@@ -259,12 +259,15 @@ function clientSelectTable(table) {
     display.className = "text-md font-black text-green-400";
   }
 }
-
-function renderItems(container,items,type){
-  container.innerHTML=items.map(item=>{
+   
+function renderItems(container, items, type) {
+  if (!container || !items) return; // 防呆機制：避免頁面切換時找不到容器產生錯誤
+  
+  container.innerHTML = items.map(item => {
     let actionButtons = '';
-    if(type === 'food') {
-      actionButtons = `<button onclick="validatedAdd(this, '${item.name.replace(/'/g,"\\\\'")}',${item.price},'food','')" class="bg-amber-600/20 text-amber-400 border border-amber-600/40 rounded-lg px-4 py-1.5 text-xs font-bold transition-all hover:bg-amber-600 hover:text-white">+加入</button>`;
+    if (type === 'food') {
+      // 🎯 補回  標籤與點擊觸發事件 validatedAdd
+      actionButtons = `+加入`;
     } else {
       actionButtons = `
       <div class="flex flex-col items-end gap-1">
