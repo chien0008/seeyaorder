@@ -157,19 +157,17 @@
    <button class="nav-btn active flex-1 flex flex-col items-center py-1 text-[12px] font-bold" id="nav-home" data-page="home"><i data-lucide="home" class="mb-1"></i><span>首頁</span></button>
    <button class="nav-btn flex-1 flex flex-col items-center py-1 text-[12px] font-bold" data-page="alcohol"><i data-lucide="glass-water" class="mb-1"></i><span>有酒精</span></button>
    <button class="nav-btn flex-1 flex flex-col items-center py-1 text-[12px] font-bold" data-page="nonalcohol"><i data-lucide="cup-soda" class="mb-1"></i><span>無酒精</span></button>
-   <button class="nav-btn flex-1 flex flex-col items-center py-1 text-[12px] font-bold" data-page="food"><i data-lucide="popcorn" class="mb-1"></i><span>嚴選小點</span></button>
+   <button class="nav-btn flex-1 flex flex-col items-center py-1 text-[12px] font-bold" data-page="food"><i data-lucide="popcorn" class="mb-1"></i><span>隱藏版美食</span></button>
   </nav>
 
   <script>
 const MENU = {
   alcohol: {
     "Signature": [
-      {name: "真正優秀的女人，連罩杯都拿A", en: "Signature Cocktail", desc: "紅酒 蔓越莓 百香果 水蜜桃 桑椹", price: 350, imageUrl: "https://images.unsplash.com/photo-1618885472179-5e474019f2a9?q=80&w=200"},
-      {name: "腳踏萬條船，踏都踏不完", en: "Signature Cocktail", desc: "琴酒 酸蘋果 接骨木 蜂蜜", price: 350, imageUrl: "https://images.unsplash.com/photo-1599824419266-419b4b0e8b1d?q=80&w=200"},
-      {name: "我回妳是秒回，妳回我是輪迴", en: "Signature Cocktail", desc: "蘭姆酒 芒果 芭樂 柳橙 梅粉", price: 350, imageUrl: "https://images.unsplash.com/photo-1571613316887-6f8d5cbf7ef7?q=80&w=200"},
-      {name: "不求對象門當戶對，但求你姿勢要到位", en: "Signature Cocktail", desc: "茉莉花茶 琴酒 蜂蜜 蘇打", price: 350, imageUrl: "https://images.unsplash.com/photo-1608270586620-248524c67de9?q=80&w=200"},
-      {name: "水果特調", en: "Fruit Special", desc: "新鮮果香風味調酒", price: 320, imageUrl: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?q=80&w=200"},
-      {name: "茶酒特調", en: "Tea Cocktail", desc: "特選茶香風味調酒", price: 320, imageUrl: "https://images.unsplash.com/photo-1556855248-7123d65fdbd9?q=80&w=200"}
+      {name: "真正優秀的女人，連罩杯都拿A", en: "Signature Cocktail", desc: "紅酒 蔓越莓 百香果 水蜜桃 桑椹", price: 350, imageUrl: " "},
+      {name: "腳踏萬條船，踏都踏不完", en: "Signature Cocktail", desc: "琴酒 酸蘋果 接骨木 蜂蜜", price: 350, imageUrl: " "},
+      {name: "我回妳是秒回，妳回我是輪迴", en: "Signature Cocktail", desc: "蘭姆酒 芒果 芭樂 柳橙 梅粉", price: 350, imageUrl: " "},
+      {name: "不求對象門當戶對，但求你姿勢要到位", en: "Signature Cocktail", desc: "茉莉花茶 琴酒 蜂蜜 蘇打", price: 350, imageUrl: " "}
     ],
     "classic": [
       {name: "Gimlet", en: "Gimlet", desc: " ", price: 250, imageUrl: " "},
@@ -179,35 +177,39 @@ const MENU = {
       {name: "Gin tonic", en: "Gin Tonic", desc: " ", price: 250, imageUrl: " "},
       {name: "Cuba Libre", en: "Cuba Libre", desc: " ", price: 250, imageUrl: " "},
       {name: "長島冰茶", en: "Long Island Iced Tea", desc: " ", price: 300, imageUrl: " "},
-      {name: "野格bomb", en: "Jägerbomb", desc: " ", price: 300, imageUrl: " "}
+      {name: "野格bomb", en: "Jägerbomb", desc: " ", price: 300, imageUrl: " "},
+      {name: "蜜桃特調", en: "Peach Cocktail", desc: "經典水果風味", price: 320, imageUrl: " "},
+      {name: "熱帶雙果特調", en: "Mango & Passion Fruit", desc: "經典水果風味", price: 320, imageUrl: " "},
+      {name: "柚香青蘋特調", en: "Yuzu & Green Apple", desc: "經典水果風味", price: 320, imageUrl: " "},
+      {name: "茶酒特調", en: "Tea Cocktail", desc: "特選茶香風味調酒", price: 320, imageUrl: " "}
     ],
     "Beer買五送一!": [
-      {name: "百威", en: "Budweiser", desc: " ", price: 150, imageUrl: "https://images.unsplash.com/photo-1605706915003-8869c97b2183?q=80&w=200"},
-      {name: "可樂娜", en: "Corona", desc: " ", price: 180, imageUrl: "https://images.unsplash.com/photo-1514218240783-940066a4b6c7?q=80&w=200"}
+      {name: "百威", en: "Budweiser", desc: " ", price: 150, imageUrl: " "},
+      {name: "可樂娜", en: "Corona", desc: " ", price: 180, imageUrl: " "}
     ],
     "Shot": [
-      {name: "伏特加", en: "Vodka Shot", desc: " ", price: 120, imageUrl: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=200"},
-      {name: "琴酒", en: "Gin Shot", desc: " ", price: 120, imageUrl: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=200"},
-      {name: "蘭姆酒", en: "Rum Shot", desc: " ", price: 120, imageUrl: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=200"},
-      {name: "龍舌蘭", en: "Tequila Shot", desc: " ", price: 120, imageUrl: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=200"},
-      {name: "威士忌", en: "Whisky Shot", desc: " ", price: 120, imageUrl: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=200"},
-      {name: "特調shots", en: "Special Shots", desc: " ", price: 150, imageUrl: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=200"}
+      {name: "伏特加", en: "Vodka Shot", desc: " ", price: 120, imageUrl: " "},
+      {name: "琴酒", en: "Gin Shot", desc: " ", price: 120, imageUrl: " "},
+      {name: "蘭姆酒", en: "Rum Shot", desc: " ", price: 120, imageUrl: " "},
+      {name: "龍舌蘭", en: "Tequila Shot", desc: " ", price: 120, imageUrl: " "},
+      {name: "威士忌", en: "Whisky Shot", desc: " ", price: 120, imageUrl: " "},
+      {name: "特調shots", en: "Special Shots", desc: " ", price: 150, imageUrl: " "}
     ]
   },
   nonalcohol: {
     "Soft drinks": [
-      {name: "可樂", en: "Coca-Cola", desc: " ", price: 100, imageUrl: "https://images.unsplash.com/photo-1567103472667-6898f3a83cd2?q=80&w=200"},
-      {name: "氣泡水", en: "Sparkling Water", desc: " ", price: 100, imageUrl: "https://images.unsplash.com/photo-1567103472667-6898f3a83cd2?q=80&w=200"},
-      {name: "通寧水", en: "Tonic Water", desc: " ", price: 100, imageUrl: "https://images.unsplash.com/photo-1567103472667-6898f3a83cd2?q=80&w=200"},
-      {name: "紅牛", en: "Red Bull", desc: " ", price: 150, imageUrl: "https://images.unsplash.com/photo-1567103472667-6898f3a83cd2?q=80&w=200"},
-      {name: "蘋果汁", en: "Apple Juice", desc: " ", price: 100, imageUrl: "https://images.unsplash.com/photo-1567103472667-6898f3a83cd2?q=80&w=200"},
-      {name: "芭樂汁", en: "Guava Juice", desc: " ", price: 100, imageUrl: "https://images.unsplash.com/photo-1567103472667-6898f3a83cd2?q=80&w=200"},
-      {name: "蔓越莓汁", en: "Cranberry Juice", desc: " ", price: 100, imageUrl: "https://images.unsplash.com/photo-1567103472667-6898f3a83cd2?q=80&w=200"},
-      {name: "柳橙汁", en: "Orange Juice", desc: " ", price: 100, imageUrl: "https://images.unsplash.com/photo-1567103472667-6898f3a83cd2?q=80&w=200"}
+      {name: "可樂", en: "Coca-Cola", desc: " ", price: 100, imageUrl: " "},
+      {name: "氣泡水", en: "Sparkling Water", desc: " ", price: 100, imageUrl: " "},
+      {name: "通寧水", en: "Tonic Water", desc: " ", price: 100, imageUrl: " "},
+      {name: "紅牛", en: "Red Bull", desc: " ", price: 150, imageUrl: " "},
+      {name: "蘋果汁", en: "Apple Juice", desc: " ", price: 100, imageUrl: " "},
+      {name: "芭樂汁", en: "Guava Juice", desc: " ", price: 100, imageUrl: " "},
+      {name: "蔓越莓汁", en: "Cranberry Juice", desc: " ", price: 100, imageUrl: " "},
+      {name: "柳橙汁", en: "Orange Juice", desc: " ", price: 100, imageUrl: " "}
     ]
   },
   food: [
-    {name: "經典美味，即將上線", en: "COMING SOON", desc: "敬請期待。", price: 0, imageUrl: "https://images.unsplash.com/photo-1559742811-822873691df8?q=80&w=200"},
+    {name: "經典美味，即將上線", en: "COMING SOON", desc: "敬請期待。", price: 0, imageUrl: " "},
   ]
 };
 
