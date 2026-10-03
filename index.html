@@ -98,14 +98,15 @@
          <button type="button" id="front-btn-A5" onclick="clientSelectTable('A5')" class="col-span-1 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">A5</button>
          <button type="button" id="front-btn-A6" onclick="clientSelectTable('A6')" class="col-span-1 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">A6</button>
          
-         <button type="button" id="front-btn-吧台1" onclick="clientSelectTable('吧台1')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 duration-200">吧台1</button>
-         <button type="button" id="front-btn-吧台2" onclick="clientSelectTable('吧台2')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 duration-200">吧台2</button>
-         <button type="button" id="front-btn-吧台3" onclick="clientSelectTable('吧台3')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 duration-200">吧台3</button>
-         <button type="button" id="front-btn-吧台4" onclick="clientSelectTable('吧台4')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 duration-200">吧台4</button>
-         <button type="button" id="front-btn-吧台5" onclick="clientSelectTable('吧台5')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 duration-200">吧台5</button>
-         <button type="button" id="front-btn-吧台6" onclick="clientSelectTable('吧台6')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 duration-200">吧台6</button>
-         <button type="button" id="front-btn-包廂" onclick="clientSelectTable('包廂')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 duration-200">包廂</button>
+         <button type="button" id="front-btn-吧台1" onclick="clientSelectTable('吧台1')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">吧台1</button>
+         <button type="button" id="front-btn-吧台2" onclick="clientSelectTable('吧台2')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">吧台2</button>
+         <button type="button" id="front-btn-吧台3" onclick="clientSelectTable('吧台3')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">吧台3</button>
+         <button type="button" id="front-btn-吧台4" onclick="clientSelectTable('吧台4')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">吧台4</button>
+         <button type="button" id="front-btn-吧台5" onclick="clientSelectTable('吧台5')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">吧台5</button>
+         <button type="button" id="front-btn-吧台6" onclick="clientSelectTable('吧台6')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">吧台6</button>
 
+         <button type="button" id="front-btn-圓桌" onclick="clientSelectTable('圓桌')" class="col-span-4 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">圓桌</button>
+         <button type="button" id="front-btn-包廂" onclick="clientSelectTable('包廂')" class="col-span-4 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">包廂</button>
        </div>
      </div>
     </div>
@@ -207,13 +208,13 @@ const MENU = {
   ]
 };
 
-// 👑 步驟一中最新生成的 Web 應用程式 API 網址請放置在下方：
+// 👑 Web 應用程式 API 網址
 const BACKEND_URL = "https://script.google.com/macros/s/AKfycbzy6YYrlhWaRMBy-MtSk_8pjjjcFexXMtARGHNHELPxqO0Zi1IpBCF-rstrGlYgvco/exec";
 
 const officialTables = [
-  "A1", "A2", "A3", "A4", "A5","A6",
+  "A1", "A2", "A3", "A4", "A5", "A6",
   "吧台1", "吧台2", "吧台3", "吧台4", "吧台5", "吧台6",
-  "包廂"
+  "圓桌", "包廂"
 ];
 
 let chosenTable = ""; 
@@ -237,12 +238,12 @@ function clientSelectTable(table) {
   officialTables.forEach(t => {
     const btn = document.getElementById(`front-btn-${t}`);
     if (!btn) return;
+    
+    let colSpan = t.includes("吧台") ? "col-span-2" : (t === "包廂" || t === "圓桌" ? "col-span-4" : "col-span-1");
+
     if (t === table) {
-      btn.className = "py-3 font-black rounded-lg border border-amber-500 bg-amber-500 text-black shadow-md shadow-amber-500/20 active:scale-95 transition-all duration-200";
-      if (t.includes("吧台")) btn.className = "col-span-2 " + btn.className;
-      if (t === "包廂") btn.className = "col-span-4 " + btn.className;
+      btn.className = `${colSpan} py-3 font-black rounded-lg border border-amber-500 bg-amber-500 text-black shadow-md shadow-amber-500/20 active:scale-95 transition-all duration-200`;
     } else {
-      let colSpan = t.includes("吧台") ? "col-span-2" : (t === "包廂" ? "col-span-4" : "col-span-1");
       btn.className = `${colSpan} py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200`;
     }
   });
@@ -253,14 +254,13 @@ function clientSelectTable(table) {
     display.className = "text-md font-black text-green-400";
   }
 }
-   
+
 function renderItems(container, items, type) {
-  if (!container || !items) return; // 防呆機制：避免頁面切換時找不到容器產生錯誤
+  if (!container || !items) return;
   
   container.innerHTML = items.map(item => {
     let actionButtons = '';
     if (type === 'food') {
-      // 🎯 補回  標籤與點擊觸發事件 validatedAdd
       actionButtons = `+加入`;
     } else {
       actionButtons = `
@@ -396,7 +396,6 @@ function closeCart(){
   document.getElementById('cart-panel').classList.remove('open');
 }
 
-// 👑 終極拆行神技：客人點 2 下，前端送出時自動拆成 2 個獨立物件，保證 Google Sheet 必定印出 2 行！
 document.getElementById('submit-order').addEventListener('click',async()=>{
   const btn=document.getElementById('submit-order');
   const errEl=document.getElementById('cart-error');
@@ -411,14 +410,13 @@ document.getElementById('submit-order').addEventListener('click',async()=>{
   btn.disabled=true; btn.textContent = '正在傳送點餐明細...';
   errEl.classList.add('hidden'); successEl.classList.add('hidden');
   
-  // 🎯 核心拆彈：將數量 > 1 的品項，在前端直接展平成獨立的 x1 物件！
   const expandedItems = [];
   cart.forEach(item => {
     for (let q = 0; q < item.qty; q++) {
       expandedItems.push({
         name: item.name,
         price: item.price,
-        quantity: 1, // 👈 強制每個物件都是獨立的 1 杯！
+        quantity: 1,
         note: item.note === "去冰" ? "去冰" : "正常"
       });
     }
@@ -427,7 +425,7 @@ document.getElementById('submit-order').addEventListener('click',async()=>{
   const orderData = {
     tableNum: chosenTable, 
     totalAmount: cart.reduce((s,i)=>s+i.price*i.qty,0),
-    items: expandedItems // 傳送徹底拆開的獨立品項列表
+    items: expandedItems
   };
 
   try {
@@ -457,3 +455,4 @@ lucide.createIcons();
   </script>
  </body>
 </html>
+```<FollowUp label="我想測試點餐看看資料有沒有成功送到 Google Sheet" query="我想測試點餐看看資料有沒有成功送到 Google Sheet"/>
