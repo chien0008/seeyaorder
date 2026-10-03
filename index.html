@@ -264,13 +264,7 @@ function renderItems(container, items, type) {
       actionButtons = `+加入`;
     } else {
       actionButtons = `
-      <div class="flex flex-col items-end gap-1">
-        <div class="flex gap-1.5">
-          <button onclick="validatedAdd(this, '${item.name.replace(/'/g,"\\\\'")}',${item.price},'drink','')" class="bg-stone-800 text-amber-400 border border-amber-800 rounded-lg px-2 py-1.5 text-[11px] font-bold transition-all hover:bg-stone-700">＋正常</button>
-          <button onclick="validatedAdd(this, '${item.name.replace(/'/g,"\\\\'")}',${item.price},'drink','去冰')" class="bg-amber-600/30 text-amber-200 border border-amber-600/50 rounded-lg px-2 py-1.5 text-[11px] font-bold transition-all hover:bg-amber-600 hover:text-white">❄️去冰</button>
-        </div>
-        <span class="text-[10px] text-amber-600/60 font-light mt-0.5 tracking-wider">風味固定不調整</span>
-      </div>`;
+      <button onclick="validatedAdd(this, '${item.name.replace(/'/g,"\\\\'")}',${item.price},'drink','')" class="bg-amber-600 text-white border border-amber-500 rounded-lg px-4 py-2 text-xs font-bold transition-all hover:bg-amber-500 active:scale-95">＋加入</button>`;
     }
 
     return `
@@ -352,11 +346,6 @@ function openCart(){
   const list=document.getElementById('cart-list');
   list.innerHTML=cart.map((item,i)=>{
     let displayName = item.name;
-    if(item.note === "去冰") {
-      displayName += ` <span class="text-sky-400 font-bold bg-sky-950/50 px-2 py-0.5 rounded text-[11px] ml-1">去冰</span>`;
-    } else if(item.type === 'drink') {
-      displayName += ` <span class="text-gray-400 text-[11px] ml-1">(正常冰)</span>`;
-    }
 
     return `
     <div class="bg-black/20 border border-amber-900/10 rounded-xl p-3 flex justify-between items-center text-sm">
@@ -417,7 +406,7 @@ document.getElementById('submit-order').addEventListener('click',async()=>{
         name: item.name,
         price: item.price,
         quantity: 1,
-        note: item.note === "去冰" ? "去冰" : "正常"
+        note: ""
       });
     }
   });
