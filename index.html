@@ -437,7 +437,7 @@ document.getElementById('submit-order').addEventListener('click',async()=>{
       throw new Error(result.error);
     }
   } catch (error) {
-    errEl.textContent = '送出失敗：系統碰撞或網路異常，請向櫃檯人員確認！';
+    errEl.textContent = '因個人網路不穩，系統目前無法確認訂單是否送出成功。請勿重複點擊送出，以免重複下單。請向櫃檯人員確認訂單是否成立，謝謝！';
     errEl.classList.remove('hidden');
     btn.disabled = false; btn.textContent = '確認送出';
   }
