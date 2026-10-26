@@ -1,223 +1,224 @@
 <!doctype html>
 <html lang="zh-TW">
- <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>See Ya Bar</title>
-  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
-  <style>
-    :root {
-        --sunset-dark: #1a0f0a;
-        --sunset-amber: #3d2419;
-        --neon-glow: #f59e0b;
-        --neon-success: #4ade80;
-    }
-    body { 
-        font-family: 'DM Sans', sans-serif; 
-        margin:0; padding:0; 
-        background: linear-gradient(135deg, var(--sunset-dark), var(--sunset-amber));
-        color: #f3f4f6;
-    }
-    .tab-page { display:none; }
-    .tab-page.active { display:block; }
-    .home-container { min-height: calc(100vh - 12rem); display: flex; flex-direction: column; justify-content: center; }
-    
-    @keyframes neonPulse {
-        0% { box-shadow: 0 0px var(--neon-success); transform: scale(1); }
-        50% { box-shadow: 0 0 25px var(--neon-success); transform: scale(1.15); border-color: var(--neon-success); }
-        100% { box-shadow: 0 0px var(--neon-success); transform: scale(1); }
-    }
-    .neon-active { animation: neonPulse 0.5s ease-in-out; background-color: rgba(74, 222, 128, 0.2) !important; color: #4ade80 !important; }
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>See Ya Bar</title>
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+<style>
+:root {
+--sunset-dark: #1a0f0a;
+--sunset-amber: #3d2419;
+--neon-glow: #f59e0b;
+--neon-success: #4ade80;
+}
+body { 
+font-family: 'DM Sans', sans-serif; 
+margin:0; padding:0; 
+background: linear-gradient(135deg, var(--sunset-dark), var(--sunset-amber));
+color: #f3f4f6;
+}
+.tab-page { display:none; }
+.tab-page.active { display:block; }
+.home-container { min-height: calc(100vh - 12rem); display: flex; flex-direction: column; justify-content: center; }
 
-    @keyframes inputError {
-        0%, 100% { border-color: #f59e0b; }
-        50% { border-color: #ef4444; box-shadow: 0 0 15px #ef4444; }
-    }
-    .error-flash { animation: inputError 0.4s ease infinite; }
+@keyframes neonPulse {
+0% { box-shadow: 0 0px var(--neon-success); transform: scale(1); }
+50% { box-shadow: 0 0 25px var(--neon-success); transform: scale(1.15); border-color: var(--neon-success); }
+100% { box-shadow: 0 0px var(--neon-success); transform: scale(1); }
+}
+.neon-active { animation: neonPulse 0.5s ease-in-out; background-color: rgba(74, 222, 128, 0.2) !important; color: #4ade80 !important; }
 
-    .cart-panel { transform:translateY(100%); transition:transform .3s ease; background-color: #1a0f0a; border-top: 2px solid var(--neon-glow); }
-    .cart-panel.open { transform:translateY(0); }
-    
-    .nav-btn { color: #9ca3af; transition: all 0.2s ease; }
-    .nav-btn.active { color:var(--neon-glow); }
-    
-    .sub-btn { color: #cccccc; border-color: #5a3a2a; }
-    .sub-btn.active { background:var(--neon-glow); color:#1a0f0a; border-color:var(--neon-glow); }
+@keyframes inputError {
+0%, 100% { border-color: #f59e0b; }
+50% { border-color: #ef4444; box-shadow: 0 0 15px #ef4444; }
+}
+.error-flash { animation: inputError 0.4s ease infinite; }
 
-  </style>
- </head>
- <body class="w-full min-h-screen pb-32">
-  
-  <header class="relative bg-black/40">
-   <div class="w-full h-40 bg-gradient-to-r from-amber-900 to-stone-950 flex items-center justify-center text-white text-xl font-bold tracking-widest opacity-30">SEE YA BAR</div>
-   <div class="absolute inset-0 bg-gradient-to-b from-transparent to-sunset-dark"></div>
-   <div class="absolute bottom-4 left-4">
-    <h1 class="text-3xl font-bold text-white drop-shadow-sm">See Ya</h1>
-    <p class="text-sm text-amber-200/80">小琉球・深夜微醺</p>
-   </div>
-  </header>
+.cart-panel { transform:translateY(100%); transition:transform .3s ease; background-color: #1a0f0a; border-top: 2px solid var(--neon-glow); }
+.cart-panel.open { transform:translateY(0); }
 
-  <main class="px-4">
-   <section id="page-home" class="tab-page active">
-    <div class="home-container">
-     <div class="bg-black/30 rounded-2xl p-5 mb-5 border border-amber-900/40 text-center">
-      <div class="space-y-3 text-amber-100/90 leading-relaxed text-sm">
-       <p class="italic font-medium text-amber-400">Hidden in the heart of Xiaoliuqiu, See Ya is more than a bar.</p>
-       <p class="italic font-medium text-amber-400">It's where island nights begin, conversations last longer, and every goodbye becomes "See Ya."</p>
-       <p class="italic font-medium text-amber-400 mb-4">Great cocktails, warm lights, good people.</p>
-       <div class="w-12 h-[1px] bg-amber-500 mx-auto my-3"></div>
-       <p class="font-light">白天追著陽光、海風與浪花；夜晚，See Ya為你準備好酒精，讓旅程慢下來</p>
-       <p class="font-light">旅行最難忘的除了風景，還有笑聲與微醺的夜晚</p>
-       <p class="font-light text-amber-300 font-medium mt-2">在琉球，我們不說 Goodbye</p>
-       <p class="text-base text-amber-400 font-bold tracking-wider">我們說 See Ya。</p>
-      </div>
-     </div>
-     
-     <div class="bg-red-950/60 border border-red-700/50 rounded-xl p-4 mb-5 text-center shadow-sm">
-      <p class="text-xs text-red-200 font-medium">
-       ⚠️ 未滿18歲請勿飲酒｜理性飲酒，理性微醺｜本店低消一杯飲品<br>
-       <span class="block mt-1 font-bold text-red-100">歡慶開幕，啤酒買5送1!</span>
-      </p>
-     </div>
-     
-     <div id="table-box" class="bg-black/40 border-2 border-amber-500/70 rounded-xl p-5 shadow-lg transition-all duration-300 space-y-4">
-       <label class="block text-sm font-medium text-amber-400 font-bold">請先點選您的桌號</label> 
-       
-       <div class="bg-black/60 p-3 rounded-lg border border-amber-900/50 text-center">
-         <span class="text-xs text-amber-900 block mb-1">您目前選定的位置</span>
-         <span id="selected-table-display" class="text-md font-black text-rose-500 animate-pulse">尚未選擇桌號</span>
-       </div>
+.nav-btn { color: #9ca3af; transition: all 0.2s ease; }
+.nav-btn.active { color:var(--neon-glow); }
 
-       <div class="grid grid-cols-4 gap-2 text-xs">
-         <button type="button" id="front-btn-A1" onclick="clientSelectTable('A1')" class="col-span-1 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">A1</button>
-         <button type="button" id="front-btn-A2" onclick="clientSelectTable('A2')" class="col-span-1 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">A2</button>
-         <button type="button" id="front-btn-A3" onclick="clientSelectTable('A3')" class="col-span-1 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">A3</button>
-         <button type="button" id="front-btn-A4" onclick="clientSelectTable('A4')" class="col-span-1 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">A4</button>
-         <button type="button" id="front-btn-A5" onclick="clientSelectTable('A5')" class="col-span-1 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">A5</button>
-         <button type="button" id="front-btn-A6" onclick="clientSelectTable('A6')" class="col-span-1 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">A6</button>
-         
-         <button type="button" id="front-btn-吧台1" onclick="clientSelectTable('吧台1')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">吧台1</button>
-         <button type="button" id="front-btn-吧台2" onclick="clientSelectTable('吧台2')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">吧台2</button>
-         <button type="button" id="front-btn-吧台3" onclick="clientSelectTable('吧台3')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">吧台3</button>
-         <button type="button" id="front-btn-吧台4" onclick="clientSelectTable('吧台4')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">吧台4</button>
-         <button type="button" id="front-btn-吧台5" onclick="clientSelectTable('吧台5')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">吧台5</button>
-         <button type="button" id="front-btn-吧台6" onclick="clientSelectTable('吧台6')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">吧台6</button>
+.sub-btn { color: #cccccc; border-color: #5a3a2a; }
+.sub-btn.active { background:var(--neon-glow); color:#1a0f0a; border-color:var(--neon-glow); }
 
-         <button type="button" id="front-btn-圓桌" onclick="clientSelectTable('圓桌')" class="col-span-4 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">圓桌</button>
-         <button type="button" id="front-btn-包廂" onclick="clientSelectTable('包廂')" class="col-span-4 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">包廂</button>
-       </div>
-     </div>
-    </div>
-   </section>
+</style>
+</head>
+<body class="w-full min-h-screen pb-32">
 
-   <section id="page-alcohol" class="tab-page">
-    <div id="alcohol-filters" class="flex gap-2 overflow-x-auto pb-3 mb-3 pt-2"></div>
-    <div id="alcohol-items" class="grid gap-4"></div>
-   </section>
+<header class="relative bg-black/40">
+<div class="w-full h-40 bg-gradient-to-r from-amber-900 to-stone-950 flex items-center justify-center text-white text-xl font-bold tracking-widest opacity-30">SEE YA BAR</div>
+<div class="absolute inset-0 bg-gradient-to-b from-transparent to-sunset-dark"></div>
+<div class="absolute bottom-4 left-4">
+<h1 class="text-3xl font-bold text-white drop-shadow-sm">See Ya</h1>
+<p class="text-sm text-amber-200/80">小琉球・深夜微醺</p>
+</div>
+</header>
 
-   <section id="page-nonalcohol" class="tab-page">
-    <div id="nonalcohol-filters" class="flex gap-2 overflow-x-auto pb-3 mb-3 pt-2"></div>
-    <div id="nonalcohol-items" class="grid gap-4"></div>
-   </section>
+<main class="px-4">
+<section id="page-home" class="tab-page active">
+<div class="home-container">
+<div class="bg-black/30 rounded-2xl p-5 mb-5 border border-amber-900/40 text-center">
+<div class="space-y-3 text-amber-100/90 leading-relaxed text-sm">
+<p class="italic font-medium text-amber-400">Hidden in the heart of Xiaoliuqiu, See Ya is more than a bar.</p>
+<p class="italic font-medium text-amber-400">It's where island nights begin, conversations last longer, and every goodbye becomes "See Ya."</p>
+<p class="italic font-medium text-amber-400 mb-4">Great cocktails, warm lights, good people.</p>
+<div class="w-12 h-[1px] bg-amber-500 mx-auto my-3"></div>
+<p class="font-light">白天追著陽光、海風與浪花；夜晚，See Ya為你準備好酒精，讓旅程慢下來</p>
+<p class="font-light">旅行最難忘的除了風景，還有笑聲與微醺的夜晚</p>
+<p class="font-light text-amber-300 font-medium mt-2">在琉球，我們不說 Goodbye</p>
+<p class="text-base text-amber-400 font-bold tracking-wider">我們說 See Ya。</p>
+</div>
+</div>
 
-   <section id="page-food" class="tab-page">
-    <div id="food-items" class="grid gap-4 pt-2"></div>
-   </section>
-  </main>
+<div class="bg-red-950/60 border border-red-700/50 rounded-xl p-4 mb-5 text-center shadow-sm">
+<p class="text-xs text-red-200 font-medium">
+⚠️ 未滿18歲請勿飲酒｜理性飲酒，理性微醺｜本店低消一杯飲品<br>
+<span class="block mt-1 font-bold text-red-100">歡慶開幕，啤酒買5送1!</span>
+</p>
+</div>
 
-  <div id="global-alert" class="fixed top-5 inset-x-4 bg-red-600 text-white font-bold p-4 rounded-xl text-center shadow-2xl z-50 transform -translate-y-32 transition-transform duration-300"></div>
+<div id="table-box" class="bg-black/40 border-2 border-amber-500/70 rounded-xl p-5 shadow-lg transition-all duration-300 space-y-4">
+<label class="block text-sm font-medium text-amber-400 font-bold">請先點選您的桌號</label> 
 
-  <button id="cart-badge" class="fixed bottom-24 right-4 bg-amber-600 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center font-bold z-40 hidden transition-all duration-300">
-   <i data-lucide="shopping-cart" style="width:24px;height:24px"></i>
-   <span id="cart-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">0</span>
-  </button>
+<div class="bg-black/60 p-3 rounded-lg border border-amber-900/50 text-center">
+<span class="text-xs text-amber-900 block mb-1">您目前選定的位置</span>
+<span id="selected-table-display" class="text-md font-black text-rose-500 animate-pulse">尚未選擇桌號</span>
+</div>
 
-  <div id="cart-panel" class="cart-panel fixed inset-x-0 bottom-[68px] z-40 max-h-[60vh] overflow-y-auto p-4 shadow-2xl rounded-t-3xl">
-   <div class="flex justify-between items-center mb-4">
-    <h2 class="font-bold text-lg text-amber-400">點餐明細</h2>
-    <button id="close-cart" class="text-amber-500"><i data-lucide="x" style="width:20px;height:20px"></i></button>
-   </div>
-   <div id="cart-list" class="space-y-4 mb-4"></div>
-   <div class="border-t border-amber-900/40 pt-3 mb-4">
-    <div class="flex justify-between font-bold text-amber-300"><span>合計金額</span><span id="cart-total">NT$0</span></div>
-   </div>
-   <button id="submit-order" class="w-full bg-amber-600 text-white font-bold py-3 rounded-xl hover:bg-amber-500 shadow-lg">確認送出</button>
-   <p id="cart-error" class="text-red-400 text-sm mt-2 text-center hidden"></p>
-   <p id="cart-success" class="text-green-400 text-sm mt-2 text-center hidden"></p>
-  </div>
+<div class="grid grid-cols-4 gap-2 text-xs">
+<button type="button" id="front-btn-A1" onclick="clientSelectTable('A1')" class="col-span-1 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">A1</button>
+<button type="button" id="front-btn-A2" onclick="clientSelectTable('A2')" class="col-span-1 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">A2</button>
+<button type="button" id="front-btn-A3" onclick="clientSelectTable('A3')" class="col-span-1 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">A3</button>
+<button type="button" id="front-btn-A4" onclick="clientSelectTable('A4')" class="col-span-1 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">A4</button>
+<button type="button" id="front-btn-A5" onclick="clientSelectTable('A5')" class="col-span-1 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">A5</button>
+<button type="button" id="front-btn-A6" onclick="clientSelectTable('A6')" class="col-span-1 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">A6</button>
 
-  <nav class="fixed bottom-0 inset-x-0 bg-black/90 backdrop-blur-md border-t border-amber-900/40 flex z-50 py-2">
-   <button class="nav-btn active flex-1 flex flex-col items-center py-1 text-[12px] font-bold" id="nav-home" data-page="home"><i data-lucide="home" class="mb-1"></i><span>首頁</span></button>
-   <button class="nav-btn flex-1 flex flex-col items-center py-1 text-[12px] font-bold" data-page="alcohol"><i data-lucide="glass-water" class="mb-1"></i><span>有酒精</span></button>
-   <button class="nav-btn flex-1 flex flex-col items-center py-1 text-[12px] font-bold" data-page="nonalcohol"><i data-lucide="cup-soda" class="mb-1"></i><span>無酒精</span></button>
-   <button class="nav-btn flex-1 flex flex-col items-center py-1 text-[12px] font-bold" data-page="food"><i data-lucide="popcorn" class="mb-1"></i><span>隱藏版美食</span></button>
-  </nav>
+<button type="button" id="front-btn-吧台1" onclick="clientSelectTable('吧台1')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">吧台1</button>
+<button type="button" id="front-btn-吧台2" onclick="clientSelectTable('吧台2')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">吧台2</button>
+<button type="button" id="front-btn-吧台3" onclick="clientSelectTable('吧台3')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">吧台3</button>
+<button type="button" id="front-btn-吧台4" onclick="clientSelectTable('吧台4')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">吧台4</button>
+<button type="button" id="front-btn-吧台5" onclick="clientSelectTable('吧台5')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">吧台5</button>
+<button type="button" id="front-btn-吧台6" onclick="clientSelectTable('吧台6')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">吧台6</button>
 
-  <script>
+<button type="button" id="front-btn-圓桌" onclick="clientSelectTable('圓桌')" class="col-span-4 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">圓桌</button>
+<button type="button" id="front-btn-包廂" onclick="clientSelectTable('包廂')" class="col-span-4 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">包廂</button>
+</div>
+</div>
+</div>
+</section>
+
+<section id="page-alcohol" class="tab-page">
+<div id="alcohol-filters" class="flex gap-2 overflow-x-auto pb-3 mb-3 pt-2"></div>
+<div id="alcohol-items" class="grid gap-4"></div>
+</section>
+
+<section id="page-nonalcohol" class="tab-page">
+<div id="nonalcohol-filters" class="flex gap-2 overflow-x-auto pb-3 mb-3 pt-2"></div>
+<div id="nonalcohol-items" class="grid gap-4"></div>
+</section>
+
+<section id="page-food" class="tab-page">
+<div id="food-items" class="grid gap-4 pt-2"></div>
+</section>
+</main>
+
+<div id="global-alert" class="fixed top-5 inset-x-4 bg-red-600 text-white font-bold p-4 rounded-xl text-center shadow-2xl z-50 transform -translate-y-32 transition-transform duration-300"></div>
+
+<button id="cart-badge" class="fixed bottom-24 right-4 bg-amber-600 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center font-bold z-40 hidden transition-all duration-300">
+<i data-lucide="shopping-cart" style="width:24px;height:24px"></i>
+<span id="cart-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">0</span>
+</button>
+
+<div id="cart-panel" class="cart-panel fixed inset-x-0 bottom-[68px] z-40 max-h-[60vh] overflow-y-auto p-4 shadow-2xl rounded-t-3xl">
+<div class="flex justify-between items-center mb-4">
+<h2 class="font-bold text-lg text-amber-400">點餐明細</h2>
+<button id="close-cart" class="text-amber-500"><i data-lucide="x" style="width:20px;height:20px"></i></button>
+</div>
+<div id="cart-list" class="space-y-4 mb-4"></div>
+<div class="border-t border-amber-900/40 pt-3 mb-4">
+<div class="flex justify-between font-bold text-amber-300"><span>合計金額</span><span id="cart-total">NT$0</span></div>
+</div>
+<button id="submit-order" class="w-full bg-amber-600 text-white font-bold py-3 rounded-xl hover:bg-amber-500 shadow-lg">確認送出</button>
+<p id="cart-error" class="text-red-400 text-sm mt-2 text-center hidden"></p>
+<p id="cart-success" class="text-green-400 text-sm mt-2 text-center hidden"></p>
+</div>
+
+<nav class="fixed bottom-0 inset-x-0 bg-black/90 backdrop-blur-md border-t border-amber-900/40 flex z-50 py-2">
+<button class="nav-btn active flex-1 flex flex-col items-center py-1 text-[12px] font-bold" id="nav-home" data-page="home"><i data-lucide="home" class="mb-1"></i><span>首頁</span></button>
+<button class="nav-btn flex-1 flex flex-col items-center py-1 text-[12px] font-bold" data-page="alcohol"><i data-lucide="glass-water" class="mb-1"></i><span>有酒精</span></button>
+<button class="nav-btn flex-1 flex flex-col items-center py-1 text-[12px] font-bold" data-page="nonalcohol"><i data-lucide="cup-soda" class="mb-1"></i><span>無酒精</span></button>
+<button class="nav-btn flex-1 flex flex-col items-center py-1 text-[12px] font-bold" data-page="food"><i data-lucide="popcorn" class="mb-1"></i><span>隱藏版美食</span></button>
+</nav>
+
+<script>
 const MENU = {
-  alcohol: {
-    "Signature": [
-      {name: "真正優秀的女人，連罩杯都拿A", en: "Signature Cocktail", desc: "紅酒 蔓越莓 百香果 水蜜桃 桑椹", price: 350, imageUrl: " "},
-      {name: "腳踏萬條船，踏都踏不完", en: "Signature Cocktail", desc: "琴酒 酸蘋果 接骨木 蜂蜜", price: 350, imageUrl: " "},
-      {name: "我回妳是秒回，妳回我是輪迴", en: "Signature Cocktail", desc: "蘭姆酒 芒果 芭樂 柳橙 梅粉", price: 350, imageUrl: " "},
-      {name: "不求對象門當戶對，但求你姿勢要到位", en: "Signature Cocktail", desc: "茉莉花茶 琴酒 蜂蜜 蘇打", price: 350, imageUrl: " "}
-    ],
-    "classic": [
-      {name: "Gimlet", en: "Gimlet", desc: " ", price: 250, imageUrl: " "},
-      {name: "Daiquiri", en: "Daiquiri", desc: " ", price: 250, imageUrl: " "},
-      {name: "柯夢波丹", en: "Cosmopolitan", desc: " ", price: 250, imageUrl: " "},
-      {name: "High ball", en: "High Ball", desc: " ", price: 250, imageUrl: " "},
-      {name: "Gin tonic", en: "Gin Tonic", desc: " ", price: 250, imageUrl: " "},
-      {name: "Cuba Libre", en: "Cuba Libre", desc: " ", price: 250, imageUrl: " "},
-      {name: "長島冰茶", en: "Long Island Iced Tea", desc: " ", price: 300, imageUrl: " "},
-      {name: "野格bomb", en: "Jägerbomb", desc: " ", price: 300, imageUrl: " "},
-      {name: "蜜桃特調", en: "Peach Cocktail", desc: "經典水果風味", price: 320, imageUrl: " "},
-      {name: "熱帶雙果特調", en: "Mango & Passion Fruit", desc: "經典水果風味", price: 320, imageUrl: " "},
-      {name: "柚香青蘋特調", en: "Yuzu & Green Apple", desc: "經典水果風味", price: 320, imageUrl: " "},
-      {name: "茶酒特調", en: "Tea Cocktail", desc: "特選茶香風味調酒", price: 320, imageUrl: " "}
-    ],
-    "Beer買五送一!": [
-      {name: "百威", en: "Budweiser", desc: " ", price: 150, imageUrl: " "},
-      {name: "可樂娜", en: "Corona", desc: " ", price: 180, imageUrl: " "},
-      {name: "買五送一（百威）", en: "buy 5 get 1 free（Budweiser）", desc: " ", price: 750, imageUrl: " "},
-      {name: "買五送一（可樂娜）", en: "buy 5 get 1 free（Corona）", desc: " ", price: 900, imageUrl: " "},
+alcohol: {
+"Signature": [
+{name: "真正優秀的女人，連罩杯都拿A", en: "Signature Cocktail", desc: "紅酒 蔓越莓 百香果 水蜜桃 桑椹", price: 350, imageUrl: " "},
+{name: "腳踏萬條船，踏都踏不完", en: "Signature Cocktail", desc: "琴酒 酸蘋果 接骨木 蜂蜜", price: 350, imageUrl: " "},
+{name: "我回妳是秒回，妳回我是輪迴", en: "Signature Cocktail", desc: "蘭姆酒 芒果 芭樂 柳橙 梅粉", price: 350, imageUrl: " "},
+{name: "不求對象門當戶對，但求你姿勢要到位", en: "Signature Cocktail", desc: "茉莉花茶 琴酒 蜂蜜 蘇打", price: 350, imageUrl: " "}
+],
+"classic": [
+{name: "Gimlet", en: "Gimlet", desc: " ", price: 250, imageUrl: " "},
+{name: "Daiquiri", en: "Daiquiri", desc: " ", price: 250, imageUrl: " "},
+{name: "柯夢波丹", en: "Cosmopolitan", desc: " ", price: 250, imageUrl: " "},
+{name: "High ball", en: "High Ball", desc: " ", price: 250, imageUrl: " "},
+{name: "Gin tonic", en: "Gin Tonic", desc: " ", price: 250, imageUrl: " "},
+{name: "Cuba Libre", en: "Cuba Libre", desc: " ", price: 250, imageUrl: " "},
+{name: "長島冰茶", en: "Long Island Iced Tea", desc: " ", price: 300, imageUrl: " "},
+{name: "野格bomb", en: "Jägerbomb", desc: " ", price: 300, imageUrl: " "},
+{name: "蜜桃特調", en: "Peach Cocktail", desc: "經典水果風味", price: 320, imageUrl: " "},
+{name: "熱帶雙果特調", en: "Mango & Passion Fruit", desc: "經典水果風味", price: 320, imageUrl: " "},
+{name: "柚香青蘋特調", en: "Yuzu & Green Apple", desc: "經典水果風味", price: 320, imageUrl: " "},
+{name: "茶酒特調", en: "Tea Cocktail", desc: "特選茶香風味調酒", price: 320, imageUrl: " "}
+],
+"Beer買五送一!": [
+{name: "百威", en: "Budweiser", desc: " ", price: 150, imageUrl: " "},
+{name: "可樂娜", en: "Corona", desc: " ", price: 180, imageUrl: " "},
+{name: "買五送一（百威）", en: "buy 5 get 1 free（Budweiser）", desc: " ", price: 750, imageUrl: " "},
+{name: "買五送一（可樂娜）", en: "buy 5 get 1 free（Corona）", desc: " ", price: 900, imageUrl: " "},
 
-    ],
-    "Shot": [
-      {name: "伏特加", en: "Vodka Shot", desc: " ", price: 120, imageUrl: " "},
-      {name: "琴酒", en: "Gin Shot", desc: " ", price: 120, imageUrl: " "},
-      {name: "蘭姆酒", en: "Rum Shot", desc: " ", price: 120, imageUrl: " "},
-      {name: "龍舌蘭", en: "Tequila Shot", desc: " ", price: 120, imageUrl: " "},
-      {name: "威士忌", en: "Whisky Shot", desc: " ", price: 120, imageUrl: " "},
-      {name: "特調shots", en: "Special Shots", desc: " ", price: 150, imageUrl: " "}
-    ]
-  },
-  nonalcohol: {
-    "Soft drinks": [
-      {name: "可樂", en: "Coca-Cola", desc: " ", price: 100, imageUrl: " "},
-      {name: "氣泡水", en: "Sparkling Water", desc: " ", price: 100, imageUrl: " "},
-      {name: "通寧水", en: "Tonic Water", desc: " ", price: 100, imageUrl: " "},
-      {name: "紅牛", en: "Red Bull", desc: " ", price: 150, imageUrl: " "},
-      {name: "蘋果汁", en: "Apple Juice", desc: " ", price: 100, imageUrl: " "},
-      {name: "芭樂汁", en: "Guava Juice", desc: " ", price: 100, imageUrl: " "},
-      {name: "蔓越莓汁", en: "Cranberry Juice", desc: " ", price: 100, imageUrl: " "},
-      {name: "柳橙汁", en: "Orange Juice", desc: " ", price: 100, imageUrl: " "}
-    ]
-  },
-  food: [
-    {name: "經典美味，即將上線", en: "COMING SOON", desc: "敬請期待。", price: 0, imageUrl: " "},
-  ]
+],
+"Shot": [
+{name: "伏特加", en: "Vodka Shot", desc: " ", price: 120, imageUrl: " "},
+{name: "琴酒", en: "Gin Shot", desc: " ", price: 120, imageUrl: " "},
+{name: "蘭姆酒", en: "Rum Shot", desc: " ", price: 120, imageUrl: " "},
+{name: "龍舌蘭", en: "Tequila Shot", desc: " ", price: 120, imageUrl: " "},
+{name: "威士忌", en: "Whisky Shot", desc: " ", price: 120, imageUrl: " "},
+{name: "特調shots", en: "Special Shots", desc: " ", price: 150, imageUrl: " "}
+]
+},
+nonalcohol: {
+"Soft drinks": [
+{name: "可樂", en: "Coca-Cola", desc: " ", price: 100, imageUrl: " "},
+{name: "氣泡水", en: "Sparkling Water", desc: " ", price: 100, imageUrl: " "},
+{name: "通寧水", en: "Tonic Water", desc: " ", price: 100, imageUrl: " "},
+{name: "紅牛", en: "Red Bull", desc: " ", price: 150, imageUrl: " "},
+{name: "蘋果汁", en: "Apple Juice", desc: " ", price: 100, imageUrl: " "},
+{name: "芭樂汁", en: "Guava Juice", desc: " ", price: 100, imageUrl: " "},
+{name: "蔓越莓汁", en: "Cranberry Juice", desc: " ", price: 100, imageUrl: " "},
+{name: "柳橙汁", en: "Orange Juice", desc: " ", price: 100, imageUrl: " "}
+]
+},
+food: [
+{name: "經典美味，即將上線", en: "COMING SOON", desc: "敬請期待。", price: 0, imageUrl: " "},
+]
 };
 
+// 👑 Web 應用程式 API 網址
 //  API 網址
 const BACKEND_URL = "https://script.google.com/macros/s/AKfycbzy6YYrlhWaRMBy-MtSk_8pjjjcFexXMtARGHNHELPxqO0Zi1IpBCF-rstrGlYgvco/exec";
 
 const officialTables = [
-  "A1", "A2", "A3", "A4", "A5", "A6",
-  "吧台1", "吧台2", "吧台3", "吧台4", "吧台5", "吧台6",
-  "圓桌", "包廂"
+"A1", "A2", "A3", "A4", "A5", "A6",
+"吧台1", "吧台2", "吧台3", "吧台4", "吧台5", "吧台6",
+"圓桌", "包廂"
 ];
 
 let chosenTable = ""; 
@@ -226,225 +227,225 @@ let currentAlcoholCat=Object.keys(MENU.alcohol)[0];
 let currentNonalcoholCat=Object.keys(MENU.nonalcohol)[0];
 
 document.querySelectorAll('.nav-btn').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    document.querySelectorAll('.tab-page').forEach(p=>p.classList.remove('active'));
-    document.getElementById('page-'+btn.dataset.page).classList.add('active');
-    window.scrollTo(0,0);
-  });
+btn.addEventListener('click',()=>{
+document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+btn.classList.add('active');
+document.querySelectorAll('.tab-page').forEach(p=>p.classList.remove('active'));
+document.getElementById('page-'+btn.dataset.page).classList.add('active');
+window.scrollTo(0,0);
+});
 });
 
 function clientSelectTable(table) {
-  chosenTable = table;
-  
-  officialTables.forEach(t => {
-    const btn = document.getElementById(`front-btn-${t}`);
-    if (!btn) return;
-    
-    let colSpan = t.includes("吧台") ? "col-span-2" : (t === "包廂" || t === "圓桌" ? "col-span-4" : "col-span-1");
+chosenTable = table;
 
-    if (t === table) {
-      btn.className = `${colSpan} py-3 font-black rounded-lg border border-amber-500 bg-amber-500 text-black shadow-md shadow-amber-500/20 active:scale-95 transition-all duration-200`;
-    } else {
-      btn.className = `${colSpan} py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200`;
-    }
-  });
+officialTables.forEach(t => {
+const btn = document.getElementById(`front-btn-${t}`);
+if (!btn) return;
 
-  const display = document.getElementById('selected-table-display');
-  if (display) {
-    display.textContent = ` 您的桌號為 ${table} ，請開始點餐 `;
-    display.className = "text-md font-black text-green-400";
-  }
+let colSpan = t.includes("吧台") ? "col-span-2" : (t === "包廂" || t === "圓桌" ? "col-span-4" : "col-span-1");
+
+if (t === table) {
+btn.className = `${colSpan} py-3 font-black rounded-lg border border-amber-500 bg-amber-500 text-black shadow-md shadow-amber-500/20 active:scale-95 transition-all duration-200`;
+} else {
+btn.className = `${colSpan} py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200`;
+}
+});
+
+const display = document.getElementById('selected-table-display');
+if (display) {
+display.textContent = ` 您的桌號為 ${table} ，請開始點餐 `;
+display.className = "text-md font-black text-green-400";
+}
 }
 
 function renderItems(container, items, type) {
-  if (!container || !items) return;
-  
-  container.innerHTML = items.map(item => {
-    let actionButtons = '';
-    if (type === 'food') {
-      actionButtons = `+加入`;
-    } else {
-      actionButtons = `
-      <button onclick="validatedAdd(this, '${item.name.replace(/'/g,"\\\\'")}',${item.price},'drink','')" class="bg-amber-600 text-white border border-amber-500 rounded-lg px-4 py-2 text-xs font-bold transition-all hover:bg-amber-500 active:scale-95">＋加入</button>`;
-    }
+if (!container || !items) return;
 
-    return `
+container.innerHTML = items.map(item => {
+let actionButtons = '';
+if (type === 'food') {
+actionButtons = `+加入`;
+} else {
+actionButtons = `
+     <button onclick="validatedAdd(this, '${item.name.replace(/'/g,"\\\\'")}',${item.price},'drink','')" class="bg-amber-600 text-white border border-amber-500 rounded-lg px-4 py-2 text-xs font-bold transition-all hover:bg-amber-500 active:scale-95">＋加入</button>`;
+}
+
+return `
 <div class="bg-black/30 border border-amber-900/20 rounded-2xl p-3 flex gap-3 shadow-md">
-  <div class="flex-1 min-w-0 flex flex-col justify-between">
-    <div>
-      <div class="font-bold text-amber-100">${item.name}</div>
-      <div class="text-[11px] text-gray-500 font-medium">${item.en}</div>
-      <div class="text-[11px] text-gray-400 mt-1 leading-tight">${item.desc}</div>
-    </div>
-    <div class="flex items-center justify-between mt-2">
-      <span class="text-amber-500 font-bold text-sm">NT$${item.price}</span>
-      ${actionButtons}
-    </div>
-  </div>
+ <div class="flex-1 min-w-0 flex flex-col justify-between">
+   <div>
+     <div class="font-bold text-amber-100">${item.name}</div>
+     <div class="text-[11px] text-gray-500 font-medium">${item.en}</div>
+     <div class="text-[11px] text-gray-400 mt-1 leading-tight">${item.desc}</div>
+   </div>
+   <div class="flex items-center justify-between mt-2">
+     <span class="text-amber-500 font-bold text-sm">NT$${item.price}</span>
+     ${actionButtons}
+   </div>
+ </div>
 </div>`;
-  }).join('');
+}).join('');
 }
 
 function renderFilters(container,cats,current,setter){
-  container.innerHTML=Object.keys(cats).map(c=>`<button class="sub-btn whitespace-nowrap px-4 py-1.5 rounded-full text-xs font-medium border transition ${c===current?'active':''}" data-cat="${c}">${c}</button>`).join('');
-  container.querySelectorAll('.sub-btn').forEach(b=>{
-    b.addEventListener('click',()=>{ setter(b.dataset.cat); });
-  });
+container.innerHTML=Object.keys(cats).map(c=>`<button class="sub-btn whitespace-nowrap px-4 py-1.5 rounded-full text-xs font-medium border transition ${c===current?'active':''}" data-cat="${c}">${c}</button>`).join('');
+container.querySelectorAll('.sub-btn').forEach(b=>{
+b.addEventListener('click',()=>{ setter(b.dataset.cat); });
+});
 }
 
 function initAlcohol(){
-  renderFilters(document.getElementById('alcohol-filters'),MENU.alcohol,currentAlcoholCat,c=>{currentAlcoholCat=c;initAlcohol();});
-  renderItems(document.getElementById('alcohol-items'),MENU.alcohol[currentAlcoholCat],'drink');
+renderFilters(document.getElementById('alcohol-filters'),MENU.alcohol,currentAlcoholCat,c=>{currentAlcoholCat=c;initAlcohol();});
+renderItems(document.getElementById('alcohol-items'),MENU.alcohol[currentAlcoholCat],'drink');
 }
 function initNonalcohol(){
-  renderFilters(document.getElementById('nonalcohol-filters'),MENU.nonalcohol,currentNonalcoholCat,c=>{currentNonalcoholCat=c;initNonalcohol();});
-  renderItems(document.getElementById('nonalcohol-items'),MENU.nonalcohol[currentNonalcoholCat],'drink');
+renderFilters(document.getElementById('nonalcohol-filters'),MENU.nonalcohol,currentNonalcoholCat,c=>{currentNonalcoholCat=c;initNonalcohol();});
+renderItems(document.getElementById('nonalcohol-items'),MENU.nonalcohol[currentNonalcoholCat],'drink');
 }
 function initFood(){ renderItems(document.getElementById('food-items'),MENU.food,'food'); }
 initAlcohol(); initNonalcohol(); initFood();
 
 function validatedAdd(btn, name, price, type, note) {
-  if (!chosenTable) {
-    const alertBox = document.getElementById('global-alert');
-    alertBox.textContent = "請先至首頁點選桌號位置，就可以開始點餐囉！";
-    alertBox.style.transform = "translateY(0)";
-    document.getElementById('nav-home').click();
-    const box = document.getElementById('table-box');
-    box.classList.add('error-flash');
-    box.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    setTimeout(() => { alertBox.style.transform = "translateY(-128px)"; box.classList.remove('error-flash'); }, 4000);
-    return;
-  }
+if (!chosenTable) {
+const alertBox = document.getElementById('global-alert');
+alertBox.textContent = "請先至首頁點選桌號位置，就可以開始點餐囉！";
+alertBox.style.transform = "translateY(0)";
+document.getElementById('nav-home').click();
+const box = document.getElementById('table-box');
+box.classList.add('error-flash');
+box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+setTimeout(() => { alertBox.style.transform = "translateY(-128px)"; box.classList.remove('error-flash'); }, 4000);
+return;
+}
 
-  btn.classList.add('neon-active');
-  const cartIcon = document.getElementById('cart-badge');
-  cartIcon.classList.add('neon-active');
-  setTimeout(() => { btn.classList.remove('neon-active'); cartIcon.classList.remove('neon-active'); }, 500);
-  addToCart(name, price, type, note);
+btn.classList.add('neon-active');
+const cartIcon = document.getElementById('cart-badge');
+cartIcon.classList.add('neon-active');
+setTimeout(() => { btn.classList.remove('neon-active'); cartIcon.classList.remove('neon-active'); }, 500);
+addToCart(name, price, type, note);
 }
 
 function addToCart(name,price,type,note){
-  const existing=cart.find(i=>i.name===name && i.note===note);
-  if(existing){
-    existing.qty++;
-  }else{
-    cart.push({name:name,price:price,qty:1,note:note,type:type});
-  }
-  updateBadge();
+const existing=cart.find(i=>i.name===name && i.note===note);
+if(existing){
+existing.qty++;
+}else{
+cart.push({name:name,price:price,qty:1,note:note,type:type});
+}
+updateBadge();
 }
 
 function updateBadge(){
-  const total=cart.reduce((s,i)=>s+i.qty,0);
-  const badge = document.getElementById('cart-badge');
-  badge.classList.toggle('hidden',total===0);
-  document.getElementById('cart-count').textContent=total;
+const total=cart.reduce((s,i)=>s+i.qty,0);
+const badge = document.getElementById('cart-badge');
+badge.classList.toggle('hidden',total===0);
+document.getElementById('cart-count').textContent=total;
 }
 
 document.getElementById('cart-badge').addEventListener('click',openCart);
 document.getElementById('close-cart').addEventListener('click',closeCart);
 
 function openCart(){
-  const list=document.getElementById('cart-list');
-  list.innerHTML=cart.map((item,i)=>{
-    let displayName = item.name;
+const list=document.getElementById('cart-list');
+list.innerHTML=cart.map((item,i)=>{
+let displayName = item.name;
 
-    return `
-    <div class="bg-black/20 border border-amber-900/10 rounded-xl p-3 flex justify-between items-center text-sm">
-      <div>
-        <div class="font-medium text-amber-100">${displayName}</div>
-        <div class="text-[11px] text-gray-500 mt-0.5">單價 NT$${item.price}</div>
-      </div>
-      <div class="flex items-center gap-4">
-        <div class="flex items-center bg-stone-900 rounded-lg border border-amber-900/30 overflow-hidden">
-          <button onclick="changeQty(${i}, -1)" class="px-2.5 py-1 text-amber-600 hover:bg-stone-800 font-bold">-</button>
-          <span class="px-3 text-amber-200 font-bold text-xs">${item.qty}</span>
-          <button onclick="changeQty(${i}, 1)" class="px-2.5 py-1 text-amber-600 hover:bg-stone-800 font-bold">+</button>
-        </div>
-        <span class="text-amber-400 font-bold min-w-[60px] text-right">NT$${item.price*item.qty}</span>
-      </div>
-    </div>`;
-  }).join('');
-  
-  document.getElementById('cart-total').textContent='NT$'+cart.reduce((s,i)=>s+i.price*i.qty,0);
-  document.getElementById('cart-error').classList.add('hidden');
-  document.getElementById('cart-success').classList.add('hidden');
-  document.getElementById('cart-panel').classList.add('open');
+return `
+   <div class="bg-black/20 border border-amber-900/10 rounded-xl p-3 flex justify-between items-center text-sm">
+     <div>
+       <div class="font-medium text-amber-100">${displayName}</div>
+       <div class="text-[11px] text-gray-500 mt-0.5">單價 NT$${item.price}</div>
+     </div>
+     <div class="flex items-center gap-4">
+       <div class="flex items-center bg-stone-900 rounded-lg border border-amber-900/30 overflow-hidden">
+         <button onclick="changeQty(${i}, -1)" class="px-2.5 py-1 text-amber-600 hover:bg-stone-800 font-bold">-</button>
+         <span class="px-3 text-amber-200 font-bold text-xs">${item.qty}</span>
+         <button onclick="changeQty(${i}, 1)" class="px-2.5 py-1 text-amber-600 hover:bg-stone-800 font-bold">+</button>
+       </div>
+       <span class="text-amber-400 font-bold min-w-[60px] text-right">NT$${item.price*item.qty}</span>
+     </div>
+   </div>`;
+}).join('');
+
+document.getElementById('cart-total').textContent='NT$'+cart.reduce((s,i)=>s+i.price*i.qty,0);
+document.getElementById('cart-error').classList.add('hidden');
+document.getElementById('cart-success').classList.add('hidden');
+document.getElementById('cart-panel').classList.add('open');
 }
 
 function changeQty(index, delta) {
-  if(cart[index]) {
-    cart[index].qty += delta;
-    if(cart[index].qty <= 0) {
-      cart.splice(index, 1);
-    }
-    updateBadge();
-    openCart();
-  }
+if(cart[index]) {
+cart[index].qty += delta;
+if(cart[index].qty <= 0) {
+cart.splice(index, 1);
+}
+updateBadge();
+openCart();
+}
 }
 
 function closeCart(){
-  document.getElementById('cart-panel').classList.remove('open');
+document.getElementById('cart-panel').classList.remove('open');
 }
 
 document.getElementById('submit-order').addEventListener('click',async()=>{
-  const btn=document.getElementById('submit-order');
-  const errEl=document.getElementById('cart-error');
-  const successEl=document.getElementById('cart-success');
-  
-  if(!chosenTable) {
-    errEl.textContent='請返回首頁點選您的桌號位置再進行點餐';
-    errEl.classList.remove('hidden');
-    return;
-  }
+const btn=document.getElementById('submit-order');
+const errEl=document.getElementById('cart-error');
+const successEl=document.getElementById('cart-success');
 
-  btn.disabled=true; btn.textContent = '正在傳送點餐明細...';
-  errEl.classList.add('hidden'); successEl.classList.add('hidden');
-  
-  const expandedItems = [];
-  cart.forEach(item => {
-    for (let q = 0; q < item.qty; q++) {
-      expandedItems.push({
-        name: item.name,
-        price: item.price,
-        quantity: 1,
-        note: ""
-      });
-    }
-  });
+if(!chosenTable) {
+errEl.textContent='請返回首頁點選您的桌號位置再進行點餐';
+errEl.classList.remove('hidden');
+return;
+}
 
-  const orderData = {
-    tableNum: chosenTable, 
-    totalAmount: cart.reduce((s,i)=>s+i.price*i.qty,0),
-    items: expandedItems
-  };
+btn.disabled=true; btn.textContent = '正在傳送點餐明細...';
+errEl.classList.add('hidden'); successEl.classList.add('hidden');
 
-  try {
-    const response = await fetch(BACKEND_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify(orderData)
-    });
+const expandedItems = [];
+cart.forEach(item => {
+for (let q = 0; q < item.qty; q++) {
+expandedItems.push({
+name: item.name,
+price: item.price,
+quantity: 1,
+note: ""
+});
+}
+});
 
-    const result = await response.json();
-    if (result.success) {
-      successEl.textContent = '點餐成功！調酒師準備中！';
-      successEl.classList.remove('hidden');
-      cart = []; updateBadge();
-      setTimeout(() => { closeCart(); btn.disabled = false; btn.textContent = '確認送出'; }, 3500);
-    } else {
-      throw new Error(result.error);
-    }
-  } catch (error) {
-    errEl.textContent = '訂單可能已成功送出！因網路連線或系統回應異常，請向櫃檯人員確認訂單是否成立。請勿重複送出，以免重複下單。';
-    errEl.classList.remove('hidden');
-    btn.disabled = false; btn.textContent = '確認送出';
-  }
+const orderData = {
+tableNum: chosenTable, 
+totalAmount: cart.reduce((s,i)=>s+i.price*i.qty,0),
+items: expandedItems
+};
+
+try {
+const response = await fetch(BACKEND_URL, {
+method: 'POST',
+headers: { 'Content-Type': 'text/plain' },
+body: JSON.stringify(orderData)
+});
+
+const result = await response.json();
+if (result.success) {
+successEl.textContent = '點餐成功！調酒師準備中！';
+successEl.classList.remove('hidden');
+cart = []; updateBadge();
+setTimeout(() => { closeCart(); btn.disabled = false; btn.textContent = '確認送出'; }, 3500);
+} else {
+throw new Error(result.error);
+}
+} catch (error) {
+errEl.textContent = '訂單可能已成功送出！因網路連線或系統回應異常，請向櫃檯人員確認訂單是否成立。請勿重複送出，以免重複下單。';
+errEl.classList.remove('hidden');
+btn.disabled = false; btn.textContent = '確認送出';
+}
 });
 
 lucide.createIcons();
-  </script>
- </body>
+</script>
+</body>
 </html>
-```<FollowUp label="我想測試點餐看看資料有沒有成功送到 Google Sheet" query="我想測試點餐看看資料有沒有成功送到 Google Sheet"/> 
+```<FollowUp label="我想測試點餐看看資料有沒有成功送到 Google Sheet" query="我想測試點餐看看資料有沒有成功送到 Google Sheet"/>
