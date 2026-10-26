@@ -1,450 +1,122 @@
-<!doctype html>
-<html lang="zh-TW">
- <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>See Ya Bar</title>
-  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
-  <style>
-    :root {
-        --sunset-dark: #1a0f0a;
-        --sunset-amber: #3d2419;
-        --neon-glow: #f59e0b;
-        --neon-success: #4ade80;
-    }
-    body { 
-        font-family: 'DM Sans', sans-serif; 
-        margin:0; padding:0; 
-        background: linear-gradient(135deg, var(--sunset-dark), var(--sunset-amber));
-        color: #f3f4f6;
-    }
-    .tab-page { display:none; }
-    .tab-page.active { display:block; }
-    .home-container { min-height: calc(100vh - 12rem); display: flex; flex-direction: column; justify-content: center; }
-    
-    @keyframes neonPulse {
-        0% { box-shadow: 0 0px var(--neon-success); transform: scale(1); }
-        50% { box-shadow: 0 0 25px var(--neon-success); transform: scale(1.15); border-color: var(--neon-success); }
-        100% { box-shadow: 0 0px var(--neon-success); transform: scale(1); }
-    }
-    .neon-active { animation: neonPulse 0.5s ease-in-out; background-color: rgba(74, 222, 128, 0.2) !important; color: #4ade80 !important; }
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>See Ya Bar | 營運數據分析</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"><script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script><style>
+:root{--bg:#f5f7fb;--ink:#15263a;--muted:#7b8a9c;--line:#e7edf4;--navy:#12243b;--blue:#326ce5;--teal:#12a89a;--orange:#f0a347;--red:#dd6674;--white:#fff}*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:'Noto Sans TC',sans-serif;color:var(--ink)}button,input,select{font:inherit}button{cursor:pointer}.shell{max-width:1480px;margin:auto;padding:28px 30px 64px}.top{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:26px}.brand{display:flex;gap:14px;align-items:center}.logo{background:var(--navy);color:#fff;width:54px;height:54px;border-radius:17px;display:grid;place-items:center;font-size:25px;box-shadow:0 9px 24px #12243b22}.brand h1{font-family:'Plus Jakarta Sans','Noto Sans TC',sans-serif;font-size:24px;letter-spacing:-.6px;margin:0}.brand p{margin:4px 0 0;font-size:12px;color:var(--muted)}.actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.btn{border:1px solid var(--line);background:white;border-radius:10px;padding:11px 15px;font-size:13px;font-weight:700;color:var(--ink)}.btn.primary{background:var(--navy);color:white;border-color:var(--navy)}.btn i{margin-right:7px}.hint{font-size:12px;color:var(--muted)}.tabs{display:flex;gap:7px;overflow:auto;border-bottom:1px solid #dfe6ef;margin-bottom:24px}.tab{white-space:nowrap;border:0;background:none;color:#748399;padding:15px 20px;font-weight:700;border-bottom:3px solid transparent}.tab.active{color:var(--blue);border-color:var(--blue)}.filters{display:flex;gap:15px;align-items:end;flex-wrap:wrap;background:white;border:1px solid var(--line);border-radius:16px;padding:16px 20px;margin-bottom:22px;box-shadow:0 4px 18px #172c4506}.field{display:flex;flex-direction:column;gap:6px}.field label{font-size:11px;font-weight:700;color:var(--muted)}.field input,.field select{border:1px solid #dfe7f1;background:#fbfcfe;border-radius:8px;padding:9px 11px;min-width:140px;color:var(--ink);outline:none}.filter-note{margin-left:auto;font-size:12px;color:var(--muted);line-height:1.8}.kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:15px;margin-bottom:22px}.kpi,.card{background:white;border:1px solid var(--line);border-radius:17px;box-shadow:0 4px 20px #1e35510a}.kpi{padding:20px 20px 18px}.kpi .name{font-size:12px;color:var(--muted);font-weight:700}.kpi .value{font-family:'Plus Jakarta Sans','Noto Sans TC',sans-serif;font-size:27px;font-weight:800;margin:13px 0 5px;letter-spacing:-1px}.kpi .small{font-size:11px;color:var(--muted)}.kpi .ico{float:right;color:var(--blue);font-size:16px}.grid{display:grid;grid-template-columns:1.3fr 1fr;gap:18px}.card{padding:22px 24px;min-width:0}.card.full{grid-column:1/-1}.card h3{font-size:16px;margin:0 0 6px}.card .desc{font-size:12px;color:var(--muted);margin:0 0 19px;line-height:1.7}.chart{height:300px;position:relative}.chart.tall{height:360px}.section{display:none}.section.active{display:block}.data-table{width:100%;border-collapse:collapse;font-size:12px}.data-table th{text-align:left;color:#748399;background:#f7f9fc;padding:12px 11px;font-weight:700;white-space:nowrap}.data-table td{padding:12px 11px;border-bottom:1px solid #edf1f6}.data-table td.num{text-align:right;font-family:'Plus Jakarta Sans','Noto Sans TC',sans-serif;font-weight:700}.data-table th.num{text-align:right}.table-scroll{max-height:470px;overflow:auto}.table-scroll thead{position:sticky;top:0;z-index:1}.badge{background:#e9f7f3;color:#078c7f;padding:4px 8px;border-radius:6px;font-weight:700}.heat-wrap{overflow:auto}.heat{width:100%;border-spacing:5px;border-collapse:separate;min-width:720px}.heat th{font-size:11px;color:#75879c;padding:7px}.heat td{text-align:center;border-radius:6px;padding:13px 4px;font-size:11px;font-weight:700;min-width:60px}.insights{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.insight{padding:16px 18px;border-radius:12px;background:#f7faff;border:1px solid #e6edf9}.insight strong{display:block;font-size:13px;margin-bottom:7px}.insight p{margin:0;font-size:12px;color:#586b80;line-height:1.9}.footer{text-align:center;font-size:11px;color:#9aa8b9;margin-top:32px}.empty{color:var(--muted);padding:30px;text-align:center}.pill{display:inline-block;border-radius:99px;background:#eef5ff;color:#3768b7;padding:5px 10px;font-size:11px;font-weight:700;margin-left:7px}.warning{background:#fff8ec;border:1px solid #f9e3b9;color:#8b6424;padding:12px 16px;border-radius:10px;font-size:12px;line-height:1.8;margin-bottom:20px}.split{display:flex;justify-content:space-between;align-items:center;gap:12px}.subtabs{display:flex;gap:8px;margin-bottom:15px;flex-wrap:wrap}.chip{border:1px solid var(--line);border-radius:8px;background:#fff;padding:8px 12px;font-size:12px;color:#607186}.chip.active{background:#eaf1ff;color:#265ac6;border-color:#cbdcfb}@media(max-width:1100px){.kpis{grid-template-columns:repeat(3,1fr)}.grid{grid-template-columns:1fr}}@media(max-width:650px){.shell{padding:16px 12px 40px}.top{align-items:flex-start;flex-direction:column}.brand h1{font-size:20px}.kpis{grid-template-columns:repeat(2,1fr);gap:10px}.kpi{padding:16px}.kpi .value{font-size:23px}.card{padding:17px}.filters{padding:13px}.field input{min-width:120px}.insights{grid-template-columns:1fr}.chart{height:260px}}
 
-    @keyframes inputError {
-        0%, 100% { border-color: #f59e0b; }
-        50% { border-color: #ef4444; box-shadow: 0 0 15px #ef4444; }
-    }
-    .error-flash { animation: inputError 0.4s ease infinite; }
+/* See Ya Analytics 2.0 — gradient motion skin */
+:root{--bg:#f4f7ff;--blue:#6366f1;--teal:#06b6d4;--navy:#18214a}
+body{background:radial-gradient(ellipse 65% 45% at 7% 3%,#c7d2fe8c,transparent 70%),radial-gradient(ellipse 50% 50% at 97% 12%,#a5f3fc77,transparent 75%),linear-gradient(145deg,#f7f9ff,#f1f5fb 60%,#f9f4ff);background-attachment:fixed;min-height:100vh}
+.shell{animation:pageIn .7s cubic-bezier(.2,.7,.2,1) both}
+@keyframes pageIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.logo{background:linear-gradient(135deg,#6366f1,#06b6d4 65%,#38bdf8);box-shadow:0 12px 28px #6366f155;animation:logoFloat 6s ease-in-out infinite}
+@keyframes logoFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.brand h1{background:linear-gradient(90deg,#1e2a56,#6366f1,#0891b2);background-clip:text;-webkit-background-clip:text;color:transparent}
+.filters,.kpi,.card,.panel{backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.kpi,.card,.panel{transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
+.kpi:hover,.card:hover,.panel:hover{transform:translateY(-3px);box-shadow:0 14px 32px #5865a21a}
+.btn.primary{background:linear-gradient(110deg,#4f46e5,#0891b2);border:0;box-shadow:0 7px 18px #6366f12d}
+.btn{transition:transform .18s ease,box-shadow .18s ease} 
+.btn:hover{transform:translateY(-2px);box-shadow:0 7px 18px #1e2a5615}
+.tab.active{color:#4f46e5;border-color:#6366f1}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+/* Analytics chart visual polish */
+.chart canvas{filter:drop-shadow(0 5px 9px rgba(99,102,241,.09))}
+.heat td{transition:transform .2s ease,filter .2s ease,box-shadow .2s ease}
+.heat td:hover{transform:scale(1.07);filter:saturate(1.3);box-shadow:0 5px 14px #6366f133}
+@media(prefers-reduced-motion:reduce){.heat td{transition:none}}
+</style></head><body><div class="shell"><header class="top"><div class="brand"><div class="logo"><i class="fa-solid fa-chart-simple"></i></div><div><h1>See Ya Bar <span style="font-weight:500;color:#8a9cb2">/ Analytics</span></h1><p>營運數據分析中心 · 營業日 19:00 – 隔日 05:00 · 獨立分析資料源</p></div></div><div class="actions"><span class="hint" id="sourceLabel" style="font-weight:800;color:#b45309">等待分析資料同步</span><button class="btn" onclick="syncNow()"><i class="fa-solid fa-rotate"></i>立即同步</button><button class="btn" onclick="document.getElementById('file').click()"><i class="fa-solid fa-file-arrow-up"></i>匯入 Excel / CSV</button><input id="file" type="file" accept=".xlsx,.xls,.csv" hidden><button class="btn primary" onclick="exportCSV()"><i class="fa-solid fa-download"></i>匯出統計 CSV</button></div></header><nav class="tabs"><button class="tab active" data-tab="overview"><i class="fa-solid fa-gauge-high"></i> 營業總覽</button><button class="tab" data-tab="hours"><i class="fa-regular fa-clock"></i> 時段分析</button><button class="tab" data-tab="products"><i class="fa-solid fa-wine-glass"></i> 酒水銷售</button><button class="tab" data-tab="operations"><i class="fa-solid fa-clipboard-check"></i> 營運檢討</button></nav><div class="filters"><div class="field"><label>營業日起始</label><input type="date" id="from"></div><div class="field"><label>營業日結束</label><input type="date" id="to"></div><div class="field"><label>星期篩選</label><select id="weekday"><option value="all">全部星期</option><option value="0">週日</option><option value="1">週一</option><option value="2">週二</option><option value="3">週三</option><option value="4">週四</option><option value="5">週五</option><option value="6">週六</option></select></div><button class="btn" onclick="resetFilters()">重設篩選</button></div><div class="kpis" id="kpis"></div><section id="overview" class="section active"><div class="grid"><div class="card"><h3>每日實收營業額 <span class="pill">依營業日</span></h3><p class="desc">僅計入已結帳品項之實際結帳金額；點選日期可查看該日明細。</p><div class="chart"><canvas id="dailyChart"></canvas></div></div><div class="card full"><div class="split"><h3>每日營業紀錄</h3><button class="btn" onclick="exportDailyCSV()"><i class="fa-solid fa-download"></i>下載每日紀錄 CSV</button></div><div class="table-scroll"><table class="data-table" id="dailyTable"></table></div></div></div></section><section id="hours" class="section"><div class="grid"><div class="card full"><h3>星期 × 小時｜點餐熱力圖</h3><p class="desc">格內為有效點餐品項數（按商品數量換算前）；19:00 至隔日 05:00，依營業日的星期分類。</p><div class="heat-wrap" id="heat"></div></div><div class="card full"><h3>各時段點餐數與實收營業額</h3><p class="desc">柱狀圖為有效點餐筆數；折線圖為已結帳實收營業額，採雙座標軸呈現，方便比較趨勢。</p><div class="chart tall"><canvas id="hourComboChart"></canvas></div></div></div></section><section id="products" class="section"><div class="grid"><div class="card full"><h3>熱銷商品 TOP 12</h3><p class="desc">依商品類別區分顏色：啤酒、招牌特調、經典調酒、Shot、無酒精、其他。</p><p class="desc">依實際出貨數量排序；買五送一組合換算為 6 瓶。</p><div class="chart" style="height:440px"><canvas id="topChart"></canvas></div></div><div class="card full"><h3>商品銷售明細</h3><p class="desc">同一商品不同價格保留在原始品項，並歸入標準商品；銷量與營收分別統計。</p><div class="table-scroll"><table class="data-table" id="productTable"></table></div></div></div></section><section id="operations" class="section"><div class="grid"><div class="card"><h3>折扣與取消概況</h3><p class="desc">已結帳品項的折抵金額，以及取消品項的原始金額。</p><div id="discountBox"></div></div><div class="card full"><h3>營運觀察與進貨提示</h3><p class="desc">根據目前篩選期間的交易資料自動產生，屬描述性提示，不等於採購預測。</p><div class="insights" id="insights"></div></div><div class="card full"><h3>資料品質與計算規則</h3><p class="desc">此區說明統計口徑，避免重複計算或誤讀。</p><div id="quality" style="font-size:12px;color:#5f7288;line-height:2"></div></div></div></section><footer class="footer">© See Ya Bar · Executive Analytics System · 唯讀營運分析 · 每 5 分鐘自動同步 · 不會修改訂單</footer></div><script>
+const ANALYTICS_API_URL = 'https://script.google.com/macros/s/AKfycbxvvvsN4aLGV7zep_L15JQupYCY-QnzglYrYTI9yipSg2IWzUnHyWaAUYWIxwb2hmeH/exec';
+const EMBEDDED = []; let syncState="尚未同步";
+const COL=['點餐時間','桌號','品項','金額','結帳狀況','結帳時間','付款方式','出單狀況','取消原因','折扣比例','折扣前應收','折抵金額','實際結帳金額','結帳編號'];let raw=EMBEDDED.map(a=>Object.fromEntries(COL.map((k,i)=>[k,a[i]??'']))),all=[],selected=[],charts={};const money=n=>'NT$ '+Math.round(n||0).toLocaleString('zh-TW'),n=v=>{if(typeof v==='number')return v;let s=String(v??'').replace(/[,，NT$元\s]/g,'');return Number(s)||0},dateVal=v=>{if(v===null||v===undefined||v==='')return null;if(v instanceof Date)return isNaN(v)?null:v;if(typeof v==='number'||(/^\d{4,6}(\.\d+)?$/.test(String(v).trim())&&Number(v)>40000)){const d=new Date(Date.UTC(1899,11,30)+Number(v)*86400000);return new Date(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate(),d.getUTCHours(),d.getUTCMinutes(),d.getUTCSeconds())}let s=String(v).trim();if(!s||s==='-')return null;const m=s.match(/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})[ T](\d{1,2}):(\d{1,2})(?::(\d{1,2}))?$/);if(m){const d=new Date(+m[1],+m[2]-1,+m[3],+m[4],+m[5],+(m[6]||0));return d.getFullYear()===+m[1]&&d.getMonth()===+m[2]-1&&d.getDate()===+m[3]&&d.getHours()===+m[4]?d:null;}s=s.replace(/\//g,'-');let d=new Date(s.replace(' ','T'));return isNaN(d)?null:d};const pad=x=>String(x).padStart(2,'0'),ymd=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`,hm=d=>d?`${pad(d.getHours())}:${pad(d.getMinutes())}`:'—',weekday=['日','一','二','三','四','五','六'];function businessDate(d){let a=new Date(d);if(a.getHours()<19)a.setDate(a.getDate()-1);return ymd(a)}function businessHour(d){let h=d.getHours();return h<19?h+24:h}function normName(s){return String(s||'').replace(/\s*x\s*\d+\s*$/i,'').trim()}function qtyName(s){let m=String(s||'').match(/\s*x\s*(\d+)\s*$/i);return m?Number(m[1]):1}function product(s){let name=normName(s);let q=qtyName(s);if(/買五送一/.test(name)){q*=6;name=name.replace(/買五送一[（(]?/g,'').replace(/[）)]/g,'').trim()}name=name.replace(/（島民優惠）|\(島民優惠\)|（島民）/g,'').trim();return {name:name||'未命名商品',qty:q}}function prepare(){all=raw.map((r,i)=>{let d=dateVal(r['點餐時間']);if(!d || (d.getHours()>=5 && d.getHours()<19))return null;let cancelled=String(r['出單狀況']||'').includes('取消')||String(r['結帳狀況']||'').includes('取消');let paid=String(r['結帳狀況']||'').includes('已結帳')&&!cancelled;let p=product(r['品項']);let gross=n(r['金額']),received=paid?n(r['實際結帳金額']):0;return {...r,idx:i,row:r['原始列號']||i+2,d,day:businessDate(d),hour:businessHour(d),cancelled,paid,gross,received,discount:paid?n(r['折抵金額']):0,product:p.name,qty:p.qty,orderName:normName(r['品項'])}}).filter(Boolean);let days=all.map(r=>r.day).sort();if(days.length){document.getElementById('from').value=days[0];document.getElementById('to').value=days.at(-1)}refresh()}function refresh(){let from=document.getElementById('from').value,to=document.getElementById('to').value,w=document.getElementById('weekday').value;selected=all.filter(r=>r.day>=from&&r.day<=to&&(w==='all'||new Date(r.day+'T12:00:00').getDay()===Number(w)));render()}const sum=(a,fn)=>a.reduce((s,x)=>s+fn(x),0),group=(a,key)=>{let m=new Map();for(let x of a){let k=key(x);if(!m.has(k))m.set(k,[]);m.get(k).push(x)}return m};function table(id,heads,rows){let t=document.getElementById(id);t.innerHTML='<thead><tr>'+heads.map(h=>`<th>${esc(h)}</th>`).join('')+'</tr></thead><tbody>'+ (rows.length?rows.map(row=>'<tr>'+row.map(x=>`<td>${esc(x)}</td>`).join('')+'</tr>').join(''):'<tr><td colspan="'+heads.length+'" class="empty">此期間沒有符合條件的資料</td></tr>')+'</tbody>'}function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}const colors=['#326ce5','#12a89a','#f0a347','#9a7ce1','#dd6674','#5c9fd1','#7a91ad','#c8a463'];function chart(id,type,labels,data,options={}){
+ if(charts[id])charts[id].destroy();
+ if(!window.Chart){document.getElementById(id).parentElement.textContent='無法載入 Chart.js，請連線後重新開啟';return}
+ const canvas=document.getElementById(id),ctx=canvas.getContext('2d');
+ const palettes=[['#6366f1','#22d3ee'],['#06b6d4','#34d399'],['#8b5cf6','#ec4899'],['#f59e0b','#fcd34d'],['#f43f5e','#fb923c'],['#2563eb','#818cf8'],['#0d9488','#67e8f9'],['#a855f7','#c084fc']];
+ const gradient=(a,b,horizontal=false)=>{const g=ctx.createLinearGradient(0,0,horizontal?canvas.clientWidth:0,horizontal?0:canvas.clientHeight||300);g.addColorStop(0,a);g.addColorStop(1,b);return g};
+ const base=options.color==='#12a89a'?['#06b6d4','#34d399']:['#6366f1','#22d3ee'];
+ const fills=type==='doughnut'?labels.map((_,i)=>gradient(...palettes[i%palettes.length],true)):gradient(...base,!!options.horizontal);
+ const lineFill=gradient('rgba(99,102,241,.32)','rgba(34,211,238,.015)');
+ const dataset={label:options.label||'數量',data,backgroundColor:type==='line'?lineFill:fills,borderColor:type==='line'?'#6366f1':type==='doughnut'?'#ffffff':'rgba(255,255,255,.35)',borderWidth:type==='line'?3:type==='doughnut'?3:1,fill:type==='line',tension:.4,borderRadius:type==='bar'?9:0,borderSkipped:false,hoverBackgroundColor:type==='doughnut'?fills:gradient('#8b5cf6','#22d3ee',!!options.horizontal),hoverBorderWidth:type==='doughnut'?4:1,pointRadius:type==='line'?4:0,pointHoverRadius:7,pointBackgroundColor:'#6366f1'};
+ charts[id]=new Chart(ctx,{type,data:{labels,datasets:[dataset]},options:{responsive:true,maintainAspectRatio:false,indexAxis:options.horizontal?'y':'x',animation:{duration:1100,easing:'easeOutQuart'},interaction:{mode:'nearest',intersect:false},plugins:{legend:{display:type==='doughnut',position:'bottom',labels:{usePointStyle:true,padding:16,color:'#64748b',font:{family:'Noto Sans TC'}}},tooltip:{backgroundColor:'rgba(24,33,74,.94)',titleColor:'#fff',bodyColor:'#e0e7ff',padding:13,cornerRadius:12,displayColors:type==='doughnut',callbacks:{label:c=>{const v=type==='doughnut'?c.parsed:(options.horizontal?c.parsed.x:c.parsed.y);return `${type==='doughnut'?c.label:(c.dataset.label||'數量')}: ${options.currency?money(v):Number(v||0).toLocaleString('zh-TW')}`}}}},scales:type==='doughnut'?{}:{x:{grid:{display:false},ticks:{color:'#8190a4',maxRotation:0,autoSkip:labels.length>15}},y:{beginAtZero:true,grid:{color:'rgba(99,102,241,.09)'},ticks:{color:'#8190a4'}}},cutout:type==='doughnut'?'66%':undefined}});
+}
 
-    .cart-panel { transform:translateY(100%); transition:transform .3s ease; background-color: #1a0f0a; border-top: 2px solid var(--neon-glow); }
-    .cart-panel.open { transform:translateY(0); }
-    
-    .nav-btn { color: #9ca3af; transition: all 0.2s ease; }
-    .nav-btn.active { color:var(--neon-glow); }
-    
-    .sub-btn { color: #cccccc; border-color: #5a3a2a; }
-    .sub-btn.active { background:var(--neon-glow); color:#1a0f0a; border-color:var(--neon-glow); }
-
-  </style>
- </head>
- <body class="w-full min-h-screen pb-32">
-  
-  <header class="relative bg-black/40">
-   <div class="w-full h-40 bg-gradient-to-r from-amber-900 to-stone-950 flex items-center justify-center text-white text-xl font-bold tracking-widest opacity-30">SEE YA BAR</div>
-   <div class="absolute inset-0 bg-gradient-to-b from-transparent to-sunset-dark"></div>
-   <div class="absolute bottom-4 left-4">
-    <h1 class="text-3xl font-bold text-white drop-shadow-sm">See Ya</h1>
-    <p class="text-sm text-amber-200/80">小琉球・深夜微醺</p>
-   </div>
-  </header>
-
-  <main class="px-4">
-   <section id="page-home" class="tab-page active">
-    <div class="home-container">
-     <div class="bg-black/30 rounded-2xl p-5 mb-5 border border-amber-900/40 text-center">
-      <div class="space-y-3 text-amber-100/90 leading-relaxed text-sm">
-       <p class="italic font-medium text-amber-400">Hidden in the heart of Xiaoliuqiu, See Ya is more than a bar.</p>
-       <p class="italic font-medium text-amber-400">It's where island nights begin, conversations last longer, and every goodbye becomes "See Ya."</p>
-       <p class="italic font-medium text-amber-400 mb-4">Great cocktails, warm lights, good people.</p>
-       <div class="w-12 h-[1px] bg-amber-500 mx-auto my-3"></div>
-       <p class="font-light">白天追著陽光、海風與浪花；夜晚，See Ya為你準備好酒精，讓旅程慢下來</p>
-       <p class="font-light">旅行最難忘的除了風景，還有笑聲與微醺的夜晚</p>
-       <p class="font-light text-amber-300 font-medium mt-2">在琉球，我們不說 Goodbye</p>
-       <p class="text-base text-amber-400 font-bold tracking-wider">我們說 See Ya。</p>
-      </div>
-     </div>
-     
-     <div class="bg-red-950/60 border border-red-700/50 rounded-xl p-4 mb-5 text-center shadow-sm">
-      <p class="text-xs text-red-200 font-medium">
-       ⚠️ 未滿18歲請勿飲酒｜理性飲酒，理性微醺｜本店低消一杯飲品<br>
-       <span class="block mt-1 font-bold text-red-100">歡慶開幕，啤酒買5送1!</span>
-      </p>
-     </div>
-     
-     <div id="table-box" class="bg-black/40 border-2 border-amber-500/70 rounded-xl p-5 shadow-lg transition-all duration-300 space-y-4">
-       <label class="block text-sm font-medium text-amber-400 font-bold">請先點選您的桌號</label> 
-       
-       <div class="bg-black/60 p-3 rounded-lg border border-amber-900/50 text-center">
-         <span class="text-xs text-amber-900 block mb-1">您目前選定的位置</span>
-         <span id="selected-table-display" class="text-md font-black text-rose-500 animate-pulse">尚未選擇桌號</span>
-       </div>
-
-       <div class="grid grid-cols-4 gap-2 text-xs">
-         <button type="button" id="front-btn-A1" onclick="clientSelectTable('A1')" class="col-span-1 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">A1</button>
-         <button type="button" id="front-btn-A2" onclick="clientSelectTable('A2')" class="col-span-1 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">A2</button>
-         <button type="button" id="front-btn-A3" onclick="clientSelectTable('A3')" class="col-span-1 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">A3</button>
-         <button type="button" id="front-btn-A4" onclick="clientSelectTable('A4')" class="col-span-1 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">A4</button>
-         <button type="button" id="front-btn-A5" onclick="clientSelectTable('A5')" class="col-span-1 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">A5</button>
-         <button type="button" id="front-btn-A6" onclick="clientSelectTable('A6')" class="col-span-1 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">A6</button>
-         
-         <button type="button" id="front-btn-吧台1" onclick="clientSelectTable('吧台1')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">吧台1</button>
-         <button type="button" id="front-btn-吧台2" onclick="clientSelectTable('吧台2')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">吧台2</button>
-         <button type="button" id="front-btn-吧台3" onclick="clientSelectTable('吧台3')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">吧台3</button>
-         <button type="button" id="front-btn-吧台4" onclick="clientSelectTable('吧台4')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">吧台4</button>
-         <button type="button" id="front-btn-吧台5" onclick="clientSelectTable('吧台5')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">吧台5</button>
-         <button type="button" id="front-btn-吧台6" onclick="clientSelectTable('吧台6')" class="col-span-2 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">吧台6</button>
-
-         <button type="button" id="front-btn-圓桌" onclick="clientSelectTable('圓桌')" class="col-span-4 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">圓桌</button>
-         <button type="button" id="front-btn-包廂" onclick="clientSelectTable('包廂')" class="col-span-4 py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200">包廂</button>
-       </div>
-     </div>
-    </div>
-   </section>
-
-   <section id="page-alcohol" class="tab-page">
-    <div id="alcohol-filters" class="flex gap-2 overflow-x-auto pb-3 mb-3 pt-2"></div>
-    <div id="alcohol-items" class="grid gap-4"></div>
-   </section>
-
-   <section id="page-nonalcohol" class="tab-page">
-    <div id="nonalcohol-filters" class="flex gap-2 overflow-x-auto pb-3 mb-3 pt-2"></div>
-    <div id="nonalcohol-items" class="grid gap-4"></div>
-   </section>
-
-   <section id="page-food" class="tab-page">
-    <div id="food-items" class="grid gap-4 pt-2"></div>
-   </section>
-  </main>
-
-  <div id="global-alert" class="fixed top-5 inset-x-4 bg-red-600 text-white font-bold p-4 rounded-xl text-center shadow-2xl z-50 transform -translate-y-32 transition-transform duration-300"></div>
-
-  <button id="cart-badge" class="fixed bottom-24 right-4 bg-amber-600 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center font-bold z-40 hidden transition-all duration-300">
-   <i data-lucide="shopping-cart" style="width:24px;height:24px"></i>
-   <span id="cart-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">0</span>
-  </button>
-
-  <div id="cart-panel" class="cart-panel fixed inset-x-0 bottom-[68px] z-40 max-h-[60vh] overflow-y-auto p-4 shadow-2xl rounded-t-3xl">
-   <div class="flex justify-between items-center mb-4">
-    <h2 class="font-bold text-lg text-amber-400">點餐明細</h2>
-    <button id="close-cart" class="text-amber-500"><i data-lucide="x" style="width:20px;height:20px"></i></button>
-   </div>
-   <div id="cart-list" class="space-y-4 mb-4"></div>
-   <div class="border-t border-amber-900/40 pt-3 mb-4">
-    <div class="flex justify-between font-bold text-amber-300"><span>合計金額</span><span id="cart-total">NT$0</span></div>
-   </div>
-   <button id="submit-order" class="w-full bg-amber-600 text-white font-bold py-3 rounded-xl hover:bg-amber-500 shadow-lg">確認送出</button>
-   <p id="cart-error" class="text-red-400 text-sm mt-2 text-center hidden"></p>
-   <p id="cart-success" class="text-green-400 text-sm mt-2 text-center hidden"></p>
-  </div>
-
-  <nav class="fixed bottom-0 inset-x-0 bg-black/90 backdrop-blur-md border-t border-amber-900/40 flex z-50 py-2">
-   <button class="nav-btn active flex-1 flex flex-col items-center py-1 text-[12px] font-bold" id="nav-home" data-page="home"><i data-lucide="home" class="mb-1"></i><span>首頁</span></button>
-   <button class="nav-btn flex-1 flex flex-col items-center py-1 text-[12px] font-bold" data-page="alcohol"><i data-lucide="glass-water" class="mb-1"></i><span>有酒精</span></button>
-   <button class="nav-btn flex-1 flex flex-col items-center py-1 text-[12px] font-bold" data-page="nonalcohol"><i data-lucide="cup-soda" class="mb-1"></i><span>無酒精</span></button>
-   <button class="nav-btn flex-1 flex flex-col items-center py-1 text-[12px] font-bold" data-page="food"><i data-lucide="popcorn" class="mb-1"></i><span>隱藏版美食</span></button>
-  </nav>
-
-  <script>
-const MENU = {
-  alcohol: {
-    "Signature": [
-      {name: "真正優秀的女人，連罩杯都拿A", en: "Signature Cocktail", desc: "紅酒 蔓越莓 百香果 水蜜桃 桑椹", price: 350, imageUrl: " "},
-      {name: "腳踏萬條船，踏都踏不完", en: "Signature Cocktail", desc: "琴酒 酸蘋果 接骨木 蜂蜜", price: 350, imageUrl: " "},
-      {name: "我回妳是秒回，妳回我是輪迴", en: "Signature Cocktail", desc: "蘭姆酒 芒果 芭樂 柳橙 梅粉", price: 350, imageUrl: " "},
-      {name: "不求對象門當戶對，但求你姿勢要到位", en: "Signature Cocktail", desc: "茉莉花茶 琴酒 蜂蜜 蘇打", price: 350, imageUrl: " "}
-    ],
-    "classic": [
-      {name: "Gimlet", en: "Gimlet", desc: " ", price: 250, imageUrl: " "},
-      {name: "Daiquiri", en: "Daiquiri", desc: " ", price: 250, imageUrl: " "},
-      {name: "柯夢波丹", en: "Cosmopolitan", desc: " ", price: 250, imageUrl: " "},
-      {name: "High ball", en: "High Ball", desc: " ", price: 250, imageUrl: " "},
-      {name: "Gin tonic", en: "Gin Tonic", desc: " ", price: 250, imageUrl: " "},
-      {name: "Cuba Libre", en: "Cuba Libre", desc: " ", price: 250, imageUrl: " "},
-      {name: "長島冰茶", en: "Long Island Iced Tea", desc: " ", price: 300, imageUrl: " "},
-      {name: "野格bomb", en: "Jägerbomb", desc: " ", price: 300, imageUrl: " "},
-      {name: "蜜桃特調", en: "Peach Cocktail", desc: "經典水果風味", price: 320, imageUrl: " "},
-      {name: "熱帶雙果特調", en: "Mango & Passion Fruit", desc: "經典水果風味", price: 320, imageUrl: " "},
-      {name: "柚香青蘋特調", en: "Yuzu & Green Apple", desc: "經典水果風味", price: 320, imageUrl: " "},
-      {name: "茶酒特調", en: "Tea Cocktail", desc: "特選茶香風味調酒", price: 320, imageUrl: " "}
-    ],
-    "Beer買五送一!": [
-      {name: "百威", en: "Budweiser", desc: " ", price: 150, imageUrl: " "},
-      {name: "可樂娜", en: "Corona", desc: " ", price: 180, imageUrl: " "},
-      {name: "買五送一（百威）", en: "buy 5 get 1 free（Budweiser）", desc: " ", price: 750, imageUrl: " "},
-      {name: "買五送一（可樂娜）", en: "buy 5 get 1 free（Corona）", desc: " ", price: 900, imageUrl: " "},
-
-    ],
-    "Shot": [
-      {name: "伏特加", en: "Vodka Shot", desc: " ", price: 120, imageUrl: " "},
-      {name: "琴酒", en: "Gin Shot", desc: " ", price: 120, imageUrl: " "},
-      {name: "蘭姆酒", en: "Rum Shot", desc: " ", price: 120, imageUrl: " "},
-      {name: "龍舌蘭", en: "Tequila Shot", desc: " ", price: 120, imageUrl: " "},
-      {name: "威士忌", en: "Whisky Shot", desc: " ", price: 120, imageUrl: " "},
-      {name: "特調shots", en: "Special Shots", desc: " ", price: 150, imageUrl: " "}
-    ]
-  },
-  nonalcohol: {
-    "Soft drinks": [
-      {name: "可樂", en: "Coca-Cola", desc: " ", price: 100, imageUrl: " "},
-      {name: "氣泡水", en: "Sparkling Water", desc: " ", price: 100, imageUrl: " "},
-      {name: "通寧水", en: "Tonic Water", desc: " ", price: 100, imageUrl: " "},
-      {name: "紅牛", en: "Red Bull", desc: " ", price: 150, imageUrl: " "},
-      {name: "蘋果汁", en: "Apple Juice", desc: " ", price: 100, imageUrl: " "},
-      {name: "芭樂汁", en: "Guava Juice", desc: " ", price: 100, imageUrl: " "},
-      {name: "蔓越莓汁", en: "Cranberry Juice", desc: " ", price: 100, imageUrl: " "},
-      {name: "柳橙汁", en: "Orange Juice", desc: " ", price: 100, imageUrl: " "}
-    ]
-  },
-  food: [
-    {name: "經典美味，即將上線", en: "COMING SOON", desc: "敬請期待。", price: 0, imageUrl: " "},
-  ]
+const CATEGORY_COLORS={
+ '啤酒':['#0ea5e9','#22d3ee'],'招牌特調':['#8b5cf6','#d946ef'],
+ '經典調酒':['#6366f1','#a78bfa'],'Shot':['#f97316','#fbbf24'],
+ '無酒精':['#10b981','#5eead4'],'其他':['#64748b','#94a3b8']
 };
-
-//  API 網址
-const BACKEND_URL = "https://script.google.com/macros/s/AKfycbzy6YYrlhWaRMBy-MtSk_8pjjjcFexXMtARGHNHELPxqO0Zi1IpBCF-rstrGlYgvco/exec";
-
-const officialTables = [
-  "A1", "A2", "A3", "A4", "A5", "A6",
-  "吧台1", "吧台2", "吧台3", "吧台4", "吧台5", "吧台6",
-  "圓桌", "包廂"
-];
-
-let chosenTable = ""; 
-let cart=[];
-let currentAlcoholCat=Object.keys(MENU.alcohol)[0];
-let currentNonalcoholCat=Object.keys(MENU.nonalcohol)[0];
-
-document.querySelectorAll('.nav-btn').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    document.querySelectorAll('.tab-page').forEach(p=>p.classList.remove('active'));
-    document.getElementById('page-'+btn.dataset.page).classList.add('active');
-    window.scrollTo(0,0);
-  });
-});
-
-function clientSelectTable(table) {
-  chosenTable = table;
-  
-  officialTables.forEach(t => {
-    const btn = document.getElementById(`front-btn-${t}`);
-    if (!btn) return;
-    
-    let colSpan = t.includes("吧台") ? "col-span-2" : (t === "包廂" || t === "圓桌" ? "col-span-4" : "col-span-1");
-
-    if (t === table) {
-      btn.className = `${colSpan} py-3 font-black rounded-lg border border-amber-500 bg-amber-500 text-black shadow-md shadow-amber-500/20 active:scale-95 transition-all duration-200`;
-    } else {
-      btn.className = `${colSpan} py-3 font-black rounded-lg border border-amber-900 bg-black/60 text-amber-500/70 active:scale-95 transition-all duration-200`;
-    }
-  });
-
-  const display = document.getElementById('selected-table-display');
-  if (display) {
-    display.textContent = ` 您的桌號為 ${table} ，請開始點餐 `;
-    display.className = "text-md font-black text-green-400";
-  }
+const SIGNATURE_NAMES=['真正優秀的女人，連罩杯都拿A','腳踏萬條船，踏都踏不完','我回妳是秒回，妳回我是輪迴','不求對象門當戶對，但求你姿勢要到位'];
+const CLASSIC_NAMES=['Gimlet','Daiquiri','柯夢波丹','Cosmopolitan','High ball','High Ball','Gin tonic','Gin Tonic','Cuba Libre','長島冰茶','Long Island Iced Tea','野格bomb','Jägerbomb','蜜桃特調','熱帶雙果特調','柚香青蘋特調','茶酒特調'];
+const SHOT_NAMES=['伏特加','琴酒','蘭姆酒','龍舌蘭','威士忌','特調shots'];
+const NONALCOHOL_NAMES=['可樂','氣泡水','通寧水','紅牛','蘋果汁','芭樂汁','蔓越莓汁','柳橙汁'];
+function categoryOf(name){
+ const v=String(name||'').replace(/\s+/g,'').toLowerCase();
+ const contains=arr=>arr.some(x=>v.includes(x.replace(/\s+/g,'').toLowerCase()));
+ if(/百威|可樂娜|budweiser|corona/i.test(v))return '啤酒';
+ if(contains(SIGNATURE_NAMES))return '招牌特調';
+ if(contains(CLASSIC_NAMES))return '經典調酒';
+ if(contains(SHOT_NAMES)||/shots?\b/i.test(v))return 'Shot';
+ if(contains(NONALCOHOL_NAMES))return '無酒精';
+ return '其他';
+}
+function renderTopProducts(top){
+ const id='topChart';if(charts[id])charts[id].destroy();
+ const canvas=document.getElementById(id),ctx=canvas.getContext('2d');
+ const grad=(a,b)=>{const g=ctx.createLinearGradient(0,0,canvas.clientWidth||500,0);g.addColorStop(0,a);g.addColorStop(1,b);return g};
+ const colors=top.map(x=>grad(...CATEGORY_COLORS[categoryOf(x.name)]));
+ charts[id]=new Chart(ctx,{type:'bar',data:{labels:top.map(x=>x.name),datasets:[{label:'實售數量',data:top.map(x=>x.qty),backgroundColor:colors,borderRadius:9,borderSkipped:false}]},options:{
+ responsive:true,maintainAspectRatio:false,indexAxis:'y',animation:{duration:1000,easing:'easeOutQuart'},
+ plugins:{legend:{display:false},tooltip:{callbacks:{afterLabel:c=>'分類：'+categoryOf(top[c.dataIndex].name)}}},
+ scales:{x:{beginAtZero:true,grid:{color:'#e9eef8'}},y:{grid:{display:false},ticks:{color:'#64748b'}}}
+ }});
+}
+function renderHourCombo(labels,counts,revenue){
+ const id='hourComboChart';if(charts[id])charts[id].destroy();
+ const canvas=document.getElementById(id),ctx=canvas.getContext('2d');
+ const grad=ctx.createLinearGradient(0,0,0,canvas.clientHeight||360);grad.addColorStop(0,'#6366f1');grad.addColorStop(1,'#22d3ee');
+ charts[id]=new Chart(ctx,{data:{labels,datasets:[
+ {type:'bar',label:'有效點餐筆數',data:counts,yAxisID:'y',backgroundColor:grad,borderRadius:7,order:2},
+ {type:'line',label:'實收營業額',data:revenue,yAxisID:'y1',borderColor:'#f59e0b',backgroundColor:'#f59e0b',borderWidth:3,tension:.38,pointRadius:3,pointHoverRadius:6,order:1}
+ ]},options:{responsive:true,maintainAspectRatio:false,animation:{duration:1000},interaction:{mode:'index',intersect:false},
+ plugins:{legend:{position:'bottom'},tooltip:{callbacks:{label:c=>c.dataset.label+'：'+(c.dataset.yAxisID==='y1'?money(c.parsed.y):c.parsed.y+' 筆')}}},
+ scales:{x:{grid:{display:false}},y:{position:'left',beginAtZero:true,title:{display:true,text:'點餐筆數'}},y1:{position:'right',beginAtZero:true,grid:{drawOnChartArea:false},title:{display:true,text:'實收營業額（NT$）'}}}}});
+}
+function exportDailyCSV(){
+ const data=[['營業日','星期','點單筆數','客人組數','實收營業額','第一筆','最後一筆']];
+ const rows=document.querySelectorAll('#dailyTable tbody tr');
+ rows.forEach(tr=>{const cells=[...tr.querySelectorAll('td')].map(td=>td.textContent.trim());if(cells.length===7)data.push(cells)});
+ const csv='\ufeff'+data.map(row=>row.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\r\n');
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download='SeeYaBar_每日營業紀錄.csv';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
 }
 
-function renderItems(container, items, type) {
-  if (!container || !items) return;
-  
-  container.innerHTML = items.map(item => {
-    let actionButtons = '';
-    if (type === 'food') {
-      actionButtons = `+加入`;
-    } else {
-      actionButtons = `
-      <button onclick="validatedAdd(this, '${item.name.replace(/'/g,"\\\\'")}',${item.price},'drink','')" class="bg-amber-600 text-white border border-amber-500 rounded-lg px-4 py-2 text-xs font-bold transition-all hover:bg-amber-500 active:scale-95">＋加入</button>`;
-    }
+function render(){let active=selected.filter(x=>!x.cancelled),paid=active.filter(x=>x.paid),cancel=selected.filter(x=>x.cancelled),revenue=sum(paid,x=>x.received),discount=sum(paid,x=>x.discount),txn=new Set(paid.map(x=>x['結帳編號']).filter(Boolean));let kpis=[['實收營業額',money(revenue),'已結帳・實際結帳金額','fa-sack-dollar'],['點單筆數',active.length.toLocaleString()+' 筆','排除已取消訂單；每列計 1 筆','fa-receipt'],['客人組數',txn.size.toLocaleString()+' 組','已結帳且有結帳編號','fa-credit-card'],['折扣總金額',money(discount),'已結帳品項折抵合計','fa-tags']];document.getElementById('kpis').innerHTML=kpis.map(x=>`<div class="kpi"><i class="fa-solid ${x[3]} ico"></i><div class="name">${x[0]}</div><div class="value">${x[1]}</div><div class="small">${x[2]}</div></div>`).join('');let dates=[...new Set(selected.map(x=>x.day))].sort(),dayMap=group(active,x=>x.day),paidMap=group(paid,x=>x.day);chart('dailyChart','bar',dates.map(x=>x.slice(5)),dates.map(d=>sum(paidMap.get(d)||[],x=>x.received)),{label:'實收營業額',currency:true});let pm=group(paid,x=>x['付款方式']||'未註明');table('dailyTable',['營業日','星期','當日點單數量','當日客人組數','實收營業額','第一筆','最後一筆'],dates.map(d=>{let a=dayMap.get(d)||[],b=paidMap.get(d)||[],ts=[...a].sort((x,y)=>x.d-y.d),first=ts[0],last=ts.at(-1);return[d,'週'+weekday[new Date(d+'T12:00:00').getDay()],a.length,new Set(b.map(x=>x['結帳編號']).filter(Boolean)).size,money(sum(b,x=>x.received)),first?hm(first.d):'—',last?((last.d.getDate()!==new Date(d+'T12:00:00').getDate())?'隔日 ':'')+hm(last.d):'—']}));let hrs=Array.from({length:10},(_,i)=>19+i),hourLabels=hrs.map(h=>pad(h%24)+':00');renderHourCombo(hourLabels,hrs.map(h=>active.filter(x=>x.hour===h).length),hrs.map(h=>sum(paid.filter(x=>x.hour===h),x=>x.received)));let wdCounts=Array.from({length:7},()=>Array(10).fill(0));active.forEach(x=>{let wd=new Date(x.day+'T12:00:00').getDay();if(x.hour>=19&&x.hour<=28)wdCounts[wd][x.hour-19]++});let mx=Math.max(1,...wdCounts.flat());document.getElementById('heat').innerHTML='<table class="heat"><thead><tr><th>星期</th>'+hourLabels.map(h=>`<th>${h}</th>`).join('')+'</tr></thead><tbody>'+[1,2,3,4,5,6,0].map(w=>'<tr><th>週'+weekday[w]+'</th>'+wdCounts[w].map(v=>{let alpha=.06+.84*v/mx;return `<td title="${v} 筆" style="background:linear-gradient(135deg,rgba(99,102,241,${alpha.toFixed(3)}),rgba(6,182,212,${alpha.toFixed(3)}));color:${v/mx>.55?'white':'#46627f'}">${v||'–'}</td>`}).join('')+'</tr>').join('')+'</tbody></table>';table('firstLastTable',['營業日','星期','第一筆','最後一筆','有效點餐筆數'],dates.map(d=>{let a=[...(dayMap.get(d)||[])].sort((x,y)=>x.d-y.d),last=a.at(-1);return[d,'週'+weekday[new Date(d+'T12:00:00').getDay()],a[0]?hm(a[0].d):'—',last?((last.day!==ymd(last.d))?'隔日 ':'')+hm(last.d):'—',a.length]}));let prod=group(active,x=>x.product),prodStats=[...prod].map(([name,a])=>({name,qty:sum(a,x=>x.qty),count:a.length,rev:sum(a.filter(x=>x.paid),x=>x.received)})).sort((a,b)=>b.qty-a.qty);let top=prodStats.slice(0,12);renderTopProducts(top);let beers=prodStats.filter(x=>/百威|可樂娜/.test(x.name));table('productTable',['排名','標準商品','點餐筆數','實際出貨數量','已結帳實收金額'],prodStats.map((x,i)=>[i+1,x.name,x.count,x.qty,money(x.rev)]));document.getElementById('discountBox').innerHTML=`<div style="padding:14px 0;border-bottom:1px solid #edf1f6">已結帳原始金額 <b style="float:right">${money(sum(paid,x=>x.gross))}</b></div><div style="padding:14px 0;border-bottom:1px solid #edf1f6">折扣合計 <b style="float:right;color:#dd6674">− ${money(discount)}</b></div><div style="padding:14px 0;border-bottom:1px solid #edf1f6">實收營業額 <b style="float:right;color:#12a89a">${money(revenue)}</b></div><div style="padding:14px 0;border-bottom:1px solid #edf1f6">取消品項數 <b style="float:right">${cancel.length} 筆</b></div><div style="padding:14px 0">取消品項原始金額 <b style="float:right">${money(sum(cancel,x=>x.gross))}</b></div>`;let sortedH=hrs.map(h=>({h,c:active.filter(x=>x.hour===h).length})).sort((a,b)=>b.c-a.c),bestDay=dates.map(d=>({d,r:sum(paidMap.get(d)||[],x=>x.received)})).sort((a,b)=>b.r-a.r)[0],beerTotal=sum(beers,x=>x.qty),bw=beers.find(x=>x.name.includes('百威')),cr=beers.find(x=>x.name.includes('可樂娜'));let insights=[['最高點餐時段',sortedH[0]&&sortedH[0].c?`目前有效點餐最集中在 ${pad(sortedH[0].h%24)}:00–${pad((sortedH[0].h+1)%24)}:00，共 ${sortedH[0].c} 筆。可對照現場人力配置。`:'目前無有效點餐紀錄。'],['營收最高營業日',bestDay?`${bestDay.d} 的已結帳實收為 ${money(bestDay.r)}；請對照是否有活動、假日或團體訂位。`:'目前沒有資料。'],['啤酒銷量結構',beerTotal?`百威 ${bw?.qty||0} 瓶（${Math.round((bw?.qty||0)/beerTotal*100)}%）、可樂娜 ${cr?.qty||0} 瓶（${Math.round((cr?.qty||0)/beerTotal*100)}%）。進貨應以實際瓶數而非訂單筆數判斷。`:'目前沒有百威或可樂娜資料。'],['取消與折扣觀察',`取消 ${cancel.length} 筆，原始金額 ${money(sum(cancel,x=>x.gross))}；已結帳折抵 ${money(discount)}。可追查取消原因與促銷效益。`]];document.getElementById('insights').innerHTML=insights.map(([a,b])=>`<div class="insight"><strong>${esc(a)}</strong><p>${esc(b)}</p></div>`).join('');let unpriced=paid.filter(x=>x['實際結帳金額']===''||x['實際結帳金額']==='-').length;document.getElementById('quality').innerHTML=`資料筆數：${selected.length}；有效訂單品項：${active.length}；已取消：${cancel.length}；未結帳有效品項：${active.length-paid.length}；已結帳但缺少實收金額：${unpriced}。<br>每一列視為一個訂單品項；「xN」換算 N 件；「買五送一」換算為 6 倍件數。<br>實收金額使用 Q 欄「實際結帳金額」，不使用整筆交易的 O 欄金額重複加總。<br>若某些舊資料沒有 Q 欄，該筆不推估實收，避免錯誤；商品營收與銷量屬不同統計口徑。<br>資料來源為分析專用試算表；每 5 分鐘檢查更新。IMPORTRANGE 可能延遲。`;window.__export=dates.map(d=>[d,sum(paidMap.get(d)||[],x=>x.received),(dayMap.get(d)||[]).length,new Set((paidMap.get(d)||[]).map(x=>x['結帳編號']).filter(Boolean)).size])}
+function resetFilters(){let d=all.map(x=>x.day).sort();if(d.length){document.getElementById('from').value=d[0];document.getElementById('to').value=d.at(-1)}document.getElementById('weekday').value='all';refresh()}document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.section').forEach(x=>x.classList.toggle('active',x.id===b.dataset.tab));Object.values(charts).forEach(c=>c.resize())}));['from','to','weekday'].forEach(id=>document.getElementById(id).addEventListener('change',refresh));document.getElementById('file').addEventListener('change',async e=>{let f=e.target.files[0];if(!f)return;try{if(!window.XLSX)throw Error('Excel 解析套件尚未載入，請連接網路後重試');let data=await f.arrayBuffer(),wb=XLSX.read(data,{type:'array',cellDates:true}),ws=wb.Sheets[wb.SheetNames[0]],items=XLSX.utils.sheet_to_json(ws,{defval:'',raw:true});if(!items.length||!('點餐時間' in items[0])||!('品項' in items[0]))throw Error('找不到「點餐時間」或「品項」欄位，請匯入與目前 Google Sheets 相同格式的報表');raw=items.filter(x=>x['點餐時間']&&x['點餐時間']!=='點餐時間');document.getElementById('sourceLabel').textContent=f.name+' · '+raw.length+' 筆';prepare()}catch(err){alert('匯入失敗：'+err.message)}e.target.value=''});function exportCSV(){let data=[['營業日','實收營業額','點單筆數','客人組數'],...(window.__export||[])],csv='﻿'+data.map(row=>row.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\r\n'),a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download='SeeYaBar_每日營運統計.csv';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}prepare();
 
-    return `
-<div class="bg-black/30 border border-amber-900/20 rounded-2xl p-3 flex gap-3 shadow-md">
-  <div class="flex-1 min-w-0 flex flex-col justify-between">
-    <div>
-      <div class="font-bold text-amber-100">${item.name}</div>
-      <div class="text-[11px] text-gray-500 font-medium">${item.en}</div>
-      <div class="text-[11px] text-gray-400 mt-1 leading-tight">${item.desc}</div>
-    </div>
-    <div class="flex items-center justify-between mt-2">
-      <span class="text-amber-500 font-bold text-sm">NT$${item.price}</span>
-      ${actionButtons}
-    </div>
-  </div>
-</div>`;
-  }).join('');
+let syncBusy=false;
+let syncSerial=0;
+function mapOrder(o){const v=x=>x===null||x===undefined?'':String(x);return {'原始列號':v(o.row),'點餐時間':v(o.time),'桌號':v(o.table),'品項':v(o.item),'金額':v(o.total),'結帳狀況':v(o.status),'結帳時間':v(o.payTime),'付款方式':v(o.payMethod),'出單狀況':v(o.cook),'取消原因':v(o.cancelReason),'折扣比例':v(o.discountRate),'折扣前應收':v(o.subtotal),'折抵金額':v(o.discountAmount),'實際結帳金額':v(o.finalAmount),'結帳編號':v(o.settlementId)}}
+function syncNow(){
+ if(syncBusy)return;
+ const label=document.getElementById('sourceLabel');
+ if(!/^https:\/\/script\.google\.com\/macros\/s\/[^/]+\/exec(?:\?.*)?$/.test(ANALYTICS_API_URL)){
+  label.textContent='請先在 HTML 填入分析專用 Apps Script /exec 網址';label.style.color='#b91c1c';return;
+ }
+ syncBusy=true;syncState='同步中';label.textContent='正在讀取分析專用 Sheet…';label.style.color='#b45309';
+ const callback='seeYaAnalyticsCallback_'+(++syncSerial);
+ const script=document.createElement('script');
+ let finished=false;
+ const finish=(error,result)=>{
+  if(finished)return;finished=true;clearTimeout(timer);script.remove();
+  try{delete window[callback]}catch(_) {window[callback]=undefined}
+  syncBusy=false;
+  if(error||!result||!result.success){syncState='同步失敗';label.textContent='同步失敗：'+(error?.message||result?.error||'未知錯誤');label.style.color='#b91c1c';return}
+  raw=(result.orders||[]).map(mapOrder).filter(x=>x['點餐時間']&&x['品項']);syncState='已同步';prepare();
+  label.style.color='#047857';label.textContent='分析副本讀取：'+result.updatedAt+' · '+raw.length+' 筆（來源可能延遲）';
+ };
+ window[callback]=data=>finish(null,data);
+ script.onerror=()=>finish(new Error('連線失敗：請檢查分析 API 部署與權限'));
+ const timer=setTimeout(()=>finish(new Error('超過 20 秒未回應，請稍後再試')),20000);
+ script.src=ANALYTICS_API_URL+(ANALYTICS_API_URL.includes('?')?'&':'?')+'callback='+encodeURIComponent(callback)+'&_ts='+Date.now();
+ document.head.appendChild(script);
 }
-
-function renderFilters(container,cats,current,setter){
-  container.innerHTML=Object.keys(cats).map(c=>`<button class="sub-btn whitespace-nowrap px-4 py-1.5 rounded-full text-xs font-medium border transition ${c===current?'active':''}" data-cat="${c}">${c}</button>`).join('');
-  container.querySelectorAll('.sub-btn').forEach(b=>{
-    b.addEventListener('click',()=>{ setter(b.dataset.cat); });
-  });
-}
-
-function initAlcohol(){
-  renderFilters(document.getElementById('alcohol-filters'),MENU.alcohol,currentAlcoholCat,c=>{currentAlcoholCat=c;initAlcohol();});
-  renderItems(document.getElementById('alcohol-items'),MENU.alcohol[currentAlcoholCat],'drink');
-}
-function initNonalcohol(){
-  renderFilters(document.getElementById('nonalcohol-filters'),MENU.nonalcohol,currentNonalcoholCat,c=>{currentNonalcoholCat=c;initNonalcohol();});
-  renderItems(document.getElementById('nonalcohol-items'),MENU.nonalcohol[currentNonalcoholCat],'drink');
-}
-function initFood(){ renderItems(document.getElementById('food-items'),MENU.food,'food'); }
-initAlcohol(); initNonalcohol(); initFood();
-
-function validatedAdd(btn, name, price, type, note) {
-  if (!chosenTable) {
-    const alertBox = document.getElementById('global-alert');
-    alertBox.textContent = "請先至首頁點選桌號位置，就可以開始點餐囉！";
-    alertBox.style.transform = "translateY(0)";
-    document.getElementById('nav-home').click();
-    const box = document.getElementById('table-box');
-    box.classList.add('error-flash');
-    box.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    setTimeout(() => { alertBox.style.transform = "translateY(-128px)"; box.classList.remove('error-flash'); }, 4000);
-    return;
-  }
-
-  btn.classList.add('neon-active');
-  const cartIcon = document.getElementById('cart-badge');
-  cartIcon.classList.add('neon-active');
-  setTimeout(() => { btn.classList.remove('neon-active'); cartIcon.classList.remove('neon-active'); }, 500);
-  addToCart(name, price, type, note);
-}
-
-function addToCart(name,price,type,note){
-  const existing=cart.find(i=>i.name===name && i.note===note);
-  if(existing){
-    existing.qty++;
-  }else{
-    cart.push({name:name,price:price,qty:1,note:note,type:type});
-  }
-  updateBadge();
-}
-
-function updateBadge(){
-  const total=cart.reduce((s,i)=>s+i.qty,0);
-  const badge = document.getElementById('cart-badge');
-  badge.classList.toggle('hidden',total===0);
-  document.getElementById('cart-count').textContent=total;
-}
-
-document.getElementById('cart-badge').addEventListener('click',openCart);
-document.getElementById('close-cart').addEventListener('click',closeCart);
-
-function openCart(){
-  const list=document.getElementById('cart-list');
-  list.innerHTML=cart.map((item,i)=>{
-    let displayName = item.name;
-
-    return `
-    <div class="bg-black/20 border border-amber-900/10 rounded-xl p-3 flex justify-between items-center text-sm">
-      <div>
-        <div class="font-medium text-amber-100">${displayName}</div>
-        <div class="text-[11px] text-gray-500 mt-0.5">單價 NT$${item.price}</div>
-      </div>
-      <div class="flex items-center gap-4">
-        <div class="flex items-center bg-stone-900 rounded-lg border border-amber-900/30 overflow-hidden">
-          <button onclick="changeQty(${i}, -1)" class="px-2.5 py-1 text-amber-600 hover:bg-stone-800 font-bold">-</button>
-          <span class="px-3 text-amber-200 font-bold text-xs">${item.qty}</span>
-          <button onclick="changeQty(${i}, 1)" class="px-2.5 py-1 text-amber-600 hover:bg-stone-800 font-bold">+</button>
-        </div>
-        <span class="text-amber-400 font-bold min-w-[60px] text-right">NT$${item.price*item.qty}</span>
-      </div>
-    </div>`;
-  }).join('');
-  
-  document.getElementById('cart-total').textContent='NT$'+cart.reduce((s,i)=>s+i.price*i.qty,0);
-  document.getElementById('cart-error').classList.add('hidden');
-  document.getElementById('cart-success').classList.add('hidden');
-  document.getElementById('cart-panel').classList.add('open');
-}
-
-function changeQty(index, delta) {
-  if(cart[index]) {
-    cart[index].qty += delta;
-    if(cart[index].qty <= 0) {
-      cart.splice(index, 1);
-    }
-    updateBadge();
-    openCart();
-  }
-}
-
-function closeCart(){
-  document.getElementById('cart-panel').classList.remove('open');
-}
-
-document.getElementById('submit-order').addEventListener('click',async()=>{
-  const btn=document.getElementById('submit-order');
-  const errEl=document.getElementById('cart-error');
-  const successEl=document.getElementById('cart-success');
-  
-  if(!chosenTable) {
-    errEl.textContent='請返回首頁點選您的桌號位置再進行點餐';
-    errEl.classList.remove('hidden');
-    return;
-  }
-
-  btn.disabled=true; btn.textContent = '正在傳送點餐明細...';
-  errEl.classList.add('hidden'); successEl.classList.add('hidden');
-  
-  const expandedItems = [];
-  cart.forEach(item => {
-    for (let q = 0; q < item.qty; q++) {
-      expandedItems.push({
-        name: item.name,
-        price: item.price,
-        quantity: 1,
-        note: ""
-      });
-    }
-  });
-
-  const orderData = {
-    tableNum: chosenTable, 
-    totalAmount: cart.reduce((s,i)=>s+i.price*i.qty,0),
-    items: expandedItems
-  };
-
-  try {
-    const response = await fetch(BACKEND_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify(orderData)
-    });
-
-    const result = await response.json();
-    if (result.success) {
-      successEl.textContent = '點餐成功！調酒師準備中！';
-      successEl.classList.remove('hidden');
-      cart = []; updateBadge();
-      setTimeout(() => { closeCart(); btn.disabled = false; btn.textContent = '確認送出'; }, 3500);
-    } else {
-      throw new Error(result.error);
-    }
-  } catch (error) {
-    errEl.textContent = '訂單可能已成功送出！因網路連線或系統回應異常，請向櫃檯人員確認訂單是否成立。請勿重複送出，以免重複下單。';
-    errEl.classList.remove('hidden');
-    btn.disabled = false; btn.textContent = '確認送出';
-  }
-});
-
-lucide.createIcons();
-  </script>
- </body>
-</html>
-```<FollowUp label="我想測試點餐看看資料有沒有成功送到 Google Sheet" query="我想測試點餐看看資料有沒有成功送到 Google Sheet"/>
+setInterval(()=>{if(!document.hidden)syncNow()},300000);
+window.addEventListener('load',syncNow);
+</script></body></html>
